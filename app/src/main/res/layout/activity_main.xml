@@ -24,7 +24,6 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:backgroundTint="@color/purple_2"
-            android:background="@drawable/custom_button"
             android:text="@string/battle" />
 
         <Button
@@ -34,7 +33,6 @@
             android:layout_weight="1"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/purple_2"
-            android:background="@drawable/custom_button"
             android:text="@string/training" />
 
         <Button
@@ -43,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/purple_2"
-            android:background="@drawable/custom_button"
             android:text="@string/warm_up"
             />
     </LinearLayout>

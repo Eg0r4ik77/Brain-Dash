@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Vadim/AndroidStudioProjects/AndroidGame/app/src/main/res/drawable/custom_button.xml" value="0.1" />
-        <entry key="..\:/Users/Vadim/AndroidStudioProjects/AndroidGame/app/src/main/res/layout/activity_main.xml" value="0.24836601307189543" />
+        <entry key="..\:/Users/Vadim/AndroidStudioProjects/AndroidGame/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Vadim/AndroidStudioProjects/AndroidGame/app/src/main/res/layout/level_template.xml" value="0.264" />
       </map>
     </option>
   </component>
