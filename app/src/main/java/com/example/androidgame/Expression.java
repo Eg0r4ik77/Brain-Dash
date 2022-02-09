@@ -1,5 +1,7 @@
 package com.example.androidgame;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,9 +29,19 @@ public class Expression {
         return solution;
     }
 
-    // проработать Operation
     @Override
     public String toString() {
-        return firstOperand + " + " + secondOperand + " = ";
+        char sign;
+        switch (operation){
+            case ADDITION:
+                sign = '+';
+                break;
+            case SUBTRACTION:
+                sign = '-';
+                break;
+            default:
+                sign = ' ';
+        }
+        return firstOperand + " " + sign + " " + secondOperand + " = ";
     }
 }

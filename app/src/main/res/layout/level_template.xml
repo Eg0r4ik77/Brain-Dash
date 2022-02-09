@@ -95,6 +95,27 @@
                 android:layout_height="wrap_content"
                 android:text="9"/>
         </TableRow>
+        <TableRow
+            android:id="@+id/tableRow_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/clean_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="c"/>
+            <Button
+                android:id="@+id/button_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"/>
+            <Button
+                android:id="@+id/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OK"/>
+        </TableRow>
     </TableLayout>
 
 </RelativeLayout>
