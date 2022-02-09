@@ -16,7 +16,6 @@ public class CalculateExpressionLevel extends AppCompatActivity {
     private TextView expressionText;
     private TextView solutionText;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,11 +40,11 @@ public class CalculateExpressionLevel extends AppCompatActivity {
                 findViewById(R.id.button_9)
         };
 
+
         expressionText = findViewById(R.id.expression_text);
         solutionText = findViewById(R.id.solution_text);
 
-        Expression expression = getRandomExpression();
-        expressionText.setText(expression.toString());
+        presentRandomExpression();
 
         for (Button button : number_buttons) {
             button.setOnClickListener(v -> {
@@ -56,14 +55,13 @@ public class CalculateExpressionLevel extends AppCompatActivity {
 
         Button cleanButton = findViewById(R.id.clean_button);
         cleanButton.setOnClickListener(v -> {
-          solutionText.setText(null);
+            solutionText.setText(null);
         });
 
         Button okButton = findViewById(R.id.ok_button);
         okButton.setOnClickListener(v -> {
-            //есть случай, когда в solutionText не лежит строка
-            solutionText.setText(checkSolution(expression,
-                    Integer.parseInt(solutionText.getText().toString())));
+            presentRandomExpression();
+            solutionText.setText(null);
         });
 
     }
@@ -75,10 +73,12 @@ public class CalculateExpressionLevel extends AppCompatActivity {
                 Operation.values()[Math.abs(randomValue.nextInt()%2)]);
     }
 
-    public String checkSolution(Expression expression, int answer){
-         if(answer == expression.getSolution()){
-             return "ПРАВИЛЬНО!";
-         }
-         return "НЕПРАВИЛЬНО!";
+    public String checkAnswer(Expression expression, int answer){
+        //TO DO...
+        return null;
+    }
+    public void presentRandomExpression(){
+        Expression expression = getRandomExpression();
+        expressionText.setText(expression.toString());
     }
 }
