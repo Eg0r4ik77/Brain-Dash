@@ -10,10 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGame">
         <activity
+            android:name=".CalculationsModeGamesMenu"
+            android:exported="false" />
+        <activity
+            android:name=".GameModesMenu"
+            android:exported="false" />
+        <activity
             android:name=".CalculateExpressionLevel"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainMenu"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

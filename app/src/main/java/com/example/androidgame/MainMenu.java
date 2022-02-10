@@ -5,21 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainMenu extends AppCompatActivity {
 
     private Button trainingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_menu);
 
         trainingButton = findViewById(R.id.training_button);
         trainingButton.setOnClickListener(v -> {
-            Intent startCalculateExpressionLevel = new Intent(this, CalculateExpressionLevel.class);
-            startCalculateExpressionLevel.putExtra("new_level", "calculate_expression_level");
-            startActivity(startCalculateExpressionLevel);
+            try{
+                Intent intent = new Intent(this, GameModesMenu.class);
+                startActivity(intent);
+                finish();
+            }catch (Exception exception){
+                Toast.makeText(getBaseContext(), "Ошибка", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
