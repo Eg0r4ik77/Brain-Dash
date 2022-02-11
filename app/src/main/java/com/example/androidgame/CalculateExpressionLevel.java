@@ -2,7 +2,11 @@ package com.example.androidgame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,10 +17,22 @@ public class CalculateExpressionLevel extends AppCompatActivity {
     private TextView expressionText;
     private TextView solutionText;
 
+    private Expression expression;
+
+    private LevelComplicator levelComplicator = new LevelComplicator() {
+        @Override
+        public void complicateLevel() {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculate_expression_level);
+
+        // секундомер
+        // усложнение
 
         Button[] number_buttons = {
                 findViewById(R.id.button_0),
@@ -30,8 +46,6 @@ public class CalculateExpressionLevel extends AppCompatActivity {
                 findViewById(R.id.button_8),
                 findViewById(R.id.button_9)
         };
-
-
         expressionText = findViewById(R.id.expression_text);
         solutionText = findViewById(R.id.solution_text);
 
@@ -51,8 +65,23 @@ public class CalculateExpressionLevel extends AppCompatActivity {
 
         Button okButton = findViewById(R.id.ok_button);
         okButton.setOnClickListener(v -> {
+            try {
+                if (checkAnswer(expression, Integer.parseInt(solutionText.getText().toString()))){
+                    solutionText.setBackgroundResource(R.drawable.right_answer_anim);
+                }
+                else{
+                    solutionText.setBackgroundResource(R.drawable.wrong_answer_anim);
+                }
+            }catch (Exception exception){
+                solutionText.setBackgroundResource(R.drawable.wrong_answer_anim);
+            }
+
             presentRandomExpression();
             solutionText.setText(null);
+            AnimationDrawable animationDrawable = (AnimationDrawable) solutionText.getBackground();
+            animationDrawable.setEnterFadeDuration(500);
+            animationDrawable.setExitFadeDuration(500);
+            animationDrawable.start();
         });
 
     }
@@ -64,12 +93,12 @@ public class CalculateExpressionLevel extends AppCompatActivity {
                 Operation.values()[Math.abs(randomValue.nextInt()%2)]);
     }
 
-    public String checkAnswer(Expression expression, int answer){
-        //TO DO...
-        return null;
+    public boolean checkAnswer(Expression expression, int answer){
+        return expression.getSolution() == answer;
     }
     public void presentRandomExpression(){
-        Expression expression = getRandomExpression();
+        expression = getRandomExpression();
         expressionText.setText(expression.toString());
     }
+
 }

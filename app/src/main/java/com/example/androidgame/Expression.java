@@ -2,12 +2,13 @@ package com.example.androidgame;
 
 import androidx.annotation.NonNull;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Expression {
-    private final int firstOperand;
-    private final int secondOperand;
+    private int firstOperand;
+    private int secondOperand;
     private final Operation operation;
     Map<Operation, Integer> actions = new HashMap<Operation, Integer>();
 
@@ -15,6 +16,10 @@ public class Expression {
         this.firstOperand = firstOperand;
         this.secondOperand = secondOperand;
         this.operation = operation;
+
+        if(secondOperand > firstOperand){
+            swapOperands();
+        }
 
         actions.put(Operation.ADDITION, this.firstOperand+this.secondOperand);
         actions.put(Operation.SUBTRACTION, this.firstOperand-this.secondOperand);
@@ -43,5 +48,11 @@ public class Expression {
                 sign = ' ';
         }
         return firstOperand + " " + sign + " " + secondOperand + " = ";
+    }
+
+    private void swapOperands(){
+        int tmp = firstOperand;
+        firstOperand = secondOperand;
+        secondOperand = tmp;
     }
 }
