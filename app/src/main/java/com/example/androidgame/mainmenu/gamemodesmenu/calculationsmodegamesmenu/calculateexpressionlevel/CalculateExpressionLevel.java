@@ -1,10 +1,8 @@
 package com.example.androidgame.mainmenu.gamemodesmenu.calculationsmodegamesmenu.calculateexpressionlevel;
 
-import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.Application;
+
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.widget.Button;
@@ -72,9 +70,7 @@ public class CalculateExpressionLevel extends AppCompatActivity {
         }
 
         Button cleanButton = findViewById(R.id.clean_button);
-        cleanButton.setOnClickListener(v -> {
-            resetSolution();
-        });
+        cleanButton.setOnClickListener(v -> resetSolution());
 
         Button okButton = findViewById(R.id.ok_button);
         okButton.setOnClickListener(v -> {
