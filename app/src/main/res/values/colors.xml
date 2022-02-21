@@ -10,6 +10,9 @@
     <color name="green">#00FF00</color>
     <color name="red">#FF0000</color>
 
+
+    <color name="imperial">#ED2939</color>
     <color name="purple">#9808B1</color>
     <color name="purple_2">#360E3C</color>
+    <color name="spring_green">#9C00FF7F</color>
 </resources>

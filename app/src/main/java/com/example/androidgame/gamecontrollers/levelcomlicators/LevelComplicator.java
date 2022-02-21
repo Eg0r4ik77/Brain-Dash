@@ -1,4 +1,4 @@
-package com.example.androidgame;
+package com.example.androidgame.gamecontrollers.levelcomlicators;
 
 public abstract class LevelComplicator {
 
@@ -12,9 +12,5 @@ public abstract class LevelComplicator {
 
     public void incrementLevelDifficulty() {
         levelDifficulty++;
-    }
-
-    public void resetLevelDifficulty() {
-        levelDifficulty = 0;
     }
 }

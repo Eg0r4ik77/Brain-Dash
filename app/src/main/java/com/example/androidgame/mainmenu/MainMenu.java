@@ -1,4 +1,4 @@
-package com.example.androidgame;
+package com.example.androidgame.mainmenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.androidgame.mainmenu.gamemodesmenu.GameModesMenu;
+import com.example.androidgame.R;
 
 public class MainMenu extends AppCompatActivity {
 

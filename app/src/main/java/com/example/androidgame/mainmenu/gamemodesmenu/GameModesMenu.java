@@ -1,4 +1,4 @@
-package com.example.androidgame;
+package com.example.androidgame.mainmenu.gamemodesmenu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,17 +7,20 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class CalculationsModeGamesMenu extends AppCompatActivity {
+import com.example.androidgame.mainmenu.gamemodesmenu.calculationsmodegamesmenu.CalculationsModeGamesMenu;
+import com.example.androidgame.R;
+
+public class GameModesMenu extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculations_mode_games_menu);
+        setContentView(R.layout.activity_game_modes_menu);
 
-        Button calculateExpressionGameButton = findViewById(R.id.calculate_expression_game);
-        calculateExpressionGameButton.setOnClickListener(v -> {
+        Button calculationsModeButton = findViewById(R.id.calculations_mode);
+        calculationsModeButton.setOnClickListener(v -> {
             try{
-                Intent intent = new Intent(this, CalculateExpressionLevel.class);
+                Intent intent = new Intent(this, CalculationsModeGamesMenu.class);
                 startActivity(intent);
                 finish();
             }catch (Exception exception){

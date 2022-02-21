@@ -2,12 +2,12 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="true">
     <item
-        android:drawable="@color/white"
+        android:drawable="@color/purple"
         android:duration="0" />
     <item
-        android:drawable="@color/red"
-        android:duration="0" />
+        android:drawable="@color/imperial"
+        android:duration="100" />
     <item
-        android:drawable="@color/white"
+        android:drawable="@color/purple"
         android:duration="0" />
 </animation-list>
