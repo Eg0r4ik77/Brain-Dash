@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.gamemodesmenu.calculationsmodegamesmenu.calculateexpressionlevel;
+package com.example.androidgame.mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,10 @@ import com.example.androidgame.gamecontrollers.levelcomlicators.CalculateExpress
 import com.example.androidgame.gamecontrollers.Timer;
 
 public class CalculateExpressionLevel extends AppCompatActivity {
+
+    //рефакторинг
+    //активити в конце игры
+    //рекорд очков
 
     private TextView expressionText;
     private TextView solutionText;
@@ -41,7 +45,12 @@ public class CalculateExpressionLevel extends AppCompatActivity {
         expressionText = findViewById(R.id.expression_text);
         solutionText = findViewById(R.id.solution_text);
         pointsText = findViewById(R.id.points_text);
-        timer = new Timer(timerText);
+        timer = new Timer(60000, timerText) {
+            @Override
+            public void finish() {
+                timerText.setText("Time is up!");
+            }
+        };
         flashScreen = findViewById(R.id.flash_screen);
 
         createExpression();
@@ -80,17 +89,17 @@ public class CalculateExpressionLevel extends AppCompatActivity {
                     flashScreen.setBackgroundResource(R.drawable.right_answer_anim);
                     levelComplicator.complicateLevel();
                     points += levelPoints;
-                }
-                else{
-                    points = points < levelPoints ? 0 : points - levelPoints;
+                }else{
+
+                    points  = points < levelPoints ? 0 : points - levelPoints;
                     flashScreen.setBackgroundResource(R.drawable.wrong_answer_anim);
                 }
-                pointsText.setText(String.valueOf(points));
             }catch (Exception exception){
+                points = points < levelPoints ? 0 : points - levelPoints;
                 flashScreen.setBackgroundResource(R.drawable.wrong_answer_anim);
             }
+            pointsText.setText(String.valueOf(points));
             updateLevel();
-
         });
 
     }

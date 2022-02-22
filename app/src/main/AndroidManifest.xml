@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.androidgame">
+    package="com.example.androidgame" >
 
     <application
         android:allowBackup="true"
@@ -8,19 +8,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidGame">
+        android:theme="@style/Theme.AndroidGame" >
         <activity
-            android:name=".mainmenu.gamemodesmenu.calculationsmodegamesmenu.CalculationsModeGamesMenu"
+            android:name=".mainmenu.gamemodes.TransitionActivity"
             android:exported="false" />
         <activity
-            android:name=".mainmenu.gamemodesmenu.GameModesMenu"
+            android:name=".mainmenu.gamemodes.calculationsmodegames.CalculationsModeGamesMenu"
             android:exported="false" />
         <activity
-            android:name=".mainmenu.gamemodesmenu.calculationsmodegamesmenu.calculateexpressionlevel.CalculateExpressionLevel"
+            android:name=".mainmenu.gamemodes.GameModesMenu"
+            android:exported="false" />
+        <activity
+            android:name=".mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel.CalculateExpressionLevel"
             android:exported="false" />
         <activity
             android:name=".mainmenu.MainMenu"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

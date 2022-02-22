@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.gamemodesmenu.calculationsmodegamesmenu.calculateexpressionlevel;
+package com.example.androidgame.mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel;
 
 public class Operand {
 

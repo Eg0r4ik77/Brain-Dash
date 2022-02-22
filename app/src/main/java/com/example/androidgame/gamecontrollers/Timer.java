@@ -3,16 +3,19 @@ package com.example.androidgame.gamecontrollers;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 
-public class Timer{
+public abstract class Timer{
 
-    private final int timerDurationInMillis = 60000;
+    private final int timerDurationInMillis;
     private final int countDownInterval = 1000;
-    private int timeLeftInMillis = timerDurationInMillis;
+    private int timeLeftInMillis;
     private CountDownTimer countDownTimer;
     private final TextView timerText;
 
-    public Timer(TextView textView){
-        timerText = textView;
+
+    public Timer(int timerDurationInMillis, TextView timerText) {
+        this.timerDurationInMillis = timerDurationInMillis;
+        this.timerText = timerText;
+        timeLeftInMillis = timerDurationInMillis;
     }
 
     public void run(){
@@ -24,7 +27,7 @@ public class Timer{
             }
             @Override
             public void onFinish() {
-                    timerText.setText("Time is up! Points: ");
+                   finish();
             }
         }.start();
     }
@@ -33,4 +36,5 @@ public class Timer{
         this.countDownTimer.cancel();
     }
 
+    public abstract void finish();
 }

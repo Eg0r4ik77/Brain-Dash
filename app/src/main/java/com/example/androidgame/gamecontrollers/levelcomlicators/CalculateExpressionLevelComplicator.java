@@ -1,6 +1,6 @@
 package com.example.androidgame.gamecontrollers.levelcomlicators;
 
-import com.example.androidgame.mainmenu.gamemodesmenu.calculationsmodegamesmenu.calculateexpressionlevel.Expression;
+import com.example.androidgame.mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel.Expression;
 
 public class CalculateExpressionLevelComplicator extends LevelComplicator {
 

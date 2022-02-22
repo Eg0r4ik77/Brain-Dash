@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.androidgame.mainmenu.gamemodesmenu.GameModesMenu;
+import com.example.androidgame.mainmenu.gamemodes.GameModesMenu;
 import com.example.androidgame.R;
 
 public class MainMenu extends AppCompatActivity {

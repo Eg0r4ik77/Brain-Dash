@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.gamemodesmenu;
+package com.example.androidgame.mainmenu.gamemodes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.androidgame.mainmenu.gamemodesmenu.calculationsmodegamesmenu.CalculationsModeGamesMenu;
+import com.example.androidgame.mainmenu.gamemodes.calculationsmodegames.CalculationsModeGamesMenu;
 import com.example.androidgame.R;
 
 public class GameModesMenu extends AppCompatActivity {
