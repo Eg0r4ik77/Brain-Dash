@@ -1,6 +1,7 @@
 package com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import android.graphics.drawable.AnimationDrawable;
@@ -10,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.androidgame.R;
-import com.example.androidgame.gamecontrollers.levelcomlicators.CalculateExpressionLevelComplicator;
+import com.example.androidgame.gamecontrollers.gamecomlicators.CalculateExpressionGameComplicator;
 import com.example.androidgame.gamecontrollers.Timer;
 
 public class CalculateExpressionGame extends AppCompatActivity {
@@ -34,27 +35,35 @@ public class CalculateExpressionGame extends AppCompatActivity {
     private final int[] expressionDifficulties = {18, 108, 198};
     private final int[] levelPoints = {20, 50, 100};
 
-    private CalculateExpressionLevelComplicator levelComplicator;
+    private CalculateExpressionGameComplicator levelComplicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculate_expression_level);
+        setContentView(R.layout.activity_calculate_expression_game);
 
         TextView timerText = findViewById(R.id.timer_text);
         expressionText = findViewById(R.id.expression_text);
         solutionText = findViewById(R.id.solution_text);
         pointsText = findViewById(R.id.points_text);
-        timer = new Timer(60000, timerText) {
+        timer = new Timer(5000, timerText) {
             @Override
             public void finish() {
-                timerText.setText("Time is up!");
+                GameOverFragment fragment = new GameOverFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("score", points);
+
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.game_over_window, fragment);
+                transaction.commit();
             }
         };
         flashScreen = findViewById(R.id.flash_screen);
 
         createExpression();
-        levelComplicator = new CalculateExpressionLevelComplicator(expression);
+        levelComplicator = new CalculateExpressionGameComplicator(expression);
 
         pointsText.setText(String.valueOf(points));
 

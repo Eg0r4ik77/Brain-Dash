@@ -1,8 +1,8 @@
-package com.example.androidgame.gamecontrollers.levelcomlicators;
+package com.example.androidgame.gamecontrollers.gamecomlicators;
 
 import com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame.Expression;
 
-public class CalculateExpressionLevelComplicator extends LevelComplicator {
+public class CalculateExpressionGameComplicator extends GameComplicator {
 
     private final Expression expression;
 
@@ -10,7 +10,7 @@ public class CalculateExpressionLevelComplicator extends LevelComplicator {
     private final int mediumLevelDifficulty = 10;
     private final int hardLevelDifficulty = 30;
 
-    public CalculateExpressionLevelComplicator(Expression expression) {
+    public CalculateExpressionGameComplicator(Expression expression) {
         this.expression = expression;
     }
 

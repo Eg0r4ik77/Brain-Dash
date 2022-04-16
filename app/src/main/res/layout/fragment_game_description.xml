@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/purple"
     android:theme="@style/ThemeOverlay.AndroidGame.FullscreenContainer"
-    tools:context=".mainmenu.games.GameDescriptionFragment">
+    tools:context=".mainmenu.GameDescriptionFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.androidgame.R;
-import com.example.androidgame.mainmenu.games.GameDescriptionFragment;
 
 
 public class GamesMenuFragment extends Fragment {
@@ -31,6 +30,11 @@ public class GamesMenuFragment extends Fragment {
         Button calculateExpressionGameButton = view.findViewById(R.id.calcualte_expression_game);
         calculateExpressionGameButton.setOnClickListener(v -> {
             GameDescriptionFragment fr = new GameDescriptionFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("gameNumber", 1);
+            fr.setArguments(bundle);
+
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.games_content, fr);
             ft.commit();

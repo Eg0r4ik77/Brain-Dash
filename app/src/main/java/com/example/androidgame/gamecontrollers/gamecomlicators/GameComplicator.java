@@ -1,6 +1,6 @@
-package com.example.androidgame.gamecontrollers.levelcomlicators;
+package com.example.androidgame.gamecontrollers.gamecomlicators;
 
-public abstract class LevelComplicator {
+public abstract class GameComplicator {
 
     private int levelDifficulty = 0;
 

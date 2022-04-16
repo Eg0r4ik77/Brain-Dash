@@ -1,22 +1,14 @@
-package com.example.androidgame.mainmenu.games;
-
-import android.annotation.SuppressLint;
+package com.example.androidgame.mainmenu;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,11 +22,13 @@ public class GameDescriptionFragment extends Fragment {
     private Timer timer;
 
     private TextView timerText;
-    private TextView rulesText;
+    private TextView descriptionText;
 
     private Button startButton;
 
     private Intent intent;
+
+    private String[] descriptions = {"Игра1", "Игра2", "Игра3"};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,7 +37,7 @@ public class GameDescriptionFragment extends Fragment {
         intent = new Intent(getContext(), CalculateExpressionGame.class);
 
         timerText = view.findViewById(R.id.transition_timer_text);
-        rulesText = view.findViewById(R.id.rules_text);
+        descriptionText = view.findViewById(R.id.rules_text);
         startButton = view.findViewById(R.id.start_calculate_expression_level);
         timer = new Timer(4000, timerText) {
             @Override
@@ -51,6 +45,8 @@ public class GameDescriptionFragment extends Fragment {
                 startLevel();
             }
         };
+
+        descriptionText.setText(descriptions[this.getArguments().getInt("gameNumber")-1]);
 
         startButton.setOnClickListener(v -> {
             startButton.setClickable(false);
