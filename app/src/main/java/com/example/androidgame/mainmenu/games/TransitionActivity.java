@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.gamemodes;
+package com.example.androidgame.mainmenu.games;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.Timer;
-import com.example.androidgame.mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel.CalculateExpressionLevel;
+import com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame.CalculateExpressionGame;
 
 public class TransitionActivity extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class TransitionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transition);
 
-        intent = new Intent(this, CalculateExpressionLevel.class);
+        intent = new Intent(this, CalculateExpressionGame.class);
 
         timerText = findViewById(R.id.transition_timer_text);
         rulesText = findViewById(R.id.rules_text);
@@ -40,9 +40,6 @@ public class TransitionActivity extends AppCompatActivity {
         };
 
         Intent intent1 = getIntent();
-        String rules = intent1.getStringExtra("game rules");
-
-        rulesText.setText(rules);
 
         startButton.setOnClickListener(v -> {
             startButton.setClickable(false);

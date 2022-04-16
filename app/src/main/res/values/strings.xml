@@ -14,11 +14,13 @@
     <string name="number_button_9">9</string>
     <string name="number_button_0">0</string>
     <string name="clean_button">C</string>
-    <string name="attention_mode">Внимание</string>
-    <string name="memory_mode">Память</string>
-    <string name="calculations_mode">Вычисления</string>
     <string name="calculate_expression_game">Посчитать пример</string>
     <string name="moneybox_game">в какой копилке больше денег?</string>
     <string name="plus_or_minus_game">Плюс или минус?</string>
     <string name="start_game">Начать игру!</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="calculate_expression">Посчитай пример</string>
+    <string name="schulte_table">Таблица Шульте</string>
+    <string name="tiles">Плитки</string>
 </resources>

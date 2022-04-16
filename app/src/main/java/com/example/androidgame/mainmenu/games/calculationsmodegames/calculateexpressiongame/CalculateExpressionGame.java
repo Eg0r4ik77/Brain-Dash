@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel;
+package com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,7 @@ import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.levelcomlicators.CalculateExpressionLevelComplicator;
 import com.example.androidgame.gamecontrollers.Timer;
 
-public class CalculateExpressionLevel extends AppCompatActivity {
+public class CalculateExpressionGame extends AppCompatActivity {
 
     //рефакторинг
     //активити в конце игры

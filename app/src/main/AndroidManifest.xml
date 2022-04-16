@@ -10,16 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGame" >
         <activity
-            android:name=".mainmenu.gamemodes.TransitionActivity"
+            android:name=".mainmenu.games.TransitionActivity"
             android:exported="false" />
         <activity
-            android:name=".mainmenu.gamemodes.calculationsmodegames.CalculationsModeGamesMenu"
-            android:exported="false" />
-        <activity
-            android:name=".mainmenu.gamemodes.GameModesMenu"
-            android:exported="false" />
-        <activity
-            android:name=".mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel.CalculateExpressionLevel"
+            android:name=".mainmenu.games.calculationsmodegames.calculateexpressiongame.CalculateExpressionGame"
             android:exported="false" />
         <activity
             android:name=".mainmenu.MainMenu"

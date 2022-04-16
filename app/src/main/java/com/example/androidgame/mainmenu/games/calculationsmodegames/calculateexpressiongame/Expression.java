@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.gamemodes.calculationsmodegames.calculateexpressionlevel;
+package com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,13 +1,11 @@
 package com.example.androidgame.mainmenu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.androidgame.mainmenu.gamemodes.GameModesMenu;
 import com.example.androidgame.R;
 
 public class MainMenu extends AppCompatActivity {
@@ -21,13 +19,10 @@ public class MainMenu extends AppCompatActivity {
 
         trainingButton = findViewById(R.id.training_button);
         trainingButton.setOnClickListener(v -> {
-            try{
-                Intent intent = new Intent(this, GameModesMenu.class);
-                startActivity(intent);
-                finish();
-            }catch (Exception exception){
-                Toast.makeText(getBaseContext(), "Ошибка", Toast.LENGTH_SHORT).show();
-            }
+            GamesMenuFragment fr = new GamesMenuFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.games_menu, fr);
+            ft.commit();
         });
     }
 }
