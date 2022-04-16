@@ -21,7 +21,7 @@ public class MainMenu extends AppCompatActivity {
         trainingButton.setOnClickListener(v -> {
             GamesMenuFragment fr = new GamesMenuFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.games_menu, fr);
+            ft.replace(R.id.games_content, fr);
             ft.commit();
         });
     }
