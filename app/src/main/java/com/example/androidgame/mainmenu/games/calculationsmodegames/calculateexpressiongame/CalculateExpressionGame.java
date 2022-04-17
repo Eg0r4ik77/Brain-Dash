@@ -16,10 +16,6 @@ import com.example.androidgame.gamecontrollers.Timer;
 
 public class CalculateExpressionGame extends AppCompatActivity {
 
-    //рефакторинг
-    //активити в конце игры
-    //рекорд очков
-
     private TextView expressionText;
     private TextView solutionText;
     private TextView pointsText;
@@ -28,7 +24,7 @@ public class CalculateExpressionGame extends AppCompatActivity {
     private Timer timer;
     private LinearLayout flashScreen;
 
-    private int points;
+    private int score;
 
     private Expression expression;
 
@@ -46,26 +42,28 @@ public class CalculateExpressionGame extends AppCompatActivity {
         expressionText = findViewById(R.id.expression_text);
         solutionText = findViewById(R.id.solution_text);
         pointsText = findViewById(R.id.points_text);
-        timer = new Timer(5000, timerText) {
+        flashScreen = findViewById(R.id.flash_screen);
+
+        timer = new Timer(10000, timerText) {
             @Override
             public void finish() {
                 GameOverFragment fragment = new GameOverFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                 Bundle bundle = new Bundle();
-                bundle.putInt("score", points);
+                bundle.putInt("score", score);
 
                 fragment.setArguments(bundle);
                 transaction.replace(R.id.game_over_window, fragment);
                 transaction.commit();
             }
         };
-        flashScreen = findViewById(R.id.flash_screen);
+
 
         createExpression();
         levelComplicator = new CalculateExpressionGameComplicator(expression);
 
-        pointsText.setText(String.valueOf(points));
+        pointsText.setText(String.valueOf(score));
 
         Button[] number_buttons = {
                 findViewById(R.id.button_0),
@@ -97,18 +95,17 @@ public class CalculateExpressionGame extends AppCompatActivity {
                 if (checkAnswer(expression, Integer.parseInt(solutionText.getText().toString()))){
                     flashScreen.setBackgroundResource(R.drawable.right_answer_anim);
                     levelComplicator.complicateLevel();
-                    points += levelPoints;
+                    score += levelPoints;
                 }else{
-
-                    points  = points < levelPoints ? 0 : points - levelPoints;
+                    score = score < levelPoints ? 0 : score - levelPoints;
                     flashScreen.setBackgroundResource(R.drawable.wrong_answer_anim);
                 }
             }catch (Exception exception){
-                points = points < levelPoints ? 0 : points - levelPoints;
+                score = score < levelPoints ? 0 : score - levelPoints;
                 flashScreen.setBackgroundResource(R.drawable.wrong_answer_anim);
             }
-            pointsText.setText(String.valueOf(points));
-            updateLevel();
+            pointsText.setText(String.valueOf(score));
+            updateGame();
         });
 
     }
@@ -118,9 +115,9 @@ public class CalculateExpressionGame extends AppCompatActivity {
         currentSolutionText = "";
     }
 
-    private void updateLevel(){
+    private void updateGame(){
         screenAnimationPlay();
-        updateExpression();
+        generateExpression();
         resetSolution();
     }
 
@@ -134,11 +131,11 @@ public class CalculateExpressionGame extends AppCompatActivity {
     private void createExpression(){
         expression = new Expression();
         expression.setOperandsUpperBounds(10, 10);
-        updateExpression();
+        generateExpression();
     }
 
-    private void updateExpression(){
-        expression.update();
+    private void generateExpression(){
+        expression.generate();
         presentExpression();
     }
 

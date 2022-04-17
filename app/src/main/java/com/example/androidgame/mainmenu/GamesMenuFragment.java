@@ -16,11 +16,9 @@ import com.example.androidgame.R;
 
 public class GamesMenuFragment extends Fragment {
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
     }
 
     @Override
@@ -32,7 +30,7 @@ public class GamesMenuFragment extends Fragment {
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putInt("gameNumber", 1);
+            bundle.putInt("gameNumber", 3);
             fr.setArguments(bundle);
 
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();

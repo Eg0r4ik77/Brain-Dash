@@ -54,7 +54,7 @@ public class Expression {
         secondOperand.setUpperBound(secondUpperBound);
     }
 
-    public void update(){
+    public void generate(){
         Random randomValue = new Random();
         firstOperand.setValue(Math.abs(randomValue.nextInt()% firstOperand.getUpperBound()));
         secondOperand.setValue(Math.abs(randomValue.nextInt()% secondOperand.getUpperBound()));
