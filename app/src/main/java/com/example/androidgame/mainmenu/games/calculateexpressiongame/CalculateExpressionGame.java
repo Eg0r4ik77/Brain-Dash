@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame;
+package com.example.androidgame.mainmenu.games.calculateexpressiongame;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.gamecomlicators.CalculateExpressionGameComplicator;
 import com.example.androidgame.gamecontrollers.Timer;
+import com.example.androidgame.mainmenu.games.GameOverFragment;
 
 public class CalculateExpressionGame extends AppCompatActivity {
 

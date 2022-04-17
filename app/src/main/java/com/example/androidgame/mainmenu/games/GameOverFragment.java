@@ -1,4 +1,4 @@
-package com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame;
+package com.example.androidgame.mainmenu.games;
 
 import android.content.Intent;
 import android.os.Bundle;

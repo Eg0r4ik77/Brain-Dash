@@ -26,6 +26,20 @@ public class GamesMenuFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_games_menu, container, false);
 
         Button calculateExpressionGameButton = view.findViewById(R.id.calcualte_expression_game);
+        Button schulteTableGameButton = view.findViewById(R.id.schulte_table_game);
+
+        schulteTableGameButton.setOnClickListener(v ->{
+            GameDescriptionFragment fr = new GameDescriptionFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("gameNumber", 1);
+            fr.setArguments(bundle);
+
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.games_content, fr);
+            ft.commit();
+        });
+
         calculateExpressionGameButton.setOnClickListener(v -> {
             GameDescriptionFragment fr = new GameDescriptionFragment();
 

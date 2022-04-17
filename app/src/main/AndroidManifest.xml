@@ -10,7 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGame" >
         <activity
-            android:name=".mainmenu.games.calculationsmodegames.calculateexpressiongame.CalculateExpressionGame"
+            android:name=".mainmenu.games.shultetablegame.SchulteTableGame"
+            android:exported="false" />
+        <activity
+            android:name=".mainmenu.games.calculateexpressiongame.CalculateExpressionGame"
             android:exported="false" />
         <activity
             android:name=".mainmenu.MainMenu"

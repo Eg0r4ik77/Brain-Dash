@@ -1,6 +1,6 @@
 package com.example.androidgame.gamecontrollers.gamecomlicators;
 
-import com.example.androidgame.mainmenu.games.calculationsmodegames.calculateexpressiongame.Expression;
+import com.example.androidgame.mainmenu.games.calculateexpressiongame.Expression;
 
 public class CalculateExpressionGameComplicator extends GameComplicator {
 

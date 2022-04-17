@@ -14,18 +14,19 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="60dp"
+            android:layout_centerHorizontal="true"
             android:layout_margin="60dp"
-            android:layout_centerHorizontal="true">
+            android:layout_marginHorizontal="60dp"
+            android:orientation="vertical">
+
             <TextView
-                android:id="@+id/rules_text"
+                android:id="@+id/description_text"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:textSize="20sp"
-                android:textAlignment="center"
+                android:background="@color/white"
                 android:paddingTop="50dp"
-                android:background="@color/white"/>
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/start_calculate_expression_level"
@@ -34,17 +35,17 @@
                 android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="300dp"
                 android:backgroundTint="@color/white"
-                android:textColor="@color/cardview_dark_background"
-                android:text="@string/start_game"/>
+                android:text="@string/start_game"
+                android:textColor="@color/cardview_dark_background" />
 
             <TextView
                 android:id="@+id/transition_timer_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:textColor="@color/white"
                 android:textAlignment="center"
-                android:textSize="50sp"/>
+                android:textColor="@color/white"
+                android:textSize="50sp" />
 
         </RelativeLayout>
     </RelativeLayout>
