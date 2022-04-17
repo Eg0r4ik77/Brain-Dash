@@ -28,7 +28,10 @@ public class GameDescriptionFragment extends Fragment {
 
     private Intent intent;
 
-    private String[] descriptions = {"Игра1", "Игра2", "Игра3"};
+    private String[] descriptions = {
+            "Игра1",
+            "Игра2",
+            "Решите как можно больше примеров за 60 секунд"};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
