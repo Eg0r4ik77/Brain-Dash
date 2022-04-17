@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/timer_text"
+            android:id="@+id/timer3_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="120dp"
@@ -24,7 +24,7 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/points_text"
+            android:id="@+id/score3_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="120dp"
@@ -161,7 +161,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/game_over_window"
+        android:id="@+id/game3_over_window"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

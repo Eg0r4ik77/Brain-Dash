@@ -6,7 +6,6 @@ public class CalculateExpressionGameComplicator extends GameComplicator {
 
     private final Expression expression;
 
-    private final int easyLevelDifficulty = 0;
     private final int mediumLevelDifficulty = 10;
     private final int hardLevelDifficulty = 30;
 
@@ -15,9 +14,9 @@ public class CalculateExpressionGameComplicator extends GameComplicator {
     }
 
     @Override
-    public void complicateLevel() {
-        incrementLevelDifficulty();
-        switch (getLevelDifficulty()){
+    public void complicateGame() {
+        incrementGameDifficulty();
+        switch (getGameDifficulty()){
             case mediumLevelDifficulty:
                 expression.setOperandsUpperBounds(100, 10);
                 break;

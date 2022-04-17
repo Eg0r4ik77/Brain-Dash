@@ -1,7 +1,10 @@
 package com.example.androidgame.mainmenu.games.shultetablegame;
 
+import android.graphics.Color;
+import android.text.BoringLayout;
 import android.text.Layout;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -10,6 +13,10 @@ import android.widget.TableRow;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.androidgame.gamecontrollers.gamecomlicators.GameComplicator;
+import com.example.androidgame.gamecontrollers.gamecomlicators.SchulteTableGameComplicator;
+import com.google.android.material.tabs.TabLayout;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,14 +24,12 @@ import java.util.Random;
 
 public class SchulteTable {
 
-    private Button[][] table;
+    private int[][] table;
+    private int size = 2;
 
-    private int size;
-
-    public void generate(TableLayout layout){
-        size = (int)(Math.random()*2+2.9);
+    public void generate(){
         int number = 0;
-        table = new Button[size][size];
+        table = new int[size][size];
 
         List<Integer> solution = new ArrayList<>();
         for (int i = 1; i <= size*size; i++) {
@@ -33,14 +38,14 @@ public class SchulteTable {
         Collections.shuffle(solution);
 
         for (int i=0; i < size; i++) {
-            TableRow row = new TableRow(layout.getContext());
             for (int j=0; j < size; j++) {
-                table[i][j] = new Button(layout.getContext());
-
-                table[i][j].setText(String.valueOf(solution.get(number++)));
-                row.addView(table[i][j]);
+                table[i][j] = solution.get(number++);
             }
-            layout.addView(row);
         }
     }
+
+    public void setSize(int size){
+        this.size = size;
+    }
+    public int[][] getTable(){return table;}
 }

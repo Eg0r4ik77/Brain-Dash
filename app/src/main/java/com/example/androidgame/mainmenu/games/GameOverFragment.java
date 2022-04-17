@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.androidgame.R;
 import com.example.androidgame.mainmenu.GameDescriptionFragment;
-import com.example.androidgame.mainmenu.GamesMenuFragment;
 import com.example.androidgame.mainmenu.MainMenu;
 
 public class GameOverFragment extends Fragment {
@@ -45,7 +44,7 @@ public class GameOverFragment extends Fragment {
         restartButton.setOnClickListener(v -> {
             GameDescriptionFragment fragment = new GameDescriptionFragment();
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.game_over_window, fragment);
+            transaction.replace(R.id.game3_over_window, fragment);
             transaction.commit();
         });
 

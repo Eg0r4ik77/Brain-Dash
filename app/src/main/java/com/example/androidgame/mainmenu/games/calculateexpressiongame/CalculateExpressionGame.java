@@ -19,7 +19,7 @@ public class CalculateExpressionGame extends AppCompatActivity {
 
     private TextView expressionText;
     private TextView solutionText;
-    private TextView pointsText;
+    private TextView scoreText;
     private String currentSolutionText = "";
 
     private Timer timer;
@@ -30,19 +30,19 @@ public class CalculateExpressionGame extends AppCompatActivity {
     private Expression expression;
 
     private final int[] expressionDifficulties = {18, 108, 198};
-    private final int[] levelPoints = {20, 50, 100};
+    private final int[] gamePoints = {20, 50, 100};
 
-    private CalculateExpressionGameComplicator levelComplicator;
+    private CalculateExpressionGameComplicator gameComplicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculate_expression_game);
 
-        TextView timerText = findViewById(R.id.timer_text);
+        TextView timerText = findViewById(R.id.timer3_text);
         expressionText = findViewById(R.id.expression_text);
         solutionText = findViewById(R.id.solution_text);
-        pointsText = findViewById(R.id.points_text);
+        scoreText = findViewById(R.id.score3_text);
         flashScreen = findViewById(R.id.flash_screen);
 
         timer = new Timer(10000, timerText) {
@@ -55,16 +55,16 @@ public class CalculateExpressionGame extends AppCompatActivity {
                 bundle.putInt("score", score);
 
                 fragment.setArguments(bundle);
-                transaction.replace(R.id.game_over_window, fragment);
+                transaction.replace(R.id.game3_over_window, fragment);
                 transaction.commit();
             }
         };
 
 
         createExpression();
-        levelComplicator = new CalculateExpressionGameComplicator(expression);
+        gameComplicator = new CalculateExpressionGameComplicator(expression);
 
-        pointsText.setText(String.valueOf(score));
+        scoreText.setText(String.valueOf(score));
 
         Button[] number_buttons = {
                 findViewById(R.id.button_0),
@@ -91,11 +91,11 @@ public class CalculateExpressionGame extends AppCompatActivity {
 
         Button okButton = findViewById(R.id.ok_button);
         okButton.setOnClickListener(v -> {
-            int levelPoints = getLevelPoints();
+            int levelPoints = getGamePoints();
             try {
                 if (checkAnswer(expression, Integer.parseInt(solutionText.getText().toString()))){
                     flashScreen.setBackgroundResource(R.drawable.right_answer_anim);
-                    levelComplicator.complicateLevel();
+                    gameComplicator.complicateGame();
                     score += levelPoints;
                 }else{
                     score = score < levelPoints ? 0 : score - levelPoints;
@@ -105,7 +105,7 @@ public class CalculateExpressionGame extends AppCompatActivity {
                 score = score < levelPoints ? 0 : score - levelPoints;
                 flashScreen.setBackgroundResource(R.drawable.wrong_answer_anim);
             }
-            pointsText.setText(String.valueOf(score));
+            scoreText.setText(String.valueOf(score));
             updateGame();
         });
 
@@ -147,12 +147,12 @@ public class CalculateExpressionGame extends AppCompatActivity {
         expressionText.setText(expression.toString());
     }
 
-    private int getLevelPoints(){
+    private int getGamePoints(){
         int solution = expression.getSolution();
 
         for(int i = 0; i< expressionDifficulties.length; i++){
             if(solution <= expressionDifficulties[i]){
-                return levelPoints[i];
+                return gamePoints[i];
             }
         }
         return 0;
