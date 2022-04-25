@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.androidgame.R;
-import com.example.androidgame.gamecontrollers.gamecomlicators.CalculateExpressionGameComplicator;
+import com.example.androidgame.gamecontrollers.gamecomplicators.CalculateExpressionGameComplicator;
 import com.example.androidgame.gamecontrollers.Timer;
 import com.example.androidgame.mainmenu.games.GameOverFragment;
 

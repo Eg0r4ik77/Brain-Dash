@@ -29,13 +29,13 @@
                 android:textAllCaps="false"/>
 
             <Button
-                android:id="@+id/tiles_game"
+                android:id="@+id/repeat_drawing_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginBottom="5dp"
                 android:backgroundTint="@color/purple_2"
-                android:text="@string/tiles"
+                android:text="@string/drawing"
                 android:textAllCaps="false"/>
 
             <Button

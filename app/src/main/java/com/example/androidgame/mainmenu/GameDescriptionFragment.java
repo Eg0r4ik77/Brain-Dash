@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.Timer;
 import com.example.androidgame.mainmenu.games.calculateexpressiongame.CalculateExpressionGame;
+import com.example.androidgame.mainmenu.games.repeatdrawinggame.RepeatDrawingGame;
 import com.example.androidgame.mainmenu.games.shultetablegame.SchulteTableGame;
 
 public class GameDescriptionFragment extends Fragment {
@@ -44,6 +45,7 @@ public class GameDescriptionFragment extends Fragment {
                 intent = new Intent(getContext(), SchulteTableGame.class);
                 break;
             case 2:
+                intent = new Intent(getContext(), RepeatDrawingGame.class);
                 break;
             case 3:
                 intent = new Intent(getContext(), CalculateExpressionGame.class);

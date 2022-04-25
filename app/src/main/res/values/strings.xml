@@ -22,7 +22,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="calculate_expression">Посчитай пример</string>
     <string name="schulte_table">Таблица Шульте</string>
-    <string name="tiles">Плитки</string>
+    <string name="drawing">Повтори рисунок</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="restart">попробовать снова</string>

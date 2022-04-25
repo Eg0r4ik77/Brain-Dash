@@ -1,4 +1,4 @@
-package com.example.androidgame.gamecontrollers.gamecomlicators;
+package com.example.androidgame.gamecontrollers.gamecomplicators;
 
 public abstract class GameComplicator {
 

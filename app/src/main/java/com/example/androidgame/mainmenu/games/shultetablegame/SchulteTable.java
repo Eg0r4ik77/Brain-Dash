@@ -1,26 +1,8 @@
 package com.example.androidgame.mainmenu.games.shultetablegame;
 
-import android.graphics.Color;
-import android.text.BoringLayout;
-import android.text.Layout;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import com.example.androidgame.gamecontrollers.gamecomlicators.GameComplicator;
-import com.example.androidgame.gamecontrollers.gamecomlicators.SchulteTableGameComplicator;
-import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class SchulteTable {
 

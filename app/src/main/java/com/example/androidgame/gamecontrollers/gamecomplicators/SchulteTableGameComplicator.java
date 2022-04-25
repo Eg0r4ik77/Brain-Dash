@@ -1,4 +1,4 @@
-package com.example.androidgame.gamecontrollers.gamecomlicators;
+package com.example.androidgame.gamecontrollers.gamecomplicators;
 
 import com.example.androidgame.mainmenu.games.shultetablegame.SchulteTable;
 

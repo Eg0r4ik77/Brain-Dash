@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.Timer;
-import com.example.androidgame.gamecontrollers.gamecomlicators.SchulteTableGameComplicator;
+import com.example.androidgame.gamecontrollers.gamecomplicators.SchulteTableGameComplicator;
 import com.example.androidgame.mainmenu.games.GameOverFragment;
 
 import android.graphics.Color;

@@ -27,12 +27,25 @@ public class GamesMenuFragment extends Fragment {
 
         Button calculateExpressionGameButton = view.findViewById(R.id.calcualte_expression_game);
         Button schulteTableGameButton = view.findViewById(R.id.schulte_table_game);
+        Button repeatDrawingGameButton = view.findViewById(R.id.repeat_drawing_game);
 
         schulteTableGameButton.setOnClickListener(v ->{
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
             bundle.putInt("gameNumber", 1);
+            fr.setArguments(bundle);
+
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.games_content, fr);
+            ft.commit();
+        });
+
+        repeatDrawingGameButton.setOnClickListener(v -> {
+            GameDescriptionFragment fr = new GameDescriptionFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("gameNumber", 2);
             fr.setArguments(bundle);
 
             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
