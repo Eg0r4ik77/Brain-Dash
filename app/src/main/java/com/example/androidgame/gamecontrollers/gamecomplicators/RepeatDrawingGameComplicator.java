@@ -2,11 +2,11 @@ package com.example.androidgame.gamecontrollers.gamecomplicators;
 
 import com.example.androidgame.mainmenu.games.repeatdrawinggame.Drawing;
 
-public class RepeatDrawingGameComplcator extends GameComplicator{
+public class RepeatDrawingGameComplicator extends GameComplicator{
 
     private Drawing drawing;
 
-    public RepeatDrawingGameComplcator(Drawing drawing){
+    public RepeatDrawingGameComplicator(Drawing drawing){
         this.drawing = drawing;
     }
 

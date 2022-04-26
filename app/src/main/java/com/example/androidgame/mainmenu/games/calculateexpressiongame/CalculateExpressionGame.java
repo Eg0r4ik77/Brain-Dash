@@ -43,7 +43,7 @@ public class CalculateExpressionGame extends AppCompatActivity {
         expressionText = findViewById(R.id.expression_text);
         solutionText = findViewById(R.id.solution_text);
         scoreText = findViewById(R.id.score3_text);
-        flashScreen = findViewById(R.id.flash_screen);
+
 
         timer = new Timer(10000, timerText) {
             @Override
@@ -55,7 +55,7 @@ public class CalculateExpressionGame extends AppCompatActivity {
                 bundle.putInt("score", score);
 
                 fragment.setArguments(bundle);
-                transaction.replace(R.id.game3_over_window, fragment);
+                //transaction.replace(R.id.game3_over_window, fragment);
                 transaction.commit();
             }
         };

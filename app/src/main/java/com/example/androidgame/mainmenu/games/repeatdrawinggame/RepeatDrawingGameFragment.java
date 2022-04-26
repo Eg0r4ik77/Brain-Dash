@@ -1,38 +1,32 @@
 package com.example.androidgame.mainmenu.games.repeatdrawinggame;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.example.androidgame.R;
-
-import com.example.androidgame.gamecontrollers.Timer;
-import com.example.androidgame.gamecontrollers.gamecomplicators.GameComplicator;
-import com.example.androidgame.gamecontrollers.gamecomplicators.RepeatDrawingGameComplcator;
-import com.example.androidgame.mainmenu.games.GameOverFragment;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
-import java.util.TimerTask;
 
-public class RepeatDrawingGame extends AppCompatActivity {
+import com.example.androidgame.R;
+import com.example.androidgame.gamecontrollers.gamecomplicators.GameComplicator;
+import com.example.androidgame.gamecontrollers.gamecomplicators.RepeatDrawingGameComplicator;
+import com.example.androidgame.mainmenu.games.GamePanel;
+
+
+public class RepeatDrawingGameFragment extends Fragment {
 
     private Drawing drawing = new Drawing();
     private TableLayout drawingLayout;
     private boolean[][] drawingFlags;
     private Button[][] tiles;
 
-    Timer timer;
-
-    private TextView timerText;
-    private TextView scoreText;
-
-    private int score;
 
     private int selectedTilesCount;
     private int correctlySelectedTilesCount;
@@ -40,44 +34,35 @@ public class RepeatDrawingGame extends AppCompatActivity {
     private GameComplicator gameComplicator;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repeat_drawing_game);
 
-        gameComplicator = new RepeatDrawingGameComplcator(drawing);
-        scoreText = findViewById(R.id.score2_text);
-        timerText = findViewById(R.id.timer2_text);
-        timer = new Timer(20000, timerText) {
-            @Override
-            public void finish() {
-                GameOverFragment fragment = new GameOverFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    }
 
-                Bundle bundle = new Bundle();
-                bundle.putInt("score", score);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_repeat_drawing_game, container, false);
 
-                fragment.setArguments(bundle);
-                transaction.replace(R.id.game2_over_window, fragment);
-                transaction.commit();
-            }
-        };
-        timer.run();
-        drawingLayout = findViewById(R.id.drawing_layout);
+        gameComplicator = new RepeatDrawingGameComplicator(drawing);
+        drawingLayout = view.findViewById(R.id.drawing_layout);
+
         play();
+
+        return view;
     }
 
     private void play(){
-        scoreText.setText(String.valueOf(score));
         drawing.create();
         drawingFlags = drawing.getDrawing();
         selectedTilesCount = correctlySelectedTilesCount = 0;
         showDrawing();
 
-        timer.pause();
+        ((GamePanel)getActivity()).setTimerPaused(true);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                timer.run();
+                ((GamePanel)getActivity()).setTimerPaused(false);
                 clearDrawing();
             }
         },2500);
@@ -86,7 +71,7 @@ public class RepeatDrawingGame extends AppCompatActivity {
     private void clearDrawing(){
         for(int i = 0; i< tiles.length; i++){
             for(int j =0; j< tiles.length; j++){
-               tiles[i][j].setBackgroundColor(Color.WHITE);
+                tiles[i][j].setBackgroundColor(Color.WHITE);
             }
         }
         setButtonsClickable(true);
@@ -134,14 +119,14 @@ public class RepeatDrawingGame extends AppCompatActivity {
 
                     if(correctlySelectedTilesCount == drawing.drawingTilesCount
                             && correctlySelectedTilesCount == selectedTilesCount){
-                            score += getGamePoints();
-                            gameComplicator.complicateGame();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    play();
-                                }
-                            },500);
+                        ((GamePanel)getActivity()).updateScore();
+                        gameComplicator.complicateGame();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                play();
+                            }
+                        },500);
                     }
                 });
 
@@ -152,7 +137,8 @@ public class RepeatDrawingGame extends AppCompatActivity {
         setButtonsClickable(false);
     }
 
-    private int getGamePoints(){
+    public int getGamePoints(){
         return 10 * correctlySelectedTilesCount;
     }
+
 }

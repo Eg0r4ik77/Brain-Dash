@@ -1,67 +1,53 @@
 package com.example.androidgame.mainmenu.games.shultetablegame;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.example.androidgame.R;
-import com.example.androidgame.gamecontrollers.Timer;
-import com.example.androidgame.gamecontrollers.gamecomplicators.SchulteTableGameComplicator;
-import com.example.androidgame.mainmenu.games.GameOverFragment;
-
 import android.graphics.Color;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
-public class SchulteTableGame extends AppCompatActivity {
+import com.example.androidgame.R;
+import com.example.androidgame.gamecontrollers.gamecomplicators.SchulteTableGameComplicator;
+import com.example.androidgame.mainmenu.games.GamePanel;
+
+
+public class SchulteTableGameFragment extends Fragment {
+
 
     private SchulteTable schulteTable;
     private TableLayout tableLayout;
     private int currentNumber;
 
-    private int score;
     private final int[] gamePoints = {20, 50, 100};
 
     private SchulteTableGameComplicator gameComplicator;
-    private Timer timer;
 
     private Button[][] buttons;
 
-    private TextView timerText;
-    private TextView scoreText;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view =  inflater.inflate(R.layout.fragment_schulte_table_game, container, false);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_schulte_table_game);
-
-        timerText = findViewById(R.id.timer1_text);
-        scoreText = findViewById(R.id.score1_text);
-
-        tableLayout = findViewById(R.id.schulte_table_place);
+        tableLayout = view.findViewById(R.id.schulte_table_layout);
 
         schulteTable = new SchulteTable();
         gameComplicator = new SchulteTableGameComplicator(schulteTable);
 
-        timer = new Timer(10000, timerText) {
-            @Override
-            public void finish() {
-                GameOverFragment fragment = new GameOverFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                Bundle bundle = new Bundle();
-                bundle.putInt("score", score);
-
-                fragment.setArguments(bundle);
-                transaction.replace(R.id.game1_over_window, fragment);
-                transaction.commit();
-            }
-        };
-        timer.run();
         create();
+
+        return view;
     }
 
     private void applyChoice(Button button){
@@ -71,8 +57,8 @@ public class SchulteTableGame extends AppCompatActivity {
             button.setBackgroundColor(Color.GREEN);
         }
         if(currentNumber == buttons.length*buttons.length){
-            score += getGamePoints();
-            scoreText.setText(String.valueOf(score));
+            ((GamePanel)getActivity()).updateScore();
+
             tableLayout.removeAllViews();
             gameComplicator.complicateGame();
             create();
@@ -101,7 +87,7 @@ public class SchulteTableGame extends AppCompatActivity {
         }
     }
 
-    private int getGamePoints(){
+    public int getGamePoints(){
         switch (buttons.length){
             case 2:
                 return gamePoints[0];

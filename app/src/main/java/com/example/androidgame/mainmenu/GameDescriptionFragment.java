@@ -15,9 +15,7 @@ import android.widget.Toast;
 
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.Timer;
-import com.example.androidgame.mainmenu.games.calculateexpressiongame.CalculateExpressionGame;
-import com.example.androidgame.mainmenu.games.repeatdrawinggame.RepeatDrawingGame;
-import com.example.androidgame.mainmenu.games.shultetablegame.SchulteTableGame;
+import com.example.androidgame.mainmenu.games.GamePanel;
 
 public class GameDescriptionFragment extends Fragment {
 
@@ -28,8 +26,6 @@ public class GameDescriptionFragment extends Fragment {
 
     private Button startButton;
 
-    private Intent intent;
-
     private final String[] descriptions = {
             "Игра1",
             "Игра2",
@@ -39,20 +35,6 @@ public class GameDescriptionFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_description, container, false);
-
-        switch (this.getArguments().getInt("gameNumber")){
-            case 1:
-                intent = new Intent(getContext(), SchulteTableGame.class);
-                break;
-            case 2:
-                intent = new Intent(getContext(), RepeatDrawingGame.class);
-                break;
-            case 3:
-                intent = new Intent(getContext(), CalculateExpressionGame.class);
-                break;
-            default:
-                break;
-        }
 
         timerText = view.findViewById(R.id.transition_timer_text);
         descriptionText = view.findViewById(R.id.description_text);
@@ -81,6 +63,8 @@ public class GameDescriptionFragment extends Fragment {
 
     public void startLevel(){
         try{
+            Intent intent = new Intent(getContext(), GamePanel.class);
+            intent.putExtra("gameNumber", this.getArguments().getInt("gameNumber"));
             startActivity(intent);
             getActivity().finish();
         }catch (Exception exception){

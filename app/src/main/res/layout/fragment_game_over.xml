@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/score_text"
+            android:id="@+id/result_score_text"
             android:layout_width="202dp"
             android:layout_height="51dp"
             android:layout_marginTop="257dp"

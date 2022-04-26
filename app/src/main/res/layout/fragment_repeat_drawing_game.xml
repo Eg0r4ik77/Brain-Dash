@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/purple"
+    android:layout_gravity="center"
+    tools:context=".mainmenu.games.repeatdrawinggame.RepeatDrawingGameFragment">
+
+    <TableLayout
+        android:id="@+id/drawing_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</FrameLayout>
