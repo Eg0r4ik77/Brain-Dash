@@ -3,12 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_background"
     tools:context=".mainmenu.GamesMenuFragment">
 
     <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/games"
             android:layout_width="221dp"
@@ -18,40 +20,50 @@
             android:layout_marginBottom="230dp"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                android:textColor="@color/white"
+                app:cornerRadius="30dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/schulte_table_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:textSize="20sp"
-                android:fontFamily="@font/button_font"
                 android:backgroundTint="@color/purple_2"
+                android:fontFamily="@font/button_font"
                 android:text="@string/schulte_table"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                 />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                android:textColor="@color/white"
+                app:cornerRadius="30dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/repeat_drawing_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:fontFamily="@font/button_font"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/purple_2"
+                android:fontFamily="@font/button_font"
                 android:text="@string/drawing"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:textSize="20sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
+                android:textColor="@color/white"
+                app:cornerRadius="30dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/calcualte_expression_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="20sp"
-                android:fontFamily="@font/button_font"
                 android:backgroundTint="@color/purple_2"
+                android:fontFamily="@font/button_font"
                 android:text="@string/calculate_expression"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:textSize="20sp" />
         </LinearLayout>
     </RelativeLayout>
 
