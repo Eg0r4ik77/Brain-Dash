@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
+            android:fontFamily="@font/button_font"
+            android:textSize="20sp"
             android:backgroundTint="@color/purple_2"
             android:text="@string/battle" />
 
@@ -31,6 +33,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/button_font"
+            android:textSize="20sp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/purple_2"
             android:text="@string/training" />
@@ -39,7 +43,9 @@
             android:id="@+id/warm_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:layout_weight="1"
+            android:fontFamily="@font/button_font"
             android:backgroundTint="@color/purple_2"
             android:text="@string/warm_up"
             />

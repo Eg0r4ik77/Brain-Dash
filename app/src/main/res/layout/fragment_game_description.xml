@@ -26,7 +26,9 @@
                 android:background="@color/white"
                 android:paddingTop="50dp"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:fontFamily="@font/button_font"
+                />
 
             <Button
                 android:id="@+id/start_calculate_expression_level"
@@ -36,6 +38,8 @@
                 android:layout_marginTop="300dp"
                 android:backgroundTint="@color/white"
                 android:text="@string/start_game"
+                android:textSize="20sp"
+                android:fontFamily="@font/button_font"
                 android:textColor="@color/cardview_dark_background" />
 
             <TextView
@@ -44,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:textAlignment="center"
+                android:fontFamily="@font/button_font"
                 android:textColor="@color/white"
                 android:textSize="50sp" />
 
