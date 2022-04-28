@@ -58,11 +58,14 @@ public class RepeatDrawingGameFragment extends Fragment {
         selectedTilesCount = correctlySelectedTilesCount = 0;
         showDrawing();
 
-        ((GamePanel)getActivity()).setTimerPaused(true);
+//        if(getActivity() instanceof GamePanel){
+//            ((GamePanel) getActivity()).setTimerPaused(true);
+//        }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ((GamePanel)getActivity()).setTimerPaused(false);
+                //((GamePanel)getActivity()).setTimerPaused(false);
                 clearDrawing();
             }
         },2500);

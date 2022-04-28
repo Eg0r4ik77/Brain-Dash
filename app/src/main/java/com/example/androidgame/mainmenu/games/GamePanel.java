@@ -6,8 +6,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.androidgame.R;
@@ -21,7 +23,8 @@ public class GamePanel extends AppCompatActivity {
     private TextView scoreText;
     private TextView timerText;
     private FrameLayout gameLayout;
-    private Timer timer;
+    private ProgressBar progressBar;
+    public Timer timer;
     private int score;
 
     private Fragment fragment;
@@ -35,22 +38,29 @@ public class GamePanel extends AppCompatActivity {
         getSupportActionBar().hide();
 
         //flashScreen = findViewById(R.id.flash_screen);
-
+        progressBar = findViewById(R.id.progress_bar);
         scoreText = findViewById(R.id.score_text);
         timerText = findViewById(R.id.timer_text);
         gameLayout = findViewById(R.id.game_fragment);
-        timer = new Timer(10000, timerText) {
+        timer = new Timer(60000, timerText, progressBar) {
             @Override
             public void finish() {
-                GameOverFragment fragment = new GameOverFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                progressBar.setProgress(100);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
-                Bundle bundle = new Bundle();
-                bundle.putInt("score", score);
+                        GameOverFragment fragment = new GameOverFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("score", score);
 
-                fragment.setArguments(bundle);
-                transaction.replace(R.id.game_over_window, fragment);
-                transaction.commit();
+                        fragment.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.game_over_window, fragment)
+                                .commit();
+                    }
+                },500);
+
             }
         };
 
