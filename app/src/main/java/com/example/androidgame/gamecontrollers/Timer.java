@@ -13,16 +13,16 @@ public abstract class Timer{
 
 
     public Timer(int timerDurationInMillis, TextView timerText) {
-        this.timerDurationInMillis = timerDurationInMillis;
+        this.timerDurationInMillis = timerDurationInMillis - 1000;
         this.timerText = timerText;
-        timeLeftInMillis = timerDurationInMillis;
+        timeLeftInMillis = this.timerDurationInMillis;
     }
 
     public void run(){
         countDownTimer = new CountDownTimer(timeLeftInMillis, countDownInterval) {
             @Override
             public void onTick(long l) {
-                timerText.setText(""+l/1000);
+                timerText.setText(""+(l+1000)/1000);
                 timeLeftInMillis = (int)l;
             }
             @Override
