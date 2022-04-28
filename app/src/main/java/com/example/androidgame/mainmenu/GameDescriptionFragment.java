@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,23 +23,26 @@ public class GameDescriptionFragment extends Fragment {
     private Timer timer;
 
     private TextView timerText;
-    private TextView descriptionText;
 
     private Button startButton;
+    private Button backButton;
 
-    private final String[] descriptions = {
-            "Игра1",
-            "Игра2",
-            "Игра3"
-    };
+    private String[] descriptions;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        descriptions = getResources().getStringArray(R.array.descriptions);
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_description, container, false);
 
+        TextView descriptionText = view.findViewById(R.id.description_text);
         timerText = view.findViewById(R.id.transition_timer_text);
-        descriptionText = view.findViewById(R.id.description_text);
-        startButton = view.findViewById(R.id.start_calculate_expression_level);
+        backButton = view.findViewById(R.id.back_button);
+        startButton = view.findViewById(R.id.start_game_button);
         timer = new Timer(4000, timerText) {
             @Override
             public void finish() {
@@ -51,6 +55,14 @@ public class GameDescriptionFragment extends Fragment {
         startButton.setOnClickListener(v -> {
             startButton.setClickable(false);
             timer.run();
+        });
+
+        backButton.setOnClickListener(v -> {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.games_content, new GamesMenuFragment())
+                    .commit();
         });
 
         return view;

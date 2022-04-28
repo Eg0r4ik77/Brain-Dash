@@ -32,6 +32,7 @@ public class GamePanel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_panel);
+        getSupportActionBar().hide();
 
         //flashScreen = findViewById(R.id.flash_screen);
 

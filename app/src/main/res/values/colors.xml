@@ -13,11 +13,12 @@
 
     <color name="imperial">#ED2939</color>
     <color name="purple">#9808B1</color>
-    <color name="purple_2">#360E3C</color>
+    <color name="purple_2">#660099</color>
     <color name="spring_green">#9C00FF7F</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="textview_color">#E6E6FA</color>
 </resources>

@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:background="@color/purple"
     tools:context=".mainmenu.games.calculateexpressiongame.CalculateExpressionGameFragment">
 
 

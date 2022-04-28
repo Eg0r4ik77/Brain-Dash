@@ -13,9 +13,6 @@
             android:name=".mainmenu.games.GamePanel"
             android:exported="false" />
         <activity
-            android:name=".mainmenu.games.calculateexpressiongame.CalculateExpressionGame"
-            android:exported="false" />
-        <activity
             android:name=".mainmenu.MainMenu"
             android:exported="true" >
             <intent-filter>

@@ -34,7 +34,7 @@ public class GameOverFragment extends Fragment {
         TextView bestScoreText = view.findViewById(R.id.best_score_text);
 
         scoreText.setText("Результат: " +  getArguments().getInt("score"));
-        bestScoreText.setText("Лучший результат" + getArguments().getInt("score"));
+        bestScoreText.setText("Лучший результат " + getArguments().getInt("score"));
 
         toMenuButton.setOnClickListener(v ->{
             startActivity(new Intent(getContext(), MainMenu.class));
@@ -42,11 +42,19 @@ public class GameOverFragment extends Fragment {
         });
 
         restartButton.setOnClickListener(v -> {
+            GameDescriptionFragment fr = new GameDescriptionFragment();
 
-            Intent intent = new Intent(getContext(), MainMenu.class);
-            intent.putExtra("Restart", getArguments().getInt("gameNumber"));
-            startActivity(intent);
-            getActivity().finish();
+            Bundle bundle = new Bundle();
+            bundle.putInt("gameNumber", this.getArguments().getInt("gameNumber"));
+            fr.setArguments(bundle);
+
+            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.game_over_window, fr);
+            ft.commit();
+//            Intent intent = new Intent(getContext(), MainMenu.class);
+//            intent.putExtra("Restart", getArguments().getInt("gameNumber"));
+//            startActivity(intent);
+//            getActivity().finish();
         });
 
         return view;

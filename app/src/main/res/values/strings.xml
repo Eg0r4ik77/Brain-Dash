@@ -23,10 +23,12 @@
     <string name="calculate_expression">Посчитай пример</string>
     <string name="schulte_table">Таблица Шульте</string>
     <string name="drawing">Повтори рисунок</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="restart">попробовать снова</string>
     <string name="to_menu">в меню</string>
-    <string name="game_3_description">Решите как можно больше примеров за 60 секунд</string>
-    <string name="game_1_description">Найдите все числа в порядке возрастания. Решите задачу как можно большее количество раз</string>
+    <string name="back_text">НАЗАД</string>
+    <string-array name = "descriptions">
+        <item>Последовательно найдите все числа как можно большее количество раз за 60 секунд</item>
+        <item>Повторите как можно большее количество рисунков за 60 секунд</item>
+        <item>Решите как можно большее количество примеров за 60 секунд</item>
+    </string-array>
 </resources>
