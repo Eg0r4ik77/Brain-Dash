@@ -1,7 +1,9 @@
 package com.example.androidgame.mainmenu.games.repeatdrawinggame;
 
-import android.graphics.Color;
+import android.annotation.SuppressLint;
+
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -58,14 +60,14 @@ public class RepeatDrawingGameFragment extends Fragment {
         selectedTilesCount = correctlySelectedTilesCount = 0;
         showDrawing();
 
-//        if(getActivity() instanceof GamePanel){
-//            ((GamePanel) getActivity()).setTimerPaused(true);
-//        }
+        if(getActivity() instanceof GamePanel){
+            ((GamePanel) getActivity()).setTimerPaused(true);
+        }
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //((GamePanel)getActivity()).setTimerPaused(false);
+                ((GamePanel)getActivity()).setTimerPaused(false);
                 clearDrawing();
             }
         },2500);
@@ -74,7 +76,7 @@ public class RepeatDrawingGameFragment extends Fragment {
     private void clearDrawing(){
         for(int i = 0; i< tiles.length; i++){
             for(int j =0; j< tiles.length; j++){
-                tiles[i][j].setBackgroundColor(Color.WHITE);
+                tiles[i][j].setBackground(getResources().getDrawable(R.drawable.white_button_rounded_corner));
             }
         }
         setButtonsClickable(true);
@@ -88,6 +90,7 @@ public class RepeatDrawingGameFragment extends Fragment {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void showDrawing(){
         tiles = new Button[drawingFlags.length][drawingFlags.length];
         drawingLayout.removeAllViews();
@@ -97,23 +100,31 @@ public class RepeatDrawingGameFragment extends Fragment {
                 tiles[i][j] = new Button(drawingLayout.getContext());
 
                 Button button = tiles[i][j];
-                button.setBackgroundColor(Color.WHITE);
+
+                button.setBackground(getResources().getDrawable(R.drawable.white_button_rounded_corner));
+                android.widget.TableRow.LayoutParams p = new android.widget.TableRow.LayoutParams();
+                p.rightMargin = (int)(5*getActivity().getResources().getDisplayMetrics().density);
+                p.bottomMargin = (int)(5*getActivity().getResources().getDisplayMetrics().density);
+                button.setLayoutParams(p);
+
                 boolean drawingFlag = drawingFlags[i][j];
 
                 if(drawingFlag) {
-                    button.setBackgroundColor(Color.BLUE);
+                    button.setBackground(getResources().getDrawable(R.drawable.green_button_rounded_corner));
                 }
 
                 button.setOnClickListener(v -> {
-                    int color = ((ColorDrawable)button.getBackground()).getColor();
-                    if(color == Color.WHITE){
-                        button.setBackgroundColor(Color.BLUE);
+                    Drawable drawable = (Drawable)button.getBackground();
+                    if(drawable.getConstantState().equals(getResources().getDrawable(R.drawable.white_button_rounded_corner).getConstantState())){
+                        button.setBackground(getResources().getDrawable(R.drawable.green_button_rounded_corner));
+
                         selectedTilesCount++;
                         if(drawingFlag){
                             correctlySelectedTilesCount++;
                         }
                     }else{
-                        button.setBackgroundColor(Color.WHITE);
+                        button.setBackground(getResources().getDrawable(R.drawable.white_button_rounded_corner));
+
                         selectedTilesCount--;
                         if(drawingFlag){
                             correctlySelectedTilesCount--;

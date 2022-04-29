@@ -12,7 +12,7 @@
         android:id="@+id/score_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/button_font"
         android:text="0"
         android:textAlignment="center"
@@ -20,15 +20,14 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/game_over_window" />
 
     <RelativeLayout
         android:id="@+id/progressbar_layout"
-        android:layout_width="201dp"
-        android:layout_height="179dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="104dp"
+        android:layout_width="264dp"
+        android:layout_height="277dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/score_text">
 
         <ProgressBar
@@ -53,9 +52,11 @@
 
     <FrameLayout
         android:id="@+id/game_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_width="410dp"
+        android:layout_height="335dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/game_over_window"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

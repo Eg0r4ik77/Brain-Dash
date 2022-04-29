@@ -34,7 +34,7 @@ public abstract class Timer{
                 if(progressBar != null){
                     progressBar.setProgress((timerDurationInMillis-timeLeftInMillis)*100/timerDurationInMillis);
                 }
-                timerText.setText(""+(l+1000)/1000);
+                timerText.setText(""+(l)/1000);
                 timeLeftInMillis = (int)l;
             }
             @Override

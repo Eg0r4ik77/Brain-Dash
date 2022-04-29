@@ -11,60 +11,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.button.MaterialButton
-            app:cornerRadius="30dp"
-            android:id="@+id/restart_button"
+        <TextView
+            android:id="@+id/game_result_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="224dp"
-            android:text="@string/restart"
-            android:textSize="20sp"
+            android:layout_marginTop="249dp"
+            android:background="@drawable/textview_rounded_corner"
+            android:backgroundTint="@color/textview_color"
             android:fontFamily="@font/button_font"
-            android:backgroundTint="@color/purple_2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/result_score_text"
-            android:layout_width="202dp"
-            android:layout_height="51dp"
-            android:layout_marginTop="164dp"
-            android:text="Результат: "
-            android:textAlignment="center"
+            android:padding="20dp"
+            android:text="@string/best_game_score_text"
             android:textSize="20sp"
-            android:fontFamily="@font/button_font"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/best_score_text"
-            android:layout_width="206dp"
-            android:layout_height="52dp"
-            android:layout_marginBottom="84dp"
-            android:text="Лучший результат: "
-            android:textSize="20sp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/restart_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:backgroundTint="@color/purple_2"
             android:fontFamily="@font/button_font"
-            android:textAlignment="center"
-            app:layout_constraintBottom_toTopOf="@+id/to_menu_button"
+            android:text="@string/restart"
+            android:textSize="20sp"
+            app:cornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/to_menu_button" />
 
         <com.google.android.material.button.MaterialButton
-            android:backgroundTint ="@color/purple_2"
-            app:cornerRadius="30dp"
             android:id="@+id/to_menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/purple_2"
+            android:fontFamily="@font/button_font"
             android:text="@string/to_menu"
             android:textSize="20sp"
-            android:fontFamily="@font/button_font"
-            app:layout_constraintBottom_toTopOf="@+id/restart_button"
+            app:cornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/game_result_text" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

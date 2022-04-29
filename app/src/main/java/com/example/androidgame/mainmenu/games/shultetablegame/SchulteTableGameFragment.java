@@ -1,10 +1,14 @@
 package com.example.androidgame.mainmenu.games.shultetablegame;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,21 +54,27 @@ public class SchulteTableGameFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void applyChoice(Button button){
         int buttonNumber = Integer.valueOf(button.getText().toString());
         if(buttonNumber - currentNumber == 1){
             currentNumber++;
-            button.setBackgroundColor(Color.GREEN);
+            button.setBackground(getResources().getDrawable(R.drawable.green_button_rounded_corner));
         }
         if(currentNumber == buttons.length*buttons.length){
             ((GamePanel)getActivity()).updateScore();
-
-            tableLayout.removeAllViews();
             gameComplicator.complicateGame();
-            create();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tableLayout.removeAllViews();
+                    create();
+                }
+            },100);
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void create(){
         currentNumber = 0;
         schulteTable.generate();
@@ -76,7 +86,16 @@ public class SchulteTableGameFragment extends Fragment {
                 buttons[i][j] = new Button(tableLayout.getContext());
                 Button button = buttons[i][j];
 
+                button.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "button_font2.otf"));
+                button.setTextSize(20);
+                button.setTextColor(getResources().getColor(R.color.white));
+                button.setBackground(getResources().getDrawable(R.drawable.purple_button_rounded_corner));
                 button.setText(String.valueOf(schulteTable.getTable()[i][j]));
+
+                android.widget.TableRow.LayoutParams p = new android.widget.TableRow.LayoutParams();
+                p.rightMargin = (int)(5*getActivity().getResources().getDisplayMetrics().density);
+                p.bottomMargin = (int)(5*getActivity().getResources().getDisplayMetrics().density);
+                button.setLayoutParams(p);
 
                 button.setOnClickListener(v -> {
                     applyChoice(button);

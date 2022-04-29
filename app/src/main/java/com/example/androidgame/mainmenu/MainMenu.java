@@ -4,14 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
 import com.example.androidgame.R;
 
 public class MainMenu extends AppCompatActivity {
 
-    private Button trainingButton;
+    private Button toGameMenuButton;
+    private Button exitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,12 +20,19 @@ public class MainMenu extends AppCompatActivity {
         getSupportActionBar().hide();
 
 
-        trainingButton = findViewById(R.id.training_button);
-        trainingButton.setOnClickListener(v -> {
+        toGameMenuButton = findViewById(R.id.to_game_menu_button);
+        exitButton = findViewById(R.id.exit_button);
+
+        toGameMenuButton.setOnClickListener(v -> {
             GamesMenuFragment fr = new GamesMenuFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.games_content, fr);
             ft.commit();
+        });
+
+        exitButton.setOnClickListener(v -> {
+            finishAffinity();
+            System.exit(0);
         });
     }
 

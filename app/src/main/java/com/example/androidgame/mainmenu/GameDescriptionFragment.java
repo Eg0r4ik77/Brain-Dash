@@ -43,7 +43,7 @@ public class GameDescriptionFragment extends Fragment {
         timerText = view.findViewById(R.id.transition_timer_text);
         backButton = view.findViewById(R.id.back_button);
         startButton = view.findViewById(R.id.start_game_button);
-        timer = new Timer(3000, timerText) {
+        timer = new Timer(4000, timerText) {
             @Override
             public void finish() {
                 startLevel();

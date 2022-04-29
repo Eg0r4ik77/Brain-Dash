@@ -40,7 +40,7 @@ public class Expression {
             default:
                 sign = ' ';
         }
-        return firstOperand + " " + sign + " " + secondOperand + " = ";
+        return firstOperand + " " + sign + " " + secondOperand + " =";
     }
 
     private void swapOperandValues(){

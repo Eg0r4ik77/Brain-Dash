@@ -19,10 +19,8 @@
 
         <com.google.android.material.button.MaterialButton
 
-            android:textColor="@color/white"
             app:cornerRadius="30dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-
+            android:backgroundTint="@color/purple_2"
             android:id="@+id/battle_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,15 +28,12 @@
             android:layout_weight="1"
             android:fontFamily="@font/button_font"
             android:textSize="20sp"
-            android:backgroundTint="@color/purple_2"
-            android:text="@string/battle" />
+            android:text="Какая-то кнопка" />
 
         <com.google.android.material.button.MaterialButton
 
-            android:textColor="@color/white"
             app:cornerRadius="30dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/training_button"
+            android:id="@+id/to_game_menu_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,25 +41,25 @@
             android:textSize="20sp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="@color/purple_2"
-            android:text="@string/training" />
+            android:text="@string/games_text" />
 
         <com.google.android.material.button.MaterialButton
-            android:textColor="@color/white"
             app:cornerRadius="30dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/warm_up_button"
+            android:id="@+id/exit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:layout_weight="1"
             android:fontFamily="@font/button_font"
             android:backgroundTint="@color/purple_2"
-            android:text="@string/warm_up"
+            android:text="@string/exit_text"
             />
+
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/games_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </RelativeLayout>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,32 +43,27 @@ public class GamePanel extends AppCompatActivity {
         scoreText = findViewById(R.id.score_text);
         timerText = findViewById(R.id.timer_text);
         gameLayout = findViewById(R.id.game_fragment);
-        timer = new Timer(60000, timerText, progressBar) {
+        timer = new Timer(61000, timerText, progressBar) {
             @Override
             public void finish() {
                 progressBar.setProgress(100);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                GameOverFragment fragment = new GameOverFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("score", score);
 
-                        GameOverFragment fragment = new GameOverFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("score", score);
-
-                        fragment.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.game_over_window, fragment)
-                                .commit();
-                    }
-                },500);
-
+                fragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.game_over_window, fragment)
+                        .commit();
             }
         };
 
         startGame(getIntent().getIntExtra("gameNumber", 1));
     }
 
+    @SuppressLint("SetTextI18n")
     private void startGame(int gameNumber){
+        scoreText.setText(getResources().getString(R.string.game_score_text)+String.valueOf(score));
         timer.run();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (gameNumber){
@@ -93,10 +89,10 @@ public class GamePanel extends AppCompatActivity {
             score+=((RepeatDrawingGameFragment)fragment).getGamePoints();
         }else{
             int gamePoints = ((CalculateExpressionGameFragment)fragment).getGamePoints();
-            score = score + gamePoints < gamePoints ? 0 : score + gamePoints;
+            score = Math.max(score + gamePoints, 0);
         }
 
-        scoreText.setText(String.valueOf(score));
+        scoreText.setText(getResources().getString(R.string.game_score_text)+String.valueOf(score));
     }
 
 //    private void screenAnimationPlay(){
