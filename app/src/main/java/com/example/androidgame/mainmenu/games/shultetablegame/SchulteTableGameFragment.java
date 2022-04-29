@@ -36,6 +36,7 @@ public class SchulteTableGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_schulte_table_game, container, false);
+        view.setClickable(true);
 
         tableLayout = view.findViewById(R.id.schulte_table_layout);
         schulteTable = new SchulteTable();

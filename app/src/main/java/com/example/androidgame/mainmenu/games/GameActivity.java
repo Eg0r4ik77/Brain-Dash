@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,7 +35,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         getSupportActionBar().hide();
-
         //flashScreen = findViewById(R.id.flash_screen);
         progressBar = findViewById(R.id.progress_bar);
         scoreText = findViewById(R.id.score_text);
@@ -42,7 +43,11 @@ public class GameActivity extends AppCompatActivity {
         timer = new Timer(11000, timerText, progressBar) {
             @Override
             public void finish() {
-                progressBar.setProgress(100);
+               progressBar.setProgress(100);
+               new Handler().postDelayed((Runnable) () -> {
+                   progressBar.setProgress(0);
+               }, 1000);
+
                 GameOverFragment fragment = new GameOverFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("score", score);
@@ -60,7 +65,8 @@ public class GameActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void startGame(int gameNumber){
-        scoreText.setText(getResources().getString(R.string.game_score_text)+String.valueOf(score));
+        scoreText.setText(getResources().getString(R.string.game_score_text) + score);
+
         timer.run();
         switch (gameNumber){
             case 1:
@@ -103,17 +109,5 @@ public class GameActivity extends AppCompatActivity {
     public void setTimerPaused(boolean paused){
         if(paused) timer.pause();
         else timer.run();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        timer.run();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        timer.pause();
     }
 }

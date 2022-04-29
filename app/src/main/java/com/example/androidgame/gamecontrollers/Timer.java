@@ -1,6 +1,7 @@
 package com.example.androidgame.gamecontrollers;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public abstract class Timer{
             }
             @Override
             public void onFinish() {
-                   finish();
+                finish();
             }
         }.start();
     }

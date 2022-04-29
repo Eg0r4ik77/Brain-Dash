@@ -36,26 +36,30 @@ public class GameDescriptionFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_description, container, false);
+        view.setClickable(true);
 
         TextView descriptionText = view.findViewById(R.id.description_text);
         timerText = view.findViewById(R.id.transition_timer_text);
         backButton = view.findViewById(R.id.back_button);
         startButton = view.findViewById(R.id.start_game_button);
-        timer = new Timer(4000, timerText) {
-            @Override
-            public void finish() {
-                startLevel();
-            }
-        };
 
         descriptionText.setText(descriptions[this.getArguments().getInt("gameNumber")-1]);
 
         startButton.setOnClickListener(v -> {
-            startButton.setClickable(false);
+            v.setClickable(false);
+            timer = new Timer(4000, timerText) {
+                @Override
+                public void finish() {
+                    startLevel();
+                }
+            };
             timer.run();
         });
 
         backButton.setOnClickListener(v -> {
+            if(timer != null){
+                timer.pause();
+            }
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()

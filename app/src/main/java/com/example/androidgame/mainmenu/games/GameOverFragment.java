@@ -35,6 +35,7 @@ public class GameOverFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_over, container, false);
+        view.setClickable(true);
 
         Button toMenuButton = view.findViewById(R.id.to_menu_button);
         Button restartButton = view.findViewById(R.id.restart_button);
@@ -50,19 +51,9 @@ public class GameOverFragment extends Fragment {
         });
 
         restartButton.setOnClickListener(v -> {
-//            GameDescriptionFragment fragment = new GameDescriptionFragment();
-//
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("gameNumber", getActivity().getIntent().getIntExtra("gameNumber", 1));
-//            fragment.setArguments(bundle);
-//
-//            getActivity()
-//                    .getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.game_over_window, fragment)
-//                    .commit();
             startActivity(new Intent(getContext(), getActivity().getClass())
-                    .putExtra("gameNumber", getActivity().getIntent().getIntExtra("gameNumber", 1)));
+                    .putExtra("gameNumber", getActivity().getIntent()
+                            .getIntExtra("gameNumber", 1)));
         });
 
         return view;

@@ -17,7 +17,8 @@ public class GamesMenuFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.fragment_games_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_games_menu, container, false);
+        view.setClickable(true);
 
         Button calculateExpressionGameButton = view.findViewById(R.id.calcualte_expression_game);
         Button schulteTableGameButton = view.findViewById(R.id.schulte_table_game);

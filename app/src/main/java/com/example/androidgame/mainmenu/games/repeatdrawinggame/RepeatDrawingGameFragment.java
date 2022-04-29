@@ -38,6 +38,7 @@ public class RepeatDrawingGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_repeat_drawing_game, container, false);
+        view.setClickable(true);
 
         gameComplicator = new RepeatDrawingGameComplicator(drawing);
         drawingLayout = view.findViewById(R.id.drawing_layout);
@@ -52,18 +53,19 @@ public class RepeatDrawingGameFragment extends Fragment {
         drawingFlags = drawing.getDrawing();
         selectedButtonsCount = correctlySelectedButtonsCount = 0;
         showDrawing();
+        if(getActivity() instanceof GameActivity){
+            ((GameActivity) getActivity()).setTimerPaused(true);
+        }
 
         if(getActivity() instanceof GameActivity){
             ((GameActivity) getActivity()).setTimerPaused(true);
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ((GameActivity)getActivity()).setTimerPaused(false);
-                clearDrawing();
-            }
+        new Handler().postDelayed(() -> {
+            ((GameActivity)getActivity()).setTimerPaused(false);
+            clearDrawing();
         },2500);
+
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -148,5 +150,4 @@ public class RepeatDrawingGameFragment extends Fragment {
     public int getGamePoints(){
         return 10 * correctlySelectedButtonsCount;
     }
-
 }

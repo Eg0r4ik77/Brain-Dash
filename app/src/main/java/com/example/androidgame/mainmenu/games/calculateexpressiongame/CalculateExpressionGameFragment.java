@@ -32,6 +32,7 @@ public class CalculateExpressionGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calculate_expression_game, container, false);
+        view.setClickable(true);
 
         expressionText = view.findViewById(R.id.expression_text);
         solutionText = view.findViewById(R.id.solution_text);
@@ -66,6 +67,9 @@ public class CalculateExpressionGameFragment extends Fragment {
 
         Button commitButton = view.findViewById(R.id.commit_button);
         commitButton.setOnClickListener(v -> {
+            if(solutionText.getText().toString().isEmpty()){
+                return;
+            }
             if (getGamePoints() > 0) {
                 gameComplicator.complicateGame();
             }
