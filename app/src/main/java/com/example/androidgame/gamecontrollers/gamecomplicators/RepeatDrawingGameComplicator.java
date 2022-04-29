@@ -4,7 +4,7 @@ import com.example.androidgame.mainmenu.games.repeatdrawinggame.Drawing;
 
 public class RepeatDrawingGameComplicator extends GameComplicator{
 
-    private Drawing drawing;
+    private final Drawing drawing;
 
     public RepeatDrawingGameComplicator(Drawing drawing){
         this.drawing = drawing;

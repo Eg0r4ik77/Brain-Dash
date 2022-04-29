@@ -1,38 +1,27 @@
 package com.example.androidgame.mainmenu.games.calculateexpressiongame;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.androidgame.R;
-import com.example.androidgame.gamecontrollers.Timer;
 import com.example.androidgame.gamecontrollers.gamecomplicators.CalculateExpressionGameComplicator;
-import com.example.androidgame.mainmenu.games.GameOverFragment;
 import com.example.androidgame.mainmenu.games.GamePanel;
 
 public class CalculateExpressionGameFragment extends Fragment {
-
-
-    private TextView expressionText;
-    private TextView solutionText;
-    private String currentSolutionText = "";
-
-    private Expression expression;
-
     private final int[] expressionDifficulties = {18, 108, 198};
     private final int[] gamePoints = {20, 50, 100};
 
-    private CalculateExpressionGameComplicator gameComplicator;
+    private TextView expressionText;
+    private TextView solutionText;
+    private String currentSolutionText;
 
+    private Expression expression;
+    private CalculateExpressionGameComplicator gameComplicator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +36,7 @@ public class CalculateExpressionGameFragment extends Fragment {
         expressionText = view.findViewById(R.id.expression_text);
         solutionText = view.findViewById(R.id.solution_text);
 
-        createExpression();
+        generateFirstExpression();
         gameComplicator = new CalculateExpressionGameComplicator(expression);
 
         Button[] number_buttons = {
@@ -65,7 +54,9 @@ public class CalculateExpressionGameFragment extends Fragment {
 
         for (Button button : number_buttons) {
             button.setOnClickListener(v -> {
-                currentSolutionText += button.getText().toString();
+                currentSolutionText = currentSolutionText == null
+                        ? button.getText().toString()
+                        : currentSolutionText + button.getText().toString();
                 solutionText.setText(currentSolutionText);
             });
         }
@@ -73,14 +64,13 @@ public class CalculateExpressionGameFragment extends Fragment {
         Button cleanButton = view.findViewById(R.id.clean_button);
         cleanButton.setOnClickListener(v -> resetSolution());
 
-        Button okButton = view.findViewById(R.id.ok_button);
-        okButton.setOnClickListener(v -> {
-                if (getGamePoints() > 0) {
-                    gameComplicator.complicateGame();
-                }
+        Button commitButton = view.findViewById(R.id.commit_button);
+        commitButton.setOnClickListener(v -> {
+            if (getGamePoints() > 0) {
+                gameComplicator.complicateGame();
+            }
             updateGame();
         });
-
         return view;
     }
 
@@ -90,13 +80,15 @@ public class CalculateExpressionGameFragment extends Fragment {
     }
 
     private void updateGame(){
-        ((GamePanel)getActivity()).updateScore();
+        if(getActivity() instanceof GamePanel){
+            ((GamePanel)getActivity()).updateScore();
+        }
         generateExpression();
         resetSolution();
     }
 
 
-    private void createExpression(){
+    private void generateFirstExpression(){
         expression = new Expression();
         expression.setOperandsUpperBounds(10, 10);
         generateExpression();

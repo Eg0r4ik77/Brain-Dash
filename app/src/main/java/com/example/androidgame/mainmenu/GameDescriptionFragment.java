@@ -21,7 +21,6 @@ import com.example.androidgame.mainmenu.games.GamePanel;
 public class GameDescriptionFragment extends Fragment {
 
     private Timer timer;
-
     private TextView timerText;
 
     private Button startButton;
@@ -68,20 +67,10 @@ public class GameDescriptionFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
     public void startLevel(){
-        try{
-            Intent intent = new Intent(getContext(), GamePanel.class);
-            intent.putExtra("gameNumber", this.getArguments().getInt("gameNumber"));
-            startActivity(intent);
-            getActivity().finish();
-        }catch (Exception exception){
-            Toast.makeText(getContext(), "Ошибка", Toast.LENGTH_SHORT).show();
-        }
+        startActivity(new Intent(getContext(), GamePanel.class)
+                .putExtra("gameNumber", this.getArguments().getInt("gameNumber")));
+        getActivity().finish();
     }
 
 }

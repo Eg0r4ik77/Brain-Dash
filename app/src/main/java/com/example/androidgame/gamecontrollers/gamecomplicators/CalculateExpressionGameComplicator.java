@@ -6,8 +6,8 @@ public class CalculateExpressionGameComplicator extends GameComplicator {
 
     private final Expression expression;
 
-    private final int mediumLevelDifficulty = 10;
-    private final int hardLevelDifficulty = 30;
+    private static final int MEDIUM_LEVEL_DIFFICULTY = 5;
+    private static final int HARD_LEVEL_DIFFICULTY = 15;
 
     public CalculateExpressionGameComplicator(Expression expression) {
         this.expression = expression;
@@ -17,10 +17,10 @@ public class CalculateExpressionGameComplicator extends GameComplicator {
     public void complicateGame() {
         incrementGameDifficulty();
         switch (getGameDifficulty()){
-            case mediumLevelDifficulty:
+            case MEDIUM_LEVEL_DIFFICULTY:
                 expression.setOperandsUpperBounds(100, 10);
                 break;
-            case hardLevelDifficulty:
+            case HARD_LEVEL_DIFFICULTY:
                 expression.setOperandsUpperBounds(100, 100);
                 break;
             default:

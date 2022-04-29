@@ -1,13 +1,10 @@
 package com.example.androidgame.mainmenu.games.repeatdrawinggame;
 
-import java.util.Random;
-
 public class Drawing {
-    private int size = 2;
 
+    private int size = 2;
     public int drawingTilesCount  = 2;
     private boolean[][] drawingFlags;
-
 
     public int getDrawingTilesCount() {
         return drawingTilesCount;

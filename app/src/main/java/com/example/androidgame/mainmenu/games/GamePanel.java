@@ -65,7 +65,6 @@ public class GamePanel extends AppCompatActivity {
     private void startGame(int gameNumber){
         scoreText.setText(getResources().getString(R.string.game_score_text)+String.valueOf(score));
         timer.run();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         switch (gameNumber){
             case 1:
                 fragment = new SchulteTableGameFragment();
@@ -77,11 +76,13 @@ public class GamePanel extends AppCompatActivity {
                 fragment = new CalculateExpressionGameFragment();
                 break;
         }
-
-        ft.replace(gameLayout.getId(), fragment);
-        ft.commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(gameLayout.getId(), fragment)
+                .commit();
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateScore(){
         if(fragment instanceof SchulteTableGameFragment){
             score += ((SchulteTableGameFragment)fragment).getGamePoints();
@@ -92,7 +93,7 @@ public class GamePanel extends AppCompatActivity {
             score = Math.max(score + gamePoints, 0);
         }
 
-        scoreText.setText(getResources().getString(R.string.game_score_text)+String.valueOf(score));
+        scoreText.setText(getResources().getString(R.string.game_score_text)+ score);
     }
 
 //    private void screenAnimationPlay(){
@@ -107,10 +108,6 @@ public class GamePanel extends AppCompatActivity {
         else timer.run();
     }
 
-    public void setFlashScreen(int id){
-        flashScreen.setBackgroundResource(id);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -122,5 +119,4 @@ public class GamePanel extends AppCompatActivity {
         super.onPause();
         timer.pause();
     }
-
 }

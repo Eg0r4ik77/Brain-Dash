@@ -32,11 +32,6 @@ public class GameOverFragment extends Fragment {
         bestGameScoreText = getString(R.string.best_game_score_text);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,7 +39,6 @@ public class GameOverFragment extends Fragment {
 
         Button toMenuButton = view.findViewById(R.id.to_menu_button);
         Button restartButton = view.findViewById(R.id.restart_button);
-
 
         TextView gameResultText = view.findViewById(R.id.game_result_text);
 
@@ -63,13 +57,11 @@ public class GameOverFragment extends Fragment {
             bundle.putInt("gameNumber", this.getArguments().getInt("gameNumber"));
             fr.setArguments(bundle);
 
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.game_over_window, fr);
-            ft.commit();
-//            Intent intent = new Intent(getContext(), MainMenu.class);
-//            intent.putExtra("Restart", getArguments().getInt("gameNumber"));
-//            startActivity(intent);
-//            getActivity().finish();
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.game_over_window, fr)
+                    .commit();
         });
 
         return view;

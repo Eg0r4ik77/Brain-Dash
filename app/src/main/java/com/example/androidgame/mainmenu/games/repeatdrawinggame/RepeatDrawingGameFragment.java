@@ -2,7 +2,6 @@ package com.example.androidgame.mainmenu.games.repeatdrawinggame;
 
 import android.annotation.SuppressLint;
 
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -26,20 +25,14 @@ public class RepeatDrawingGameFragment extends Fragment {
 
     private Drawing drawing = new Drawing();
     private TableLayout drawingLayout;
+
     private boolean[][] drawingFlags;
-    private Button[][] tiles;
+    private Button[][] buttons;
 
-
-    private int selectedTilesCount;
-    private int correctlySelectedTilesCount;
+    private int selectedButtonsCount;
+    private int correctlySelectedButtonsCount;
 
     private GameComplicator gameComplicator;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +50,7 @@ public class RepeatDrawingGameFragment extends Fragment {
     private void play(){
         drawing.create();
         drawingFlags = drawing.getDrawing();
-        selectedTilesCount = correctlySelectedTilesCount = 0;
+        selectedButtonsCount = correctlySelectedButtonsCount = 0;
         showDrawing();
 
         if(getActivity() instanceof GamePanel){
@@ -73,10 +66,11 @@ public class RepeatDrawingGameFragment extends Fragment {
         },2500);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void clearDrawing(){
-        for(int i = 0; i< tiles.length; i++){
-            for(int j =0; j< tiles.length; j++){
-                tiles[i][j].setBackground(getResources().getDrawable(R.drawable.white_button_rounded_corner));
+        for(int i = 0; i< buttons.length; i++){
+            for(int j = 0; j< buttons.length; j++){
+                buttons[i][j].setBackground(getResources().getDrawable(R.drawable.white_button_rounded_corner));
             }
         }
         setButtonsClickable(true);
@@ -85,21 +79,21 @@ public class RepeatDrawingGameFragment extends Fragment {
     private void setButtonsClickable(boolean clickable){
         for(int i = 0; i< drawingFlags.length; i++){
             for(int j = 0; j < drawingFlags.length; j++) {
-                tiles[i][j].setClickable(clickable);
+                buttons[i][j].setClickable(clickable);
             }
         }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void showDrawing(){
-        tiles = new Button[drawingFlags.length][drawingFlags.length];
+        buttons = new Button[drawingFlags.length][drawingFlags.length];
         drawingLayout.removeAllViews();
         for(int i = 0; i<drawingFlags.length; i++){
             TableRow row = new TableRow(drawingLayout.getContext());
             for(int j = 0; j<drawingFlags.length; j++){
-                tiles[i][j] = new Button(drawingLayout.getContext());
+                buttons[i][j] = new Button(drawingLayout.getContext());
 
-                Button button = tiles[i][j];
+                Button button = buttons[i][j];
 
                 button.setBackground(getResources().getDrawable(R.drawable.white_button_rounded_corner));
                 android.widget.TableRow.LayoutParams p = new android.widget.TableRow.LayoutParams();
@@ -117,22 +111,22 @@ public class RepeatDrawingGameFragment extends Fragment {
                     Drawable drawable = (Drawable)button.getBackground();
                     if(drawable.getConstantState().equals(getResources().getDrawable(R.drawable.white_button_rounded_corner).getConstantState())){
                         button.setBackground(getResources().getDrawable(R.drawable.green_button_rounded_corner));
+                        selectedButtonsCount++;
 
-                        selectedTilesCount++;
                         if(drawingFlag){
-                            correctlySelectedTilesCount++;
+                            correctlySelectedButtonsCount++;
                         }
                     }else{
                         button.setBackground(getResources().getDrawable(R.drawable.white_button_rounded_corner));
 
-                        selectedTilesCount--;
+                        selectedButtonsCount--;
                         if(drawingFlag){
-                            correctlySelectedTilesCount--;
+                            correctlySelectedButtonsCount--;
                         }
                     }
 
-                    if(correctlySelectedTilesCount == drawing.drawingTilesCount
-                            && correctlySelectedTilesCount == selectedTilesCount){
+                    if(correctlySelectedButtonsCount == drawing.drawingTilesCount
+                            && correctlySelectedButtonsCount == selectedButtonsCount){
                         ((GamePanel)getActivity()).updateScore();
                         gameComplicator.complicateGame();
                         new Handler().postDelayed(new Runnable() {
@@ -144,7 +138,7 @@ public class RepeatDrawingGameFragment extends Fragment {
                     }
                 });
 
-                row.addView(tiles[i][j]);
+                row.addView(buttons[i][j]);
             }
             drawingLayout.addView(row);
         }
@@ -152,7 +146,7 @@ public class RepeatDrawingGameFragment extends Fragment {
     }
 
     public int getGamePoints(){
-        return 10 * correctlySelectedTilesCount;
+        return 10 * correctlySelectedButtonsCount;
     }
 
 }

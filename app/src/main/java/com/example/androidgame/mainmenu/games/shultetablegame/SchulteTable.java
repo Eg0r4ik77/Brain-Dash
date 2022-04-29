@@ -10,7 +10,7 @@ public class SchulteTable {
     private int size = 2;
 
     public void generate(){
-        int number = 0;
+        int buttonNumber = 0;
         table = new int[size][size];
 
         List<Integer> solution = new ArrayList<>();
@@ -21,7 +21,7 @@ public class SchulteTable {
 
         for (int i=0; i < size; i++) {
             for (int j=0; j < size; j++) {
-                table[i][j] = solution.get(number++);
+                table[i][j] = solution.get(buttonNumber++);
             }
         }
     }

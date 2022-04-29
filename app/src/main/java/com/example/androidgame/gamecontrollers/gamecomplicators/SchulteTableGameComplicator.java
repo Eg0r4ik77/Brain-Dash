@@ -4,10 +4,10 @@ import com.example.androidgame.mainmenu.games.shultetablegame.SchulteTable;
 
 public class SchulteTableGameComplicator extends GameComplicator{
 
-    private final SchulteTable schulteTable;
+    private static final int MEDIUM_LEVEL_DIFFICULTY = 6;
+    private static final int HARD_LEVEL_DIFFICULTY = 15;
 
-    private final int mediumLevelDifficulty = 6;
-    private final int hardLevelDifficulty = 15;
+    private final SchulteTable schulteTable;
 
     public SchulteTableGameComplicator(SchulteTable schulteTable){
         this.schulteTable = schulteTable;
@@ -17,14 +17,14 @@ public class SchulteTableGameComplicator extends GameComplicator{
     public void complicateGame() {
         incrementGameDifficulty();
         switch (getGameDifficulty()){
-            case mediumLevelDifficulty:
+            case MEDIUM_LEVEL_DIFFICULTY:
                 schulteTable.setSize(3);
                 break;
-            case hardLevelDifficulty:
+            case HARD_LEVEL_DIFFICULTY:
                 schulteTable.setSize(4);
                 break;
             default:
-            break;
+                break;
         }
     }
 }

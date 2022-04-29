@@ -13,13 +13,7 @@ import android.widget.Button;
 
 import com.example.androidgame.R;
 
-
 public class GamesMenuFragment extends Fragment {
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,9 +30,11 @@ public class GamesMenuFragment extends Fragment {
             bundle.putInt("gameNumber", 1);
             fr.setArguments(bundle);
 
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.games_content, fr);
-            ft.commit();
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.games_content, fr)
+                    .commit();
         });
 
         repeatDrawingGameButton.setOnClickListener(v -> {
@@ -48,9 +44,10 @@ public class GamesMenuFragment extends Fragment {
             bundle.putInt("gameNumber", 2);
             fr.setArguments(bundle);
 
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.games_content, fr);
-            ft.commit();
+            getActivity()
+                    .getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.games_content, fr)
+                    .commit();
         });
 
         calculateExpressionGameButton.setOnClickListener(v -> {
@@ -60,9 +57,10 @@ public class GamesMenuFragment extends Fragment {
             bundle.putInt("gameNumber", 3);
             fr.setArguments(bundle);
 
-            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.games_content, fr);
-            ft.commit();
+            getActivity()
+                    .getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.games_content, fr)
+                    .commit();
         });
 
        return view;

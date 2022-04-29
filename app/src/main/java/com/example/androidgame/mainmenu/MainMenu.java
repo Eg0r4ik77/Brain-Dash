@@ -47,9 +47,10 @@ public class MainMenu extends AppCompatActivity {
             bundle.putInt("gameNumber", restart);
             fr.setArguments(bundle);
 
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.games_content, fr);
-            ft.commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.games_content, fr)
+                    .commit();
         }
     }
 }

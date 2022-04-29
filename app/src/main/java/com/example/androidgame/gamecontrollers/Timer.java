@@ -8,14 +8,17 @@ public abstract class Timer{
 
     private final int timerDurationInMillis;
     private final int countDownInterval = 1;
-    private int timeLeftInMillis;
-    private CountDownTimer countDownTimer;
     private final TextView timerText;
+
+    private int timeLeftInMillis;
+
+    private CountDownTimer countDownTimer;
     private ProgressBar progressBar;
 
     public Timer(int timerDurationInMillis, TextView timerText) {
         this.timerDurationInMillis = timerDurationInMillis;
         this.timerText = timerText;
+
         timeLeftInMillis = this.timerDurationInMillis;
     }
 

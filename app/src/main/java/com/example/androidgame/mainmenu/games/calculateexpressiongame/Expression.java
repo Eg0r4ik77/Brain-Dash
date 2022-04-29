@@ -1,5 +1,7 @@
 package com.example.androidgame.mainmenu.games.calculateexpressiongame;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -15,18 +17,14 @@ public class Expression {
         secondOperand = new Operand();
     };
 
-    public int getSolution(){
-
+    public Integer getSolution(){
         actions.put(Operation.ADDITION, firstOperand.getValue()+secondOperand.getValue());
         actions.put(Operation.SUBTRACTION, firstOperand.getValue()-secondOperand.getValue());
 
-        Integer solution = actions.get(operation);
-        if(solution == null){
-            return 0;
-        }
-        return solution;
+        return actions.get(operation);
     }
 
+    @NonNull
     @Override
     public String toString() {
         char sign;

@@ -35,17 +35,11 @@ public class SchulteTableGameFragment extends Fragment {
     private Button[][] buttons;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_schulte_table_game, container, false);
 
         tableLayout = view.findViewById(R.id.schulte_table_layout);
-
         schulteTable = new SchulteTable();
         gameComplicator = new SchulteTableGameComplicator(schulteTable);
 
@@ -56,14 +50,19 @@ public class SchulteTableGameFragment extends Fragment {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void applyChoice(Button button){
-        int buttonNumber = Integer.valueOf(button.getText().toString());
-        if(buttonNumber - currentNumber == 1){
+        int buttonNumber = Integer.parseInt(button.getText().toString());
+
+        if(buttonNumber == currentNumber){
             currentNumber++;
             button.setBackground(getResources().getDrawable(R.drawable.green_button_rounded_corner));
         }
-        if(currentNumber == buttons.length*buttons.length){
-            ((GamePanel)getActivity()).updateScore();
+
+        if(currentNumber > buttons.length*buttons.length){
+            if(getActivity() instanceof GamePanel){
+                ((GamePanel)getActivity()).updateScore();
+            }
             gameComplicator.complicateGame();
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -76,7 +75,7 @@ public class SchulteTableGameFragment extends Fragment {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void create(){
-        currentNumber = 0;
+        currentNumber = 1;
         schulteTable.generate();
         buttons = new Button[schulteTable.getTable().length][schulteTable.getTable().length];
 
@@ -97,9 +96,11 @@ public class SchulteTableGameFragment extends Fragment {
                 p.bottomMargin = (int)(5*getActivity().getResources().getDisplayMetrics().density);
                 button.setLayoutParams(p);
 
+
                 button.setOnClickListener(v -> {
                     applyChoice(button);
                 });
+
                 row.addView(buttons[i][j]);
             }
             tableLayout.addView(row);
@@ -119,5 +120,4 @@ public class SchulteTableGameFragment extends Fragment {
         }
         return 0;
     }
-
 }

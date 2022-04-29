@@ -1,15 +1,13 @@
 package com.example.androidgame.mainmenu.games.calculateexpressiongame;
 
+import androidx.annotation.NonNull;
+
 public class Operand {
 
     private int value;
     private int upperBound;
 
     public Operand() {}
-
-    public Operand(int value) {
-        this.value = value;
-    }
 
     public int getUpperBound() {
         return upperBound;
@@ -27,6 +25,7 @@ public class Operand {
         this.upperBound = upperBound;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return String.valueOf(value);
