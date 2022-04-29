@@ -3,6 +3,7 @@ package com.example.androidgame.mainmenu.games;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import com.example.androidgame.R;
 import com.example.androidgame.mainmenu.GameDescriptionFragment;
 import com.example.androidgame.mainmenu.MainMenuActivity;
+import com.example.androidgame.mainmenu.games.repeatdrawinggame.RepeatDrawingGameFragment;
+import com.example.androidgame.mainmenu.games.shultetablegame.SchulteTableGameFragment;
 
 public class GameOverFragment extends Fragment {
 
@@ -43,7 +46,7 @@ public class GameOverFragment extends Fragment {
         TextView gameResultText = view.findViewById(R.id.game_result_text);
 
         gameResultText.setText(gameScoreText +  getArguments().getInt("score") +
-                "\n" + bestGameScoreText + getArguments().getInt("score"));
+                "\n" + bestGameScoreText + ((GameActivity)getActivity()).getBestScore());
 
         toMenuButton.setOnClickListener(v ->{
             startActivity(new Intent(getContext(), MainMenuActivity.class));
