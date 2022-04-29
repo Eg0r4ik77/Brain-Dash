@@ -18,7 +18,7 @@ import android.widget.TableRow;
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.gamecomplicators.GameComplicator;
 import com.example.androidgame.gamecontrollers.gamecomplicators.RepeatDrawingGameComplicator;
-import com.example.androidgame.mainmenu.games.GamePanel;
+import com.example.androidgame.mainmenu.games.GameActivity;
 
 
 public class RepeatDrawingGameFragment extends Fragment {
@@ -53,14 +53,14 @@ public class RepeatDrawingGameFragment extends Fragment {
         selectedButtonsCount = correctlySelectedButtonsCount = 0;
         showDrawing();
 
-        if(getActivity() instanceof GamePanel){
-            ((GamePanel) getActivity()).setTimerPaused(true);
+        if(getActivity() instanceof GameActivity){
+            ((GameActivity) getActivity()).setTimerPaused(true);
         }
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ((GamePanel)getActivity()).setTimerPaused(false);
+                ((GameActivity)getActivity()).setTimerPaused(false);
                 clearDrawing();
             }
         },2500);
@@ -127,7 +127,7 @@ public class RepeatDrawingGameFragment extends Fragment {
 
                     if(correctlySelectedButtonsCount == drawing.drawingTilesCount
                             && correctlySelectedButtonsCount == selectedButtonsCount){
-                        ((GamePanel)getActivity()).updateScore();
+                        ((GameActivity)getActivity()).updateScore();
                         gameComplicator.complicateGame();
                         new Handler().postDelayed(new Runnable() {
                             @Override

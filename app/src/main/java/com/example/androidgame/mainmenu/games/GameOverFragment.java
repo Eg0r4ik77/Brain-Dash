@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.androidgame.R;
 import com.example.androidgame.mainmenu.GameDescriptionFragment;
-import com.example.androidgame.mainmenu.MainMenu;
+import com.example.androidgame.mainmenu.MainMenuActivity;
 
 public class GameOverFragment extends Fragment {
 
@@ -46,22 +45,24 @@ public class GameOverFragment extends Fragment {
                 "\n" + bestGameScoreText + getArguments().getInt("score"));
 
         toMenuButton.setOnClickListener(v ->{
-            startActivity(new Intent(getContext(), MainMenu.class));
+            startActivity(new Intent(getContext(), MainMenuActivity.class));
             getActivity().finish();
         });
 
         restartButton.setOnClickListener(v -> {
-            GameDescriptionFragment fr = new GameDescriptionFragment();
-
-            Bundle bundle = new Bundle();
-            bundle.putInt("gameNumber", this.getArguments().getInt("gameNumber"));
-            fr.setArguments(bundle);
-
-            getActivity()
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.game_over_window, fr)
-                    .commit();
+//            GameDescriptionFragment fragment = new GameDescriptionFragment();
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("gameNumber", getActivity().getIntent().getIntExtra("gameNumber", 1));
+//            fragment.setArguments(bundle);
+//
+//            getActivity()
+//                    .getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.game_over_window, fragment)
+//                    .commit();
+            startActivity(new Intent(getContext(), getActivity().getClass())
+                    .putExtra("gameNumber", getActivity().getIntent().getIntExtra("gameNumber", 1)));
         });
 
         return view;

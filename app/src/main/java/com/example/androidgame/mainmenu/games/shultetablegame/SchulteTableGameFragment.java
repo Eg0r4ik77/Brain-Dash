@@ -1,8 +1,6 @@
 package com.example.androidgame.mainmenu.games.shultetablegame;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -18,7 +16,7 @@ import android.widget.TableRow;
 
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.gamecomplicators.SchulteTableGameComplicator;
-import com.example.androidgame.mainmenu.games.GamePanel;
+import com.example.androidgame.mainmenu.games.GameActivity;
 
 
 public class SchulteTableGameFragment extends Fragment {
@@ -58,8 +56,8 @@ public class SchulteTableGameFragment extends Fragment {
         }
 
         if(currentNumber > buttons.length*buttons.length){
-            if(getActivity() instanceof GamePanel){
-                ((GamePanel)getActivity()).updateScore();
+            if(getActivity() instanceof GameActivity){
+                ((GameActivity)getActivity()).updateScore();
             }
             gameComplicator.complicateGame();
 

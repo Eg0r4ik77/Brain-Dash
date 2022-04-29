@@ -2,14 +2,10 @@ package com.example.androidgame.mainmenu.games;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,7 +15,7 @@ import com.example.androidgame.mainmenu.games.calculateexpressiongame.CalculateE
 import com.example.androidgame.mainmenu.games.repeatdrawinggame.RepeatDrawingGameFragment;
 import com.example.androidgame.mainmenu.games.shultetablegame.SchulteTableGameFragment;
 
-public class GamePanel extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
     private TextView scoreText;
     private TextView timerText;
@@ -35,7 +31,7 @@ public class GamePanel extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_panel);
+        setContentView(R.layout.activity_game);
         getSupportActionBar().hide();
 
         //flashScreen = findViewById(R.id.flash_screen);
@@ -43,7 +39,7 @@ public class GamePanel extends AppCompatActivity {
         scoreText = findViewById(R.id.score_text);
         timerText = findViewById(R.id.timer_text);
         gameLayout = findViewById(R.id.game_fragment);
-        timer = new Timer(61000, timerText, progressBar) {
+        timer = new Timer(11000, timerText, progressBar) {
             @Override
             public void finish() {
                 progressBar.setProgress(100);
@@ -52,7 +48,8 @@ public class GamePanel extends AppCompatActivity {
                 bundle.putInt("score", score);
 
                 fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction()
+                getSupportFragmentManager()
+                        .beginTransaction()
                         .replace(R.id.game_over_window, fragment)
                         .commit();
             }

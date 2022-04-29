@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.gamecomplicators.CalculateExpressionGameComplicator;
-import com.example.androidgame.mainmenu.games.GamePanel;
+import com.example.androidgame.mainmenu.games.GameActivity;
 
 public class CalculateExpressionGameFragment extends Fragment {
     private final int[] expressionDifficulties = {18, 108, 198};
@@ -80,8 +80,8 @@ public class CalculateExpressionGameFragment extends Fragment {
     }
 
     private void updateGame(){
-        if(getActivity() instanceof GamePanel){
-            ((GamePanel)getActivity()).updateScore();
+        if(getActivity() instanceof GameActivity){
+            ((GameActivity)getActivity()).updateScore();
         }
         generateExpression();
         resetSolution();

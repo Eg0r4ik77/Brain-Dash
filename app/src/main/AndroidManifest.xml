@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGame" >
         <activity
-            android:name=".mainmenu.games.GamePanel"
+            android:name=".mainmenu.games.GameActivity"
             android:exported="false" />
         <activity
-            android:name=".mainmenu.MainMenu"
+            android:name=".mainmenu.MainMenuActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

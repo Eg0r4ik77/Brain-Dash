@@ -12,11 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.androidgame.R;
 import com.example.androidgame.gamecontrollers.Timer;
-import com.example.androidgame.mainmenu.games.GamePanel;
+import com.example.androidgame.mainmenu.games.GameActivity;
 
 public class GameDescriptionFragment extends Fragment {
 
@@ -68,7 +67,7 @@ public class GameDescriptionFragment extends Fragment {
     }
 
     public void startLevel(){
-        startActivity(new Intent(getContext(), GamePanel.class)
+        startActivity(new Intent(getContext(), GameActivity.class)
                 .putExtra("gameNumber", this.getArguments().getInt("gameNumber")));
         getActivity().finish();
     }
