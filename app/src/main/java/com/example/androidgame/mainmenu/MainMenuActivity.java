@@ -29,7 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().hide();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Records", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
 
         gameRecord1 = findViewById(R.id.game_record_1);
         gameRecord2 = findViewById(R.id.game_record_2);

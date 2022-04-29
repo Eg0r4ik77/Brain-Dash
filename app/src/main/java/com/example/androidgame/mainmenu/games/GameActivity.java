@@ -50,6 +50,7 @@ public class GameActivity extends AppCompatActivity {
         timer = new Timer(11000, timerText, progressBar) {
             @Override
             public void finish() {
+                handleGameResult();
                progressBar.setProgress(100);
                new Handler().postDelayed((Runnable) () -> {
                    progressBar.setProgress(0);
@@ -116,7 +117,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void handleGameResult(){
-        sharedPreferences = getSharedPreferences("Records", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         if(fragment instanceof SchulteTableGameFragment){
             editor.putInt("SchulteTableGameBestScore",
                     Math.max(score,
@@ -131,10 +134,11 @@ public class GameActivity extends AppCompatActivity {
                             sharedPreferences.getInt("CalculateExpressionGameBestScore",0)));
         }
         editor.putInt("Rating", score + sharedPreferences.getInt("Rating",0));
+        editor.commit();
     }
 
     public int getBestScore(){
-        sharedPreferences = getSharedPreferences("Records", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
         if(fragment instanceof SchulteTableGameFragment){
             return sharedPreferences.getInt("SchulteTableGameBestScore",0);
         }else if(fragment instanceof RepeatDrawingGameFragment){
