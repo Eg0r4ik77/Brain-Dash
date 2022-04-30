@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="249dp"
             android:background="@drawable/textview_rounded_corner"
-            android:backgroundTint="@color/textview_color"
             android:fontFamily="@font/button_font"
             android:padding="20dp"
             android:text="@string/best_game_score_text"

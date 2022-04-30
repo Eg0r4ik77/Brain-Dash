@@ -3,7 +3,6 @@ package com.example.androidgame.mainmenu;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -15,22 +14,22 @@ import android.widget.TextView;
 
 import com.example.androidgame.R;
 import com.example.androidgame.mainmenu.authorization.AuthorizationFragment;
+import com.google.android.material.button.MaterialButton;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     private TextView gameRecord1;
     private TextView gameRecord2;
     private TextView gameRecord3;
-    private TextView ratingPointsText;
 
     private Button showRecordsButton;
     private Button toGameMenuButton;
     private Button exitButton;
     private Button closeRecordCardButton;
 
-    private ImageButton toAuthorizationButton;
+    private MaterialButton userButton;
 
-    CardView recordCard;
+    private CardView recordCard;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -47,20 +46,19 @@ public class MainMenuActivity extends AppCompatActivity {
         gameRecord1 = findViewById(R.id.game_record_1);
         gameRecord2 = findViewById(R.id.game_record_2);
         gameRecord3 = findViewById(R.id.game_record_3);
-        ratingPointsText = findViewById(R.id.rating_points_text);
 
-        gameRecord1.setText("Schulte: " + sharedPreferences.getInt("SchulteTableGameBestScore", 0));
-        gameRecord2.setText("Draw: " + sharedPreferences.getInt("RepeatDrawingGameBestScore", 0));
-        gameRecord3.setText("Calc: " + sharedPreferences.getInt("CalculateExpressionGameBestScore", 0));
-        ratingPointsText.setText("Rating: " + sharedPreferences.getInt("Rating", 0));
+        gameRecord1.setText("Таблица Шульте: " + sharedPreferences.getInt("SchulteTableGameBestScore", 0));
+        gameRecord2.setText("Повтори рисунок: " + sharedPreferences.getInt("RepeatDrawingGameBestScore", 0));
+        gameRecord3.setText("Посчитай пример: " + sharedPreferences.getInt("CalculateExpressionGameBestScore", 0));
 
         showRecordsButton = findViewById(R.id.show_records_button);
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
         exitButton = findViewById(R.id.exit_button);
         closeRecordCardButton = findViewById(R.id.close_record_card_button);
-        toAuthorizationButton = findViewById(R.id.to_authorization_button);
+        userButton = findViewById(R.id.user_button);
 
-        toAuthorizationButton.setOnClickListener(view -> {
+        userButton.setText("Name\nRating: " + sharedPreferences.getInt("Rating", 0));
+        userButton.setOnClickListener(view -> {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.games_content, new AuthorizationFragment())

@@ -7,7 +7,7 @@
     android:background="@drawable/gradient_background"
     tools:context=".mainmenu.GamesMenuFragment">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,13 +17,13 @@
             android:layout_height="240dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="230dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.button.MaterialButton
-                android:textColor="@color/white"
-                app:cornerRadius="30dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/schulte_table_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,13 +33,11 @@
                 android:fontFamily="@font/button_font"
                 android:text="@string/schulte_table"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:textSize="20sp"
-                 />
+                app:cornerRadius="30dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:textColor="@color/white"
-                app:cornerRadius="30dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/repeat_drawing_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,12 +47,11 @@
                 android:fontFamily="@font/button_font"
                 android:text="@string/drawing"
                 android:textAllCaps="false"
-                android:textSize="20sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:cornerRadius="30dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:textColor="@color/white"
-                app:cornerRadius="30dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/calcualte_expression_game"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,9 +60,27 @@
                 android:fontFamily="@font/button_font"
                 android:text="@string/calculate_expression"
                 android:textAllCaps="false"
-                android:textSize="20sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:cornerRadius="30dp" />
         </LinearLayout>
-    </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/close_games_menu_button"
+            android:layout_width="166dp"
+            android:layout_height="86dp"
+            android:backgroundTint="@color/purple_2"
+            android:fontFamily="@font/button_font"
+            android:text="Назад"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:cornerRadius="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/games" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

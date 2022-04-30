@@ -22,20 +22,6 @@
 
         <com.google.android.material.button.MaterialButton
 
-            android:id="@+id/show_records_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/purple_2"
-            android:fontFamily="@font/button_font"
-            android:text="Рекорды"
-            android:textSize="20sp"
-            android:visibility="visible"
-            app:cornerRadius="30dp" />
-
-        <com.google.android.material.button.MaterialButton
-
             android:id="@+id/to_game_menu_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,6 +32,21 @@
             android:text="@string/games_text"
             android:textSize="20sp"
             app:cornerRadius="30dp" />
+
+        <com.google.android.material.button.MaterialButton
+
+            android:id="@+id/show_records_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/purple_2"
+            android:fontFamily="@font/button_font"
+            android:text="Рекорды"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:cornerRadius="30dp"
+            app:iconTintMode="screen" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/exit_button"
@@ -63,81 +64,91 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/record_card"
         android:layout_width="221dp"
-        android:layout_height="151dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        app:cardBackgroundColor="@color/textview_color"
+        app:cardCornerRadius="20sp"
         app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_button">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/textview_color"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/game_record_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:fontFamily="@font/button_font"
                 android:text="TextView"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/game_record_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:fontFamily="@font/button_font"
                 android:text="TextView"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/game_record_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:fontFamily="@font/button_font"
                 android:text="TextView"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/close_record_card_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Закрыть" />
+                android:layout_gravity="center"
+                android:backgroundTint="@color/purple_2"
+                android:fontFamily="@font/button_font"
+                android:text="Закрыть"
+                android:textSize="20sp"
+                app:cornerRadius="30dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/rating_points_text"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/user_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textAlignment="center"
+        android:layout_height="74dp"
+        android:backgroundTint="@color/textview_color"
+        android:fontFamily="@font/button_font"
+        android:rotation="0"
+        android:rotationX="0"
+        android:rotationY="0"
+        android:text="Name\nRating: 100"
+        android:textAlignment="textStart"
+        android:textColor="#00838F"
+        android:textSize="20sp"
+        app:cornerRadius="10sp"
+        app:icon="@drawable/ic_user"
+        app:iconSize="50sp"
+        app:iconTintMode="multiply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/to_authorization_button"
-        android:layout_width="60dp"
-        android:layout_height="49dp"
-        android:contentDescription="authorization"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
 
     <FrameLayout
         android:id="@+id/games_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:elevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

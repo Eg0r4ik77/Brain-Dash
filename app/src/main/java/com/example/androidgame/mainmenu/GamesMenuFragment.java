@@ -23,6 +23,7 @@ public class GamesMenuFragment extends Fragment {
         Button calculateExpressionGameButton = view.findViewById(R.id.calcualte_expression_game);
         Button schulteTableGameButton = view.findViewById(R.id.schulte_table_game);
         Button repeatDrawingGameButton = view.findViewById(R.id.repeat_drawing_game);
+        Button closeGamesMenuButton = view.findViewById(R.id.close_games_menu_button);
 
         schulteTableGameButton.setOnClickListener(v ->{
             GameDescriptionFragment fr = new GameDescriptionFragment();
@@ -64,6 +65,13 @@ public class GamesMenuFragment extends Fragment {
                     .commit();
         });
 
+        closeGamesMenuButton.setOnClickListener(view1 -> {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .detach(this)
+                    .commit();
+        });
        return view;
     }
 }
