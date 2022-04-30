@@ -28,7 +28,7 @@
     <string name="exit_text">Выход</string>
     <string name="games_text">Игры</string>
     <string name="exit_alert_text">Действительно хотите выйти из игры?</string>
-    <string-array name = "descriptions">
+    <string-array name="descriptions">
         <item>Последовательно найдите все числа как можно большее количество раз за 60 секунд</item>
         <item>Повторите как можно большее количество рисунков за 60 секунд</item>
         <item>Решите как можно большее количество примеров за 60 секунд</item>

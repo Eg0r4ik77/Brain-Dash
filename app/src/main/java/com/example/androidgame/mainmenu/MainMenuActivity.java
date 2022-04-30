@@ -10,9 +10,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.androidgame.R;
+import com.example.androidgame.mainmenu.authorization.AuthorizationFragment;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -25,6 +27,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button toGameMenuButton;
     private Button exitButton;
     private Button closeRecordCardButton;
+
+    private ImageButton toAuthorizationButton;
 
     CardView recordCard;
 
@@ -54,6 +58,14 @@ public class MainMenuActivity extends AppCompatActivity {
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
         exitButton = findViewById(R.id.exit_button);
         closeRecordCardButton = findViewById(R.id.close_record_card_button);
+        toAuthorizationButton = findViewById(R.id.to_authorization_button);
+
+        toAuthorizationButton.setOnClickListener(view -> {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.games_content, new AuthorizationFragment())
+                    .commit();
+        });
 
         closeRecordCardButton.setOnClickListener(view -> {
             recordCard.setVisibility(View.INVISIBLE);
@@ -64,10 +76,9 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         toGameMenuButton.setOnClickListener(v -> {
-            GamesMenuFragment fr = new GamesMenuFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.games_content, fr);
-            ft.commit();
+            getSupportFragmentManager().beginTransaction().
+                    replace(R.id.games_content, new GamesMenuFragment())
+                    .commit();
         });
 
         exitButton.setOnClickListener(v -> {

@@ -47,7 +47,7 @@ public class GameActivity extends AppCompatActivity {
         scoreText = findViewById(R.id.score_text);
         timerText = findViewById(R.id.timer_text);
         gameLayout = findViewById(R.id.game_fragment);
-        timer = new Timer(11000, timerText, progressBar) {
+        timer = new Timer(61000, timerText, progressBar) {
             @Override
             public void finish() {
                 handleGameResult();
