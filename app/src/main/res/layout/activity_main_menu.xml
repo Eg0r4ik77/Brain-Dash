@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,46 +14,49 @@
         android:layout_height="240dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="230dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/games_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.button.MaterialButton
 
-            app:cornerRadius="30dp"
-            android:backgroundTint="@color/purple_2"
-            android:id="@+id/battle_button"
+            android:id="@+id/show_records_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
+            android:backgroundTint="@color/purple_2"
             android:fontFamily="@font/button_font"
+            android:text="Рекорды"
             android:textSize="20sp"
-            android:text="Какая-то кнопка" />
+            android:visibility="visible"
+            app:cornerRadius="30dp" />
 
         <com.google.android.material.button.MaterialButton
 
-            app:cornerRadius="30dp"
             android:id="@+id/to_game_menu_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/button_font"
-            android:textSize="20sp"
             android:layout_marginBottom="5dp"
+            android:layout_weight="1"
             android:backgroundTint="@color/purple_2"
-            android:text="@string/games_text" />
+            android:fontFamily="@font/button_font"
+            android:text="@string/games_text"
+            android:textSize="20sp"
+            app:cornerRadius="30dp" />
 
         <com.google.android.material.button.MaterialButton
-            app:cornerRadius="30dp"
             android:id="@+id/exit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:layout_weight="1"
-            android:fontFamily="@font/button_font"
             android:backgroundTint="@color/purple_2"
+            android:fontFamily="@font/button_font"
             android:text="@string/exit_text"
-            />
+            android:textSize="20sp"
+            app:cornerRadius="30dp" />
 
     </LinearLayout>
 
@@ -62,39 +65,73 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    </FrameLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/record_card"
+        android:layout_width="221dp"
+        android:layout_height="151dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:cardBackgroundColor="@color/textview_color"
+        app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/rating_points_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/game_record_1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/game_record_2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textAlignment="center" />
 
             <TextView
                 android:id="@+id/game_record_3"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
-    </FrameLayout>
+                android:text="TextView"
+                android:textAlignment="center" />
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/close_record_card_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Закрыть" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="339dp"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/rating_points_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

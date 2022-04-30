@@ -1,12 +1,14 @@
 package com.example.androidgame.mainmenu;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,8 +21,12 @@ public class MainMenuActivity extends AppCompatActivity {
     private TextView gameRecord3;
     private TextView ratingPointsText;
 
+    private Button showRecordsButton;
     private Button toGameMenuButton;
     private Button exitButton;
+    private Button closeRecordCardButton;
+
+    CardView recordCard;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -30,6 +36,9 @@ public class MainMenuActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         SharedPreferences sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
+
+        recordCard = findViewById(R.id.record_card);
+        recordCard.setVisibility(View.INVISIBLE);
 
         gameRecord1 = findViewById(R.id.game_record_1);
         gameRecord2 = findViewById(R.id.game_record_2);
@@ -41,8 +50,18 @@ public class MainMenuActivity extends AppCompatActivity {
         gameRecord3.setText("Calc: " + sharedPreferences.getInt("CalculateExpressionGameBestScore", 0));
         ratingPointsText.setText("Rating: " + sharedPreferences.getInt("Rating", 0));
 
+        showRecordsButton = findViewById(R.id.show_records_button);
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
         exitButton = findViewById(R.id.exit_button);
+        closeRecordCardButton = findViewById(R.id.close_record_card_button);
+
+        closeRecordCardButton.setOnClickListener(view -> {
+            recordCard.setVisibility(View.INVISIBLE);
+        });
+
+        showRecordsButton.setOnClickListener(view -> {
+            recordCard.setVisibility(View.VISIBLE);
+        });
 
         toGameMenuButton.setOnClickListener(v -> {
             GamesMenuFragment fr = new GamesMenuFragment();
@@ -52,8 +71,17 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         exitButton.setOnClickListener(v -> {
-            finishAffinity();
-            System.exit(0);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.exit_alert_text).
+            setPositiveButton("Да", (dialogInterface, i) -> {
+                finishAffinity();
+                System.exit(0);
+            }).setNegativeButton("Нет", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+            });
+            AlertDialog dialog = builder.create();
+            dialog.setTitle("Выход из игры");
+            dialog.show();
         });
     }
 }
