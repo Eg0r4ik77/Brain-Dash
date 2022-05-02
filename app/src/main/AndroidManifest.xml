@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.androidgame" >
+    package="com.sumsung.minigames" >
 
     <application
         android:allowBackup="true"
@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGame" >
         <activity
-            android:name=".mainmenu.games.GameActivity"
+            android:name="com.sumsung.minigames.mainmenu.games.GameActivity"
             android:exported="false" />
         <activity
-            android:name=".mainmenu.MainMenuActivity"
+            android:name="com.sumsung.minigames.mainmenu.MainMenuActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

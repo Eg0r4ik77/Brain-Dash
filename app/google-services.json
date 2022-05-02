@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "20426682956",
+    "project_id": "mini-games-1f2f1",
+    "storage_bucket": "mini-games-1f2f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:20426682956:android:c54f67aaf3af224e30fae9",
+        "android_client_info": {
+          "package_name": "com.sumsung.minigames"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "20426682956-vb0o1u81p026ma99hsil8ljvgng0bu7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sumsung.minigames",
+            "certificate_hash": "7a47b2ed735296fce53edd6e00acf954547d1644"
+          }
+        },
+        {
+          "client_id": "20426682956-fgtqfmoi7uk09lohjcaunpa2nbrb8n6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVForjrFsvmcRaYuyQVHIJYGi53izZ4Ms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "20426682956-fgtqfmoi7uk09lohjcaunpa2nbrb8n6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

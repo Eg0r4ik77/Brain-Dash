@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    tools:context=".mainmenu.games.calculateexpressiongame.CalculateExpressionGameFragment">
+    tools:context="com.sumsung.minigames.mainmenu.games.calculateexpressiongame.CalculateExpressionGameFragment">
 
 
     <LinearLayout
