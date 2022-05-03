@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,7 +66,14 @@ public class LoginFragment extends Fragment {
     }
 
     private void signIn() {
-        // код для проверки корректности данных
+
+        if(TextUtils.isEmpty(email.getText().toString())){
+            Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show();
+            return;
+        }else if(TextUtils.isEmpty(password.getText().toString())){
+            Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -74,7 +85,11 @@ public class LoginFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Ошибка авторизации. "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                if(e instanceof FirebaseAuthInvalidUserException){
+                    Toast.makeText(getContext(), "Учетная запись с таким email не сущесвует ", Toast.LENGTH_SHORT).show();
+                }else if(e instanceof FirebaseAuthInvalidCredentialsException){
+                    Toast.makeText(getContext(), "Введен неправильный пароль", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

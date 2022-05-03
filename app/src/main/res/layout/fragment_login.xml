@@ -16,13 +16,28 @@
 
 
       <EditText
+          android:id="@+id/email_field"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:background="@drawable/edit_text_background"
+          android:ems="10"
+
+          android:hint="Электронная почта"
+          android:inputType="textEmailAddress"
+          android:minHeight="48dp"
+
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <EditText
           android:id="@+id/password_field"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="21dp"
+          android:background="@drawable/edit_text_background"
           android:ems="10"
           android:hint="Пароль"
-          android:background="@drawable/edit_text_background"
           android:inputType="textPassword"
           android:minHeight="48dp"
           app:layout_constraintEnd_toEndOf="parent"
@@ -30,24 +45,15 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/email_field" />
 
-      <EditText
-          android:id="@+id/email_field"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:hint="Логин или электронная почта"
-          android:background="@drawable/edit_text_background"
-          android:inputType="textPersonName"
-          android:minHeight="48dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
       <Button
           android:id="@+id/sing_in_button"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Войти"
+          android:backgroundTint="@color/purple_2"
+          android:fontFamily="@font/button_font"
+          android:textSize="20sp"
+          app:cornerRadius="30dp"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent" />

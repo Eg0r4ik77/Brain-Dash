@@ -29,9 +29,9 @@
             android:layout_weight="1"
             android:backgroundTint="@color/purple_2"
             android:fontFamily="@font/button_font"
-            android:text="@string/games_text"
             android:textSize="20sp"
-            app:cornerRadius="30dp" />
+            app:cornerRadius="30dp"
+            android:text="@string/games_text"/>
 
         <com.google.android.material.button.MaterialButton
 
@@ -106,23 +106,13 @@
                 android:textAlignment="center"
                 android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/close_record_card_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/purple_2"
-                android:fontFamily="@font/button_font"
-                android:text="Закрыть"
-                android:textSize="20sp"
-                app:cornerRadius="30dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/user_button"
-        android:layout_width="wrap_content"
-        android:layout_height="74dp"
+        android:layout_width="246dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/textview_color"
         android:fontFamily="@font/button_font"
         android:rotation="0"

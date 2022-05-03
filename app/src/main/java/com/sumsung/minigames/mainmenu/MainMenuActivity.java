@@ -8,11 +8,12 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,11 +42,13 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button showRecordsButton;
     private Button toGameMenuButton;
     private Button exitButton;
-    private Button closeRecordCardButton;
     private Button exitAccountButton;
 
     private MaterialButton userButton;
     private CardView recordCard;
+
+    private boolean isShowRecordsButtonClicked;
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -92,7 +95,6 @@ public class MainMenuActivity extends AppCompatActivity {
         showRecordsButton = findViewById(R.id.show_records_button);
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
         exitButton = findViewById(R.id.exit_button);
-        closeRecordCardButton = findViewById(R.id.close_record_card_button);
         userButton = findViewById(R.id.user_button);
         exitAccountButton = findViewById(R.id.exit_account_button);
 
@@ -109,12 +111,17 @@ public class MainMenuActivity extends AppCompatActivity {
             userButton.setText("Авторизация");
         });
 
-        closeRecordCardButton.setOnClickListener(view -> {
-            recordCard.setVisibility(View.INVISIBLE);
-        });
-
         showRecordsButton.setOnClickListener(view -> {
-            recordCard.setVisibility(View.VISIBLE);
+            if(isShowRecordsButtonClicked){
+                Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_decrease_anim);
+                recordCard.startAnimation(animation);
+                recordCard.setVisibility(View.INVISIBLE);
+            }else{
+                Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_increase_anim);
+                recordCard.startAnimation(animation);
+                recordCard.setVisibility(View.VISIBLE);
+            }
+            isShowRecordsButtonClicked = !isShowRecordsButtonClicked;
         });
 
         toGameMenuButton.setOnClickListener(v -> {
@@ -136,13 +143,5 @@ public class MainMenuActivity extends AppCompatActivity {
             dialog.setTitle("Выход из игры");
             dialog.show();
         });
-    }
-
-    private void updateAccountInfo(){
-        userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("Rating", 0));
-    }
-
-    public void upgateRecords(){
-
     }
 }
