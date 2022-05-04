@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +50,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private CardView profiledCard;
     private CardView recordCard;
 
+    private ProgressBar accountLoadingProgress;
+
     private boolean isShowRecordsButtonClicked;
     private boolean isUserProfileShown;
 
@@ -59,26 +62,9 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().hide();
 
+        accountLoadingProgress = findViewById(R.id.account_loading_progress);
+
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
-        databaseReference =  FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-                if(firebaseUser == null){
-                    user = new User();
-                }
-                else{
-                    user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
-                }
-                updateScores();
-                updateUi();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-
 
         recordCard = findViewById(R.id.record_card);
         recordCard.setVisibility(View.INVISIBLE);
@@ -99,6 +85,29 @@ public class MainMenuActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exit_button);
         userButton = findViewById(R.id.user_button);
         exitAccountButton = findViewById(R.id.exit_account_button);
+
+        userButton.setVisibility(View.INVISIBLE);
+
+        databaseReference =  FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if(firebaseUser == null){
+                    user = new User();
+                }
+                else{
+                    user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
+                }
+                accountLoadingProgress.setVisibility(View.GONE);
+                userButton.setVisibility(View.VISIBLE);
+                updateScores();
+                updateUi();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
 
         userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("Rating", 0));
         userButton.setOnClickListener(view -> {

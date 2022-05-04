@@ -3,10 +3,15 @@ package com.sumsung.minigames.mainmenu.games.calculateexpressiongame;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import com.sumsung.minigames.R;
 import com.sumsung.minigames.gamecontrollers.gamecomplicators.CalculateExpressionGameComplicator;
@@ -62,19 +67,27 @@ public class CalculateExpressionGameFragment extends Fragment {
             });
         }
 
+        solutionText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(solutionText.getText().toString().isEmpty()){
+                    return;
+                }
+                if (checkAnswer(expression, Integer.parseInt(solutionText.getText().toString()))) {
+                    gameComplicator.complicateGame();
+                    updateGame();
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
         Button cleanButton = view.findViewById(R.id.clean_button);
         cleanButton.setOnClickListener(v -> resetSolution());
 
-        Button commitButton = view.findViewById(R.id.commit_button);
-        commitButton.setOnClickListener(v -> {
-            if(solutionText.getText().toString().isEmpty()){
-                return;
-            }
-            if (getGamePoints() > 0) {
-                gameComplicator.complicateGame();
-            }
-            updateGame();
-        });
         return view;
     }
 
@@ -106,6 +119,7 @@ public class CalculateExpressionGameFragment extends Fragment {
     private boolean checkAnswer(Expression expression, int answer){
         return expression.getSolution() == answer;
     }
+
     private void presentExpression(){
         expressionText.setText(expression.toString());
     }
@@ -113,17 +127,12 @@ public class CalculateExpressionGameFragment extends Fragment {
     public int getGamePoints(){
         int solution = expression.getSolution();
         int points = 0;
-        for(int i = 0; i< expressionDifficulties.length; i++){
+        for(int i = 0; i < expressionDifficulties.length; i++){
             if(solution <= expressionDifficulties[i]){
                 points = gamePoints[i];
                 break;
             }
         }
-        if(checkAnswer(expression, Integer.parseInt(solutionText.getText().toString()))){
-            return points;
-        }else{
-            return -points;
-        }
+        return points;
     }
-
 }

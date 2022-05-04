@@ -186,15 +186,6 @@
                     android:textSize="20sp"
                     app:cornerRadius="30dp" />
 
-                <Button
-                    android:id="@+id/commit_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/purple_2"
-                    android:fontFamily="@font/button_font"
-                    android:text="OK"
-                    android:textSize="20sp"
-                    app:cornerRadius="30dp" />
             </TableRow>
         </TableLayout>
     </LinearLayout>
