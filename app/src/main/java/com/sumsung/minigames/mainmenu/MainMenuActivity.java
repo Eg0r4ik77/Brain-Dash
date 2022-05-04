@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -44,10 +45,12 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button exitAccountButton;
 
     private MaterialButton userButton;
+
+    private CardView profiledCard;
     private CardView recordCard;
 
     private boolean isShowRecordsButtonClicked;
-
+    private boolean isUserProfileShown;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -80,6 +83,9 @@ public class MainMenuActivity extends AppCompatActivity {
         recordCard = findViewById(R.id.record_card);
         recordCard.setVisibility(View.INVISIBLE);
 
+        profiledCard = findViewById(R.id.profile_card);
+        profiledCard.setVisibility(View.INVISIBLE);
+
         gameRecord1 = findViewById(R.id.game_record_1);
         gameRecord2 = findViewById(R.id.game_record_2);
         gameRecord3 = findViewById(R.id.game_record_3);
@@ -104,7 +110,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
         exitAccountButton.setOnClickListener(view -> {
             FirebaseAuth.getInstance().signOut();
-            updateUi();
+            //updateUi();
+            startActivity(new Intent(this, MainMenuActivity.class));
         });
 
         showRecordsButton.setOnClickListener(view -> {
@@ -143,13 +150,21 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private void updateUi(){
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
-            userButton.setClickable(true);
             userButton.setText("Авторизация");
-           exitAccountButton.setVisibility(View.INVISIBLE);
+            userButton.setOnClickListener(view -> {
+               getSupportFragmentManager()
+                       .beginTransaction()
+                       .replace(R.id.games_content, new AuthorizationFragment())
+                       .commit();
+           });
         }else{
-            userButton.setClickable(false);
             userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("rating", 0));
-            exitAccountButton.setVisibility(View.VISIBLE);
+
+            userButton.setOnClickListener(view -> {
+                if (isUserProfileShown) profiledCard.setVisibility(View.VISIBLE);
+                else profiledCard.setVisibility(View.INVISIBLE);
+                isUserProfileShown = !isUserProfileShown;
+            });
 
             gameRecord1.setText("Таблица Шульте: " + user.getRecord1());
             gameRecord2.setText("Повтори рисунок: " + user.getRecord2());

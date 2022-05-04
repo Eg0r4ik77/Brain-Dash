@@ -1,11 +1,7 @@
 package com.sumsung.minigames.authorization;
 
-import android.annotation.SuppressLint;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
@@ -36,7 +32,7 @@ public class PasswordResetFragment extends Fragment {
 
         EditText emailForPasswordReset = view.findViewById(R.id.email_for_password_reset);
 
-        Button resetPasswordButton = view.findViewById(R.id.reset_password_button_2);
+        Button resetPasswordButton = view.findViewById(R.id.reset_password_button);
         resetPasswordButton.setOnClickListener(view1 -> {
             String email = emailForPasswordReset.getText().toString();
             if(email.isEmpty()){
@@ -51,9 +47,15 @@ public class PasswordResetFragment extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-                        Toast.makeText(getContext(), "Проверьте почту для восстановления пароля", Toast.LENGTH_SHORT);
+                        getActivity()
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.games_content, new AuthorizationFragment())
+                                .commit();
+
+                        Toast.makeText(getContext(), "Проверьте почту для восстановления пароля", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getContext(), "Попробуйте еще раз. Что то пошло не так", Toast.LENGTH_SHORT);
+                        Toast.makeText(getContext(), "Попробуйте еще раз. Что то пошло не так", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
