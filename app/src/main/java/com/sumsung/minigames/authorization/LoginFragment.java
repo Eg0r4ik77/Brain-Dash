@@ -29,6 +29,7 @@ public class LoginFragment extends Fragment {
     private FirebaseDatabase firebaseDatabase;
 
     private Button signInButton;
+    private Button resetPasswordButton;
 
     private EditText email;
     private EditText password;
@@ -49,9 +50,18 @@ public class LoginFragment extends Fragment {
         password = view.findViewById(R.id.password_field);
 
         signInButton = view.findViewById(R.id.sing_in_button);
+        resetPasswordButton = view.findViewById(R.id.reset_password_button);
 
         signInButton.setOnClickListener(view1 -> {
             signIn();
+        });
+
+        resetPasswordButton.setOnClickListener(view12 -> {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.games_content, new PasswordResetFragment())
+                    .commit();
         });
 
         return view;
