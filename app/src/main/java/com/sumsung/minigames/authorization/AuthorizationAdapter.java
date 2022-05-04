@@ -1,4 +1,4 @@
-package com.sumsung.minigames.mainmenu.authorization;
+package com.sumsung.minigames.authorization;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

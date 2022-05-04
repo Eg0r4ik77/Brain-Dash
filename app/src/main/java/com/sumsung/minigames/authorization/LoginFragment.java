@@ -1,4 +1,4 @@
-package com.sumsung.minigames.mainmenu.authorization;
+package com.sumsung.minigames.authorization;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,20 +16,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.sumsung.minigames.R;
-import com.sumsung.minigames.mainmenu.GamesMenuFragment;
-import com.sumsung.minigames.models.User;
 
 public class LoginFragment extends Fragment {
 

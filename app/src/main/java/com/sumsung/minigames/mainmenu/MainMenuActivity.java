@@ -8,7 +8,6 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -23,8 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sumsung.minigames.R;
-import com.sumsung.minigames.mainmenu.authorization.AuthorizationFragment;
+import com.sumsung.minigames.authorization.AuthorizationFragment;
 import com.google.android.material.button.MaterialButton;
+import com.sumsung.minigames.mainmenu.games.GameActivity;
 import com.sumsung.minigames.models.User;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -33,7 +33,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     private User user = new User();
-    private int[] scores = new int[4];
 
     private TextView gameRecord1;
     private TextView gameRecord2;
@@ -57,29 +56,26 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().hide();
 
-
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
         databaseReference =  FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseUser tempUser = FirebaseAuth.getInstance().getCurrentUser();
-                if(tempUser == null){
+                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                if(firebaseUser == null){
                     user = new User();
-                    userButton.setText("Авторизация");
                 }
                 else{
-                    user = snapshot.child(tempUser.getUid()).getValue(User.class);
-                    userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("Rating", 0));
+                    user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
                 }
-                scores = user.getScores();
+                updateScores();
+                updateUi();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
+
 
         recordCard = findViewById(R.id.record_card);
         recordCard.setVisibility(View.INVISIBLE);
@@ -88,9 +84,9 @@ public class MainMenuActivity extends AppCompatActivity {
         gameRecord2 = findViewById(R.id.game_record_2);
         gameRecord3 = findViewById(R.id.game_record_3);
 
-        gameRecord1.setText("Таблица Шульте: " + scores[0]);
-        gameRecord2.setText("Повтори рисунок: " + scores[1]);
-        gameRecord3.setText("Посчитай пример: " + scores[2]);
+        gameRecord1.setText("Таблица Шульте: " + user.getRecord1());
+        gameRecord2.setText("Повтори рисунок: " + user.getRecord2());
+        gameRecord3.setText("Посчитай пример: " + user.getRecord3());
 
         showRecordsButton = findViewById(R.id.show_records_button);
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
@@ -108,7 +104,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         exitAccountButton.setOnClickListener(view -> {
             FirebaseAuth.getInstance().signOut();
-            userButton.setText("Авторизация");
+            updateUi();
         });
 
         showRecordsButton.setOnClickListener(view -> {
@@ -143,5 +139,37 @@ public class MainMenuActivity extends AppCompatActivity {
             dialog.setTitle("Выход из игры");
             dialog.show();
         });
+    }
+
+    private void updateUi(){
+        if(FirebaseAuth.getInstance().getCurrentUser()==null){
+            userButton.setClickable(true);
+            userButton.setText("Авторизация");
+           exitAccountButton.setVisibility(View.INVISIBLE);
+        }else{
+            userButton.setClickable(false);
+            userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("rating", 0));
+            exitAccountButton.setVisibility(View.VISIBLE);
+
+            gameRecord1.setText("Таблица Шульте: " + user.getRecord1());
+            gameRecord2.setText("Повтори рисунок: " + user.getRecord2());
+            gameRecord3.setText("Посчитай пример: " + user.getRecord3());
+        }
+    }
+
+    public void updateScores(){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser == null) return;
+        databaseReference.child(firebaseUser.getUid()).child("record1")
+                .setValue(sharedPreferences.getInt("SchulteTableGameBestScore",0));
+
+        databaseReference.child(firebaseUser.getUid()).child("record2")
+                .setValue(sharedPreferences.getInt("RepeatDrawingGameBestScore",0));
+
+        databaseReference.child(firebaseUser.getUid()).child("record3")
+                .setValue(sharedPreferences.getInt("CalculateExpressionGameBestScore",0));
+
+        databaseReference.child(firebaseUser.getUid()).child("rating")
+                .setValue(sharedPreferences.getInt("rating",0));
     }
 }

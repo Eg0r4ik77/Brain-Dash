@@ -5,7 +5,10 @@ public class User {
     private String email;
     private String password;
 
-    private int[] scores = new int[4];
+    private int record1;
+    private int record2;
+    private int record3;
+    private int rating;
 
     public User(){};
 
@@ -13,6 +16,22 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public int getRecord1() {
+        return record1;
+    }
+
+    public int getRecord2() {
+        return record2;
+    }
+
+    public int getRecord3() {
+        return record3;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     public String getName() {
@@ -23,7 +42,8 @@ public class User {
         this.name = name;
     }
 
-    public int[] getScores(){
-        return scores;
+    public String getEmail() {
+        return email;
     }
+
 }
