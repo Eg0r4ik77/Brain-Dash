@@ -53,6 +53,7 @@
             android:background="@drawable/edit_text_background"
             android:inputType="textPassword"
             android:minHeight="48dp"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

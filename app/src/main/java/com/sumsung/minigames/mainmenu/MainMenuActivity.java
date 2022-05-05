@@ -27,6 +27,7 @@ import com.sumsung.minigames.R;
 import com.sumsung.minigames.authorization.AuthorizationFragment;
 import com.google.android.material.button.MaterialButton;
 import com.sumsung.minigames.mainmenu.games.GameActivity;
+import com.sumsung.minigames.mainmenu.games.ProfileFragment;
 import com.sumsung.minigames.models.User;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -36,24 +37,14 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private User user = new User();
 
-    private TextView gameRecord1;
-    private TextView gameRecord2;
-    private TextView gameRecord3;
-
-    private Button showRecordsButton;
     private Button toGameMenuButton;
     private Button exitButton;
-    private Button exitAccountButton;
 
     private MaterialButton userButton;
-
-    private CardView profiledCard;
-    private CardView recordCard;
 
     private ProgressBar accountLoadingProgress;
 
     private boolean isShowRecordsButtonClicked;
-    private boolean isUserProfileShown;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -66,25 +57,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
 
-        recordCard = findViewById(R.id.record_card);
-        recordCard.setVisibility(View.INVISIBLE);
-
-        profiledCard = findViewById(R.id.profile_card);
-        profiledCard.setVisibility(View.INVISIBLE);
-
-        gameRecord1 = findViewById(R.id.game_record_1);
-        gameRecord2 = findViewById(R.id.game_record_2);
-        gameRecord3 = findViewById(R.id.game_record_3);
-
-        gameRecord1.setText("Таблица Шульте: " + user.getRecord1());
-        gameRecord2.setText("Повтори рисунок: " + user.getRecord2());
-        gameRecord3.setText("Посчитай пример: " + user.getRecord3());
-
-        showRecordsButton = findViewById(R.id.show_records_button);
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
         exitButton = findViewById(R.id.exit_button);
         userButton = findViewById(R.id.user_button);
-        exitAccountButton = findViewById(R.id.exit_account_button);
 
         userButton.setVisibility(View.INVISIBLE);
 
@@ -115,25 +90,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     .beginTransaction()
                     .replace(R.id.games_content, new AuthorizationFragment())
                     .commit();
-        });
-
-        exitAccountButton.setOnClickListener(view -> {
-            FirebaseAuth.getInstance().signOut();
-            //updateUi();
-            startActivity(new Intent(this, MainMenuActivity.class));
-        });
-
-        showRecordsButton.setOnClickListener(view -> {
-            if(isShowRecordsButtonClicked){
-                Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_decrease_anim);
-                recordCard.startAnimation(animation);
-                recordCard.setVisibility(View.INVISIBLE);
-            }else{
-                Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_increase_anim);
-                recordCard.startAnimation(animation);
-                recordCard.setVisibility(View.VISIBLE);
-            }
-            isShowRecordsButtonClicked = !isShowRecordsButtonClicked;
         });
 
         toGameMenuButton.setOnClickListener(v -> {
@@ -170,14 +126,11 @@ public class MainMenuActivity extends AppCompatActivity {
             userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("rating", 0));
 
             userButton.setOnClickListener(view -> {
-                if (isUserProfileShown) profiledCard.setVisibility(View.VISIBLE);
-                else profiledCard.setVisibility(View.INVISIBLE);
-                isUserProfileShown = !isUserProfileShown;
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.games_content, new ProfileFragment())
+                        .commit();
             });
-
-            gameRecord1.setText("Таблица Шульте: " + user.getRecord1());
-            gameRecord2.setText("Повтори рисунок: " + user.getRecord2());
-            gameRecord3.setText("Посчитай пример: " + user.getRecord3());
         }
     }
 
@@ -195,5 +148,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         databaseReference.child(firebaseUser.getUid()).child("rating")
                 .setValue(sharedPreferences.getInt("rating",0));
+    }
+
+    public User getUser(){
+        return user;
     }
 }

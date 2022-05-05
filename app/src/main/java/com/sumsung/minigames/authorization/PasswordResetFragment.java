@@ -61,6 +61,15 @@ public class PasswordResetFragment extends Fragment {
             });
         });
 
+        Button cancelResetButton = view.findViewById(R.id.cancel_reset_button);
+        cancelResetButton.setOnClickListener(v -> {
+            getActivity()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .detach(this)
+                    .commit();
+        });
+
         return view;
 
     }
