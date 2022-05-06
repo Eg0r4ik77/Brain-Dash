@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -54,7 +56,9 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         getSupportActionBar().hide();
-        //flashScreen = findViewById(R.id.flash_screen);
+
+        flashScreen = findViewById(R.id.flash_screen);
+        flashScreen.setBackgroundResource(R.drawable.right_answer_anim);
 
         databaseReference =  FirebaseDatabase.getInstance().getReference("Users");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -125,6 +129,7 @@ public class GameActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void updateScore(){
+        screenAnimationPlay();
         if(fragment instanceof SchulteTableGameFragment){
             score += ((SchulteTableGameFragment)fragment).getGamePoints();
         }else if(fragment instanceof RepeatDrawingGameFragment){
@@ -134,12 +139,17 @@ public class GameActivity extends AppCompatActivity {
         }
         scoreText.setText(getResources().getString(R.string.game_score_text)+ score);
     }
-//    private void screenAnimationPlay(){
-//        AnimationDrawable animationDrawable = (AnimationDrawable) flashScreen.getBackground();
-//        animationDrawable.setEnterFadeDuration(1000);
-//        animationDrawable.setExitFadeDuration(1000);
-//        animationDrawable.start();
-//    }
+
+    private void screenAnimationPlay(){
+        Drawable current = flashScreen.getBackground();
+        if(current instanceof AnimationDrawable){
+            AnimationDrawable animationDrawable = (AnimationDrawable) current;
+            animationDrawable.setEnterFadeDuration(1000);
+            animationDrawable.setExitFadeDuration(1000);
+            animationDrawable.start();
+        }
+    }
+
     public void setTimerPaused(boolean paused){
         if(paused) timer.pause();
         else timer.run();
