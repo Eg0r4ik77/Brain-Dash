@@ -3,6 +3,7 @@ package com.sumsung.minigames.mainmenu.games;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
@@ -40,8 +41,8 @@ public class ProfileFragment extends Fragment {
     private Button exitAccountButton;
     private Button saveChangesButton;
     private Button editPasswordButton;
+    private Button deleteAccountButton;
 
-    private CardView recordCard;
     private TextView gameRecord1;
     private TextView gameRecord2;
     private TextView gameRecord3;
@@ -58,8 +59,6 @@ public class ProfileFragment extends Fragment {
 
         user = ((MainMenuActivity)getActivity()).getUser();
 
-        recordCard = view.findViewById(R.id.record_card);
-
         editName = view.findViewById(R.id.edit_name);
         editName.setText(user.getName());
 
@@ -73,30 +72,42 @@ public class ProfileFragment extends Fragment {
 
         closeButton = view.findViewById(R.id.close_profile_button);
         closeButton.setOnClickListener(view1 -> {
-            getActivity().
-                    getSupportFragmentManager()
-                    .beginTransaction()
-                    .detach(this)
-                    .commit();
+            String newName = editName.getText().toString();
+            if(!user.getName().equals((newName))){
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Сохранить изменения?").
+                        setPositiveButton("Да", (dialogInterface, i) -> {
+                            saveChanges();
+                        }).setNegativeButton("Нет", (dialogInterface, i) -> {
+                            dialogInterface.cancel();
+                            close();
+                });
+                AlertDialog dialog = builder.create();
+                dialog.setTitle("Сохранение изменений");
+                dialog.show();
+            }else{
+                close();
+            }
         });
 
         exitAccountButton = view.findViewById(R.id.exit_account_button);
         exitAccountButton.setOnClickListener(v -> {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getContext(),getActivity().getClass()));
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage("Действительно хотите выйти из аккаунта?").
+                    setPositiveButton("Да", (dialogInterface, i) -> {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(getContext(),getActivity().getClass()));
+                    }).setNegativeButton("Нет", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+            });
+            AlertDialog dialog = builder.create();
+            dialog.setTitle("Выход из аккаунта");
+            dialog.show();
         });
 
         saveChangesButton = view.findViewById(R.id.save_changes_button);
         saveChangesButton.setOnClickListener(v -> {
-            String newName = editName.getText().toString();
-
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-            FirebaseUser firebaseUser =  FirebaseAuth.getInstance().getCurrentUser();
-
-            databaseReference.child(firebaseUser.getUid()).child("name").setValue(newName)
-                    .addOnSuccessListener(unused -> {
-                        Toast.makeText(getContext(), "Данные сохранены", Toast.LENGTH_SHORT).show();
-                    });
+            saveChanges();
         });
 
         editPasswordButton = view.findViewById(R.id.edit_password_button);
@@ -108,7 +119,65 @@ public class ProfileFragment extends Fragment {
                     .commit();
         });
 
+        deleteAccountButton = view.findViewById(R.id.delete_account_button);
+        deleteAccountButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage("Действительно хотите удалить аккаунт?").
+                    setPositiveButton("Да", (dialogInterface, i) -> {
+                        deleteAccount();
+                    }).setNegativeButton("Нет", (dialogInterface, i) -> {
+                dialogInterface.cancel();
+            });
+            AlertDialog dialog = builder.create();
+            dialog.setTitle("Удаление аккаунта");
+            dialog.show();
+        });
+
         return view;
+    }
+
+    private void deleteAccount(){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).
+                removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(getContext(), "Аккаунт удален", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//            firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    Toast.makeText(getContext(), "Аккаунт удален", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+        startActivity(new Intent(getContext(), getActivity().getClass()));
+    }
+
+    private void saveChanges(){
+        String newName = editName.getText().toString();
+        if(newName.isEmpty()){
+            Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        FirebaseUser firebaseUser =  FirebaseAuth.getInstance().getCurrentUser();
+
+        databaseReference.child(firebaseUser.getUid()).child("name").setValue(newName)
+                .addOnSuccessListener(unused -> {
+                    Toast.makeText(getContext(), "Имя изменено", Toast.LENGTH_SHORT).show();
+                    close();
+                });
+    }
+
+    private void close(){
+        getActivity().
+                getSupportFragmentManager()
+                .beginTransaction()
+                .detach(this)
+                .commit();
     }
 
 }

@@ -12,7 +12,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/edit_password_button"
-        android:layout_width="212dp"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:backgroundTint="@color/purple_2"
         android:fontFamily="@font/button_font"
@@ -20,58 +20,53 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:cornerRadius="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/exit_account_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_name" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/record_card"
-        android:layout_width="245dp"
-        android:layout_height="133dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        app:cardCornerRadius="20sp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="288dp"
+        android:layout_height="122dp"
+        android:background="@color/textview_color"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/line1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/game_record_1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/textview_color"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/button_font"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/game_record_1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/button_font"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/game_record_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/button_font"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/game_record_3"
+            app:layout_constraintTop_toBottomOf="@+id/game_record_1" />
 
-            <TextView
-                android:id="@+id/game_record_2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/button_font"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="20sp" />
+        <TextView
+            android:id="@+id/game_record_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/button_font"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <TextView
-                android:id="@+id/game_record_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/button_font"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
         android:id="@+id/close_profile_button"
@@ -86,21 +81,20 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/exit_account_button"
-        android:layout_width="212dp"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:backgroundTint="@color/purple_2"
         android:fontFamily="@font/button_font"
-        android:text="выйти из системы"
+        android:text="выйти из аккаунта"
         android:textAlignment="center"
         android:textSize="20sp"
         app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save_changes_button"
-        android:layout_width="212dp"
+        android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:backgroundTint="@color/purple_2"
         android:fontFamily="@font/button_font"
@@ -108,7 +102,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:cornerRadius="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/exit_account_button"
+        app:layout_constraintBottom_toTopOf="@+id/line2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -117,9 +111,13 @@
         android:layout_width="235dp"
         android:layout_height="40dp"
         android:ems="10"
-        android:hint="Имя"
         android:fontFamily="@font/button_font"
+        android:textAlignment="center"
+        android:hint="Имя"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:inputType="textPersonName"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line1" />
@@ -129,16 +127,34 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#c0c0c0"
-        app:layout_constraintBottom_toTopOf="@+id/save_changes_button"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-37dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/save_changes_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_marginBottom="100dp"
         android:background="#c0c0c0"
-        app:layout_constraintBottom_toTopOf="@+id/save_changes_button"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintBottom_toTopOf="@+id/delete_account_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/delete_account_button"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:backgroundTint="@color/purple_2"
+        android:fontFamily="@font/button_font"
+        android:text="Удалить аккаунт"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:cornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
