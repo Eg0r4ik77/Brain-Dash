@@ -1,5 +1,6 @@
 package com.sumsung.minigames.mainmenu.games;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -7,20 +8,34 @@ import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sumsung.minigames.R;
 import com.sumsung.minigames.gamecontrollers.Timer;
+import com.sumsung.minigames.mainmenu.MainMenuActivity;
 import com.sumsung.minigames.mainmenu.games.calculateexpressiongame.CalculateExpressionGameFragment;
 import com.sumsung.minigames.mainmenu.games.repeatdrawinggame.RepeatDrawingGameFragment;
 import com.sumsung.minigames.mainmenu.games.shultetablegame.SchulteTableGameFragment;
+import com.sumsung.minigames.models.User;
 
 public class GameActivity extends AppCompatActivity {
+
+    private User user;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference databaseReference;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -44,11 +59,15 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         getSupportActionBar().hide();
         //flashScreen = findViewById(R.id.flash_screen);
+
+        databaseReference =  FirebaseDatabase.getInstance().getReference("Users");
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
         progressBar = findViewById(R.id.progress_bar);
         scoreText = findViewById(R.id.score_text);
         timerText = findViewById(R.id.timer_text);
         gameLayout = findViewById(R.id.game_fragment);
-        timer = new Timer(61000, timerText, progressBar) {
+        timer = new Timer(11000, timerText, progressBar) {
             @Override
             public void finish() {
                 handleGameResult();
@@ -68,6 +87,20 @@ public class GameActivity extends AppCompatActivity {
                         .commit();
             }
         };
+
+        if(firebaseUser != null){
+            databaseReference.child(firebaseUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if(task.isSuccessful()) {
+                        user = task.getResult().getValue(User.class);
+                    }else{
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                }
+            });
+        }
+
 
         startGame(getIntent().getIntExtra("gameNumber", 1));
     }
@@ -117,35 +150,57 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void handleGameResult(){
-        sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-
-        if(fragment instanceof SchulteTableGameFragment){
-            editor.putInt("SchulteTableGameBestScore",
-                    Math.max(score,
-                            sharedPreferences.getInt("SchulteTableGameBestScore",0)));
-        }else if(fragment instanceof RepeatDrawingGameFragment){
-            editor.putInt("RepeatDrawingGameBestScore",
-                    Math.max(score,
-                            sharedPreferences.getInt("RepeatDrawingGameBestScore",0)));
+        if(firebaseUser == null){
+            sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+            if(fragment instanceof SchulteTableGameFragment){
+                editor.putInt("SchulteTableGameBestScore",
+                        Math.max(score,
+                                sharedPreferences.getInt("SchulteTableGameBestScore",0)));
+            }else if(fragment instanceof RepeatDrawingGameFragment){
+                editor.putInt("RepeatDrawingGameBestScore",
+                        Math.max(score,
+                                sharedPreferences.getInt("RepeatDrawingGameBestScore",0)));
+            }else{
+                editor.putInt("CalculateExpressionGameBestScore",
+                        Math.max(score,
+                                sharedPreferences.getInt("CalculateExpressionGameBestScore",0)));
+            }
+            editor.commit();
         }else{
-            editor.putInt("CalculateExpressionGameBestScore",
-                    Math.max(score,
-                            sharedPreferences.getInt("CalculateExpressionGameBestScore",0)));
+            if(fragment instanceof SchulteTableGameFragment){
+                databaseReference.child(firebaseUser.getUid()).child("record1")
+                        .setValue(Math.max(score, user.getRecord1()));
+            }else if(fragment instanceof RepeatDrawingGameFragment){
+                databaseReference.child(firebaseUser.getUid()).child("record2")
+                        .setValue(Math.max(score, user.getRecord2()));
+            }else{
+                databaseReference.child(firebaseUser.getUid()).child("record3")
+                        .setValue(Math.max(score, user.getRecord3()));
+            }
+            databaseReference.child(firebaseUser.getUid()).child("rating").setValue(score+user.getRating());
         }
-        editor.putInt("rating", score + sharedPreferences.getInt("rating",0));
-        editor.commit();
     }
 
 
     public int getBestScore(){
-        sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
-        if(fragment instanceof SchulteTableGameFragment){
-            return sharedPreferences.getInt("SchulteTableGameBestScore",0);
-        }else if(fragment instanceof RepeatDrawingGameFragment){
-            return sharedPreferences.getInt("RepeatDrawingGameBestScore",0);
+        if(firebaseUser == null){
+            sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
+            if(fragment instanceof SchulteTableGameFragment){
+                return sharedPreferences.getInt("SchulteTableGameBestScore",0);
+            }else if(fragment instanceof RepeatDrawingGameFragment){
+                return sharedPreferences.getInt("RepeatDrawingGameBestScore",0);
+            }else{
+                return sharedPreferences.getInt("CalculateExpressionGameBestScore",0);
+            }
         }else{
-            return sharedPreferences.getInt("CalculateExpressionGameBestScore",0);
+            if(fragment instanceof SchulteTableGameFragment){
+                return user.getRecord1();
+            }else if(fragment instanceof RepeatDrawingGameFragment){
+                return user.getRecord2();
+            }else{
+                return user.getRecord3();
+            }
         }
     }
 }

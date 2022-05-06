@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -35,7 +36,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private DatabaseReference databaseReference;
 
-    private User user = new User();
+    private FirebaseUser firebaseUser;
+    private User user;
 
     private Button toGameMenuButton;
     private Button exitButton;
@@ -43,8 +45,6 @@ public class MainMenuActivity extends AppCompatActivity {
     private MaterialButton userButton;
 
     private ProgressBar accountLoadingProgress;
-
-    private boolean isShowRecordsButtonClicked;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -57,6 +57,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
 
+        TextView textView1 = findViewById(R.id.textView1);
+        TextView textView2 = findViewById(R.id.textView2);
+        TextView textView3 = findViewById(R.id.textView3);
+
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
         exitButton = findViewById(R.id.exit_button);
         userButton = findViewById(R.id.user_button);
@@ -67,29 +71,27 @@ public class MainMenuActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(firebaseUser == null){
                     user = new User();
+                    textView1.setText(String.valueOf(sharedPreferences.getInt("SchulteTableGameBestScore", 0)));
+                    textView2.setText(String.valueOf(sharedPreferences.getInt("RepeatDrawingGameBestScore", 0)));
+                    textView3.setText(String.valueOf(sharedPreferences.getInt("CalculateExpressionGameBestScore", 0)));
                 }
                 else{
                     user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
+                    textView1.setText("???");
+                    textView2.setText("???");
+                    textView3.setText("???");
+
                 }
                 accountLoadingProgress.setVisibility(View.GONE);
                 userButton.setVisibility(View.VISIBLE);
-                updateScores();
                 updateUi();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
-        });
-
-        userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("Rating", 0));
-        userButton.setOnClickListener(view -> {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.games_content, new AuthorizationFragment())
-                    .commit();
         });
 
         toGameMenuButton.setOnClickListener(v -> {
@@ -114,7 +116,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void updateUi(){
-        if(FirebaseAuth.getInstance().getCurrentUser()==null){
+        if(firebaseUser == null){
             userButton.setText("Авторизация");
             userButton.setOnClickListener(view -> {
                getSupportFragmentManager()
@@ -123,8 +125,7 @@ public class MainMenuActivity extends AppCompatActivity {
                        .commit();
            });
         }else{
-            userButton.setText(user.getName()+"\nRating: " + sharedPreferences.getInt("rating", 0));
-
+            userButton.setText(user.getName()+"\nRating: " + user.getRating());
             userButton.setOnClickListener(view -> {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -132,22 +133,6 @@ public class MainMenuActivity extends AppCompatActivity {
                         .commit();
             });
         }
-    }
-
-    public void updateScores(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUser == null) return;
-        databaseReference.child(firebaseUser.getUid()).child("record1")
-                .setValue(sharedPreferences.getInt("SchulteTableGameBestScore",0));
-
-        databaseReference.child(firebaseUser.getUid()).child("record2")
-                .setValue(sharedPreferences.getInt("RepeatDrawingGameBestScore",0));
-
-        databaseReference.child(firebaseUser.getUid()).child("record3")
-                .setValue(sharedPreferences.getInt("CalculateExpressionGameBestScore",0));
-
-        databaseReference.child(firebaseUser.getUid()).child("rating")
-                .setValue(sharedPreferences.getInt("rating",0));
     }
 
     public User getUser(){

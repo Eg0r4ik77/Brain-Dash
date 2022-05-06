@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.sumsung.minigames.models.User;
 public class ProfileFragment extends Fragment {
 
     private User user;
+    private  FirebaseUser firebaseUser;
 
     private ImageButton closeButton;
     private Button exitAccountButton;
@@ -95,6 +97,11 @@ public class ProfileFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage("Действительно хотите выйти из аккаунта?").
                     setPositiveButton("Да", (dialogInterface, i) -> {
+                        getActivity()
+                                .getSharedPreferences("Records", getActivity().MODE_PRIVATE)
+                                .edit()
+                                .clear()
+                                .apply();
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(getContext(),getActivity().getClass()));
                     }).setNegativeButton("Нет", (dialogInterface, i) -> {
@@ -137,21 +144,20 @@ public class ProfileFragment extends Fragment {
     }
 
     private void deleteAccount(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).
                 removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(getContext(), "Аккаунт удален", Toast.LENGTH_SHORT).show();
+                firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Toast.makeText(getContext(), "Аккаунт удален", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
-
-//            firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Void> task) {
-//                    Toast.makeText(getContext(), "Аккаунт удален", Toast.LENGTH_SHORT).show();
-//                }
-//            });
+        FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getContext(), getActivity().getClass()));
     }
 
