@@ -35,18 +35,19 @@
 
         <com.google.android.material.button.MaterialButton
 
-            android:id="@+id/show_records_button"
+            android:id="@+id/leaderboard_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:backgroundTint="@color/purple_2"
             android:fontFamily="@font/button_font"
-            android:text="Рекорды"
+            android:text="Таблица лидеров"
             android:textSize="20sp"
             android:visibility="visible"
             app:cornerRadius="30dp"
-            app:iconTintMode="screen" />
+            app:iconTintMode="screen"
+            tools:visibility="visible" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/exit_button"
@@ -91,6 +92,7 @@
         app:layout_constraintTop_toTopOf="@+id/user_button" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/records_layout"
         android:layout_width="218dp"
         android:layout_height="146dp"
         app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
@@ -99,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/user_button">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/record1_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
@@ -108,23 +110,74 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/record2_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
+            app:layout_constraintBottom_toTopOf="@+id/record3_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView1" />
+            app:layout_constraintTop_toBottomOf="@+id/record1_text" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/record3_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/leaderboard_layout"
+        android:layout_width="376dp"
+        android:layout_height="441dp"
+        android:background="@color/purple_2"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/games_content"
+        app:layout_constraintEnd_toEndOf="@+id/games_content"
+        app:layout_constraintStart_toStartOf="@+id/games_content"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible">
+
+        <ImageButton
+            android:id="@+id/close_leaderboard_button"
+            android:layout_width="65dp"
+            android:layout_height="54dp"
+            android:background="#0000"
+            android:contentDescription="close_leaderboard"
+            android:scaleType="fitEnd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/textview_rounded_corner"
+            android:fontFamily="@font/button_font"
+            android:gravity="center"
+            android:padding="10sp"
+
+            android:text="Таблица лидеров"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/leaderboard_view"
+            android:layout_width="410dp"
+            android:layout_height="349dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout

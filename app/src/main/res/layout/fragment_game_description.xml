@@ -42,10 +42,10 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/textview_rounded_corner"
                 android:fontFamily="@font/button_font"
-                android:textSize="20sp"
                 android:padding="50sp"
                 android:text="Some description"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/start_game_button"
