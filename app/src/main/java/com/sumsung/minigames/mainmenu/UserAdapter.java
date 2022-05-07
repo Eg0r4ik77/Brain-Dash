@@ -46,7 +46,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                 view.setBackgroundColor(Color.GREEN);
             }
             points.setText(String.valueOf(user.getRating()));
-
         }
     }
 

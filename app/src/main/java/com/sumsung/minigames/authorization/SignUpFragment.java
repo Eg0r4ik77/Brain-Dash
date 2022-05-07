@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,16 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sumsung.minigames.R;
+import com.sumsung.minigames.mainmenu.MainMenuActivity;
 import com.sumsung.minigames.models.User;
+
+import java.util.ArrayList;
 
 
 public class SignUpFragment extends Fragment {
@@ -67,6 +72,8 @@ public class SignUpFragment extends Fragment {
 
     private void signUp() {
 
+        String nameString = name.getText().toString();
+
         if(TextUtils.isEmpty(name.getText().toString())){
             Toast.makeText(getContext(), "Введите логин", Toast.LENGTH_SHORT).show();
             return;
@@ -78,6 +85,34 @@ public class SignUpFragment extends Fragment {
         if(TextUtils.isEmpty(password.getText().toString())){
             Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
             return;
+        }
+        if(nameString.length() < 6){
+            Toast.makeText(getContext(), "Логин должет иметь более 5 символов", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(nameString.length() > 20){
+            Toast.makeText(getContext(), "Логин должет иметь не более 20 символов", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!nameString.matches("^[a-zA-Z0-9_.-]*$")){
+            Toast.makeText(getContext(), "Логин должет иметь только латинские буквы, цифры, символы тире, подчеркивания и точки", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(nameString.charAt(nameString.length()-1) == '.'){
+            Toast.makeText(getContext(), "Логин не может заканитваться точкой", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!Character.isLetter(nameString.charAt(0))){
+            Toast.makeText(getContext(), "Логин должен начинаться с буквы", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ArrayList<User> users = ((MainMenuActivity)getActivity()).getUsers();
+        for (User user : users){
+            if(user.getName().equals(nameString)){
+                Toast.makeText(getContext(), "Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
             firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
@@ -93,21 +128,19 @@ public class SignUpFragment extends Fragment {
                                 Toast.makeText(getContext(), "Пользователь добавлен!", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getContext(), getActivity().getClass()));
                             }
-                        })
-                       .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if(e instanceof FirebaseAuthWeakPasswordException){
-                            Toast.makeText(getContext(), "Пароль должет иметь более 5 символов", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (e instanceof FirebaseAuthInvalidCredentialsException){
-                            Toast.makeText(getContext(), "Email адрес имеет неправильный формат", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (e instanceof FirebaseAuthUserCollisionException){
-                            Toast.makeText(getContext(), "Учетная запись с таким email уже сущесвует", Toast.LENGTH_SHORT).show();
-                        }
+                        });
+        }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    if (e instanceof FirebaseAuthInvalidCredentialsException){
+                        Toast.makeText(getContext(), "Email адрес имеет неправильный формат", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (e instanceof FirebaseAuthUserCollisionException){
+                        Toast.makeText(getContext(), "Учетная запись с таким email уже сущесвует", Toast.LENGTH_SHORT).show();
+                    }else if(e instanceof FirebaseAuthWeakPasswordException){
+                        Toast.makeText(getContext(), "Пароль должет иметь более 5 символов", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
-        });
     }
 }

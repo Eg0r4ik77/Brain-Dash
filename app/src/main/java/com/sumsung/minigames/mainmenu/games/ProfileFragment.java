@@ -33,6 +33,8 @@ import com.sumsung.minigames.authorization.PasswordResetFragment;
 import com.sumsung.minigames.mainmenu.MainMenuActivity;
 import com.sumsung.minigames.models.User;
 
+import java.util.ArrayList;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -166,6 +168,35 @@ public class ProfileFragment extends Fragment {
         if(newName.isEmpty()){
             Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_SHORT).show();
             return;
+        }
+
+        if(newName.length() < 6){
+            Toast.makeText(getContext(), "Логин должет иметь более 5 символов", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(newName.length() > 20){
+            Toast.makeText(getContext(), "Логин должет иметь не более 20 символов", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!newName.matches("^[a-zA-Z0-9_.-]*$")){
+            Toast.makeText(getContext(), "Логин должет иметь только латинские буквы, цифры, символы тире, подчеркивания и точки", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(newName.charAt(newName.length()-1) == '.'){
+            Toast.makeText(getContext(), "Логин не может заканитваться точкой", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!Character.isLetter(newName.charAt(0))){
+            Toast.makeText(getContext(), "Логин должен начинаться с буквы", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ArrayList<User> users = ((MainMenuActivity)getActivity()).getUsers();
+        for (User user : users){
+            if(user.getName().equals(newName)){
+                Toast.makeText(getContext(), "Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");

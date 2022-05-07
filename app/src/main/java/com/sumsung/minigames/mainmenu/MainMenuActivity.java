@@ -90,21 +90,27 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
                 if(firebaseUser == null){
+                    users = new ArrayList<>();
+                    for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        users.add(dataSnapshot.getValue(User.class));
+                    }
+
                     user = new User();
                     recordsLayout.setVisibility(View.VISIBLE);
                     textView1.setText(String.valueOf(sharedPreferences.getInt("SchulteTableGameBestScore", 0)));
                     textView2.setText(String.valueOf(sharedPreferences.getInt("RepeatDrawingGameBestScore", 0)));
                     textView3.setText(String.valueOf(sharedPreferences.getInt("CalculateExpressionGameBestScore", 0)));
                 }
-                else{
+                else {
                     user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
                     recordsLayout.setVisibility(View.INVISIBLE);
 
                     users = new ArrayList<>();
-                    for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User currentUser = dataSnapshot.getValue(User.class);
-                        if(currentUser.getName().equals(user.getName())){
+                        if (currentUser.getName().equals(user.getName())) {
                             currentUser.setName("Вы");
                         }
                         users.add(currentUser);
@@ -115,12 +121,11 @@ public class MainMenuActivity extends AppCompatActivity {
                         public int compare(User user1, User user2) {
                             int points1 = user1.getRating();
                             int points2 = user2.getRating();
-                            if(points1 > points2) return -1;
-                            if(points1 == points2) return 0;
+                            if (points1 > points2) return -1;
+                            if (points1 == points2) return 0;
                             return 1;
                         }
                     }));
-
                     leaderboard.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                     leaderboard.setAdapter(new UserAdapter(users));
                 }
@@ -188,5 +193,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public User getUser(){
         return user;
+    }
+    public ArrayList<User> getUsers(){
+        return users;
     }
 }

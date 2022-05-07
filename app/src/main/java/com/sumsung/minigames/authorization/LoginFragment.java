@@ -85,15 +85,14 @@ public class LoginFragment extends Fragment {
                         startActivity(new Intent(getContext(), getActivity().getClass()));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                if(e instanceof FirebaseAuthInvalidUserException){
-                    Toast.makeText(getContext(), "Учетная запись с таким email не сущесвует ", Toast.LENGTH_SHORT).show();
-                }else if(e instanceof FirebaseAuthInvalidCredentialsException){
-                    Toast.makeText(getContext(), "Введен неправильный пароль", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(e instanceof FirebaseAuthInvalidUserException){
+                            Toast.makeText(getContext(), "Учетная запись с таким email не сущесвует ", Toast.LENGTH_SHORT).show();
+                        }else if(e instanceof FirebaseAuthInvalidCredentialsException){
+                            Toast.makeText(getContext(), "Введен неправильный пароль", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
 }
