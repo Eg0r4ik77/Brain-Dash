@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sumsung.minigames.R;
+import com.sumsung.minigames.authorization.AuthorizationFragment;
 import com.sumsung.minigames.authorization.PasswordResetFragment;
 import com.sumsung.minigames.mainmenu.MainMenuActivity;
 import com.sumsung.minigames.models.User;
@@ -116,11 +117,25 @@ public class ProfileFragment extends Fragment {
 
         editPasswordButton = view.findViewById(R.id.edit_password_button);
         editPasswordButton.setOnClickListener(v -> {
-            getActivity().
-                    getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.games_content, new PasswordResetFragment())
-                    .commit();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage(R.string.do_you_want_to_update_password).
+                    setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+                        FirebaseAuth.getInstance().sendPasswordResetEmail(user.getEmail()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    Toast.makeText(getContext(), getString(R.string.check_email), Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getContext(), getString(R.string.try_again), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }).setNegativeButton(getString(R.string.no), (dialogInterface, i) -> {
+                dialogInterface.cancel();
+            });
+            AlertDialog dialog = builder.create();
+            dialog.setTitle(getString(R.string.password_update));
+            dialog.show();
         });
 
         deleteAccountButton = view.findViewById(R.id.delete_account_button);
