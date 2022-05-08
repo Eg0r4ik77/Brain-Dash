@@ -45,7 +45,6 @@ public class LanguageAdapter extends BaseAdapter {
         View v = layoutInflater
                 .inflate(R.layout.language_item, viewGroup, false);
 
-        //Drawable languageImage = (Drawable) getItem(i);
         ImageView spinnerImage = (ImageView) v.findViewById(R.id.language_image);
         spinnerImage.setImageDrawable(context.getDrawable(R.drawable.ic_languages));
 

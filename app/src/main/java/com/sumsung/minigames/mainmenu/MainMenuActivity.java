@@ -161,15 +161,28 @@ public class MainMenuActivity extends AppCompatActivity {
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 1) setLocale("ru");
-                else setLocale("en");
+
+                if(i == 1){
+                    setLocale("ru");
+                    getSharedPreferences("Languages", MODE_PRIVATE)
+                            .edit().putString("Language","ru")
+                            .apply();
+                }
+                else{
+                    setLocale("en");
+                    getSharedPreferences("Languages", MODE_PRIVATE)
+                            .edit().putString("Language","en")
+                            .apply();
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                setLocale("en");
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+
+        languageSpinner.setSelection( getSharedPreferences("Languages", MODE_PRIVATE)
+                .getString("Language", "en")
+                .equals("ru") ? 1 : 0);
 
         toGameMenuButton.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction().
