@@ -36,11 +36,11 @@ public class PasswordResetFragment extends Fragment {
         resetPasswordButton.setOnClickListener(view1 -> {
             String email = emailForPasswordReset.getText().toString();
             if(email.isEmpty()){
-                Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
                 return;
             }
             if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                Toast.makeText(getContext(), "Почта введена неверно", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.email_is_incorrect), Toast.LENGTH_SHORT).show();
                 return;
             }
             FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -53,9 +53,9 @@ public class PasswordResetFragment extends Fragment {
                                 .replace(R.id.games_content, new AuthorizationFragment())
                                 .commit();
 
-                        Toast.makeText(getContext(), "Проверьте почту для восстановления пароля", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.check_email), Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getContext(), "Попробуйте еще раз. Что то пошло не так", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.try_again), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

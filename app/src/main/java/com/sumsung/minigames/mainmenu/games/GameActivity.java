@@ -107,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     private void startGame(int gameNumber){
-        scoreText.setText(getResources().getString(R.string.game_score_text) + score);
+        scoreText.setText(getResources().getString(R.string.game_score) + score);
 
         timer.run();
         switch (gameNumber){
@@ -137,7 +137,7 @@ public class GameActivity extends AppCompatActivity {
         }else{
             score += ((CalculateExpressionGameFragment)fragment).getGamePoints();
         }
-        scoreText.setText(getResources().getString(R.string.game_score_text)+ score);
+        scoreText.setText(getResources().getString(R.string.game_score)+ score);
     }
 
     private void screenAnimationPlay(){

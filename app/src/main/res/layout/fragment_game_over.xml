@@ -19,7 +19,7 @@
             android:background="@drawable/textview_rounded_corner"
             android:fontFamily="@font/button_font"
             android:padding="20dp"
-            android:text="@string/best_game_score_text"
+            android:text="@string/best_game_score"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

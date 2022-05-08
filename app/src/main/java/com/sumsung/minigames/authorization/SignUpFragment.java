@@ -5,10 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +18,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.database.DatabaseReference;
@@ -75,42 +72,42 @@ public class SignUpFragment extends Fragment {
         String nameString = name.getText().toString();
 
         if(TextUtils.isEmpty(name.getText().toString())){
-            Toast.makeText(getContext(), "Введите логин", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.enter_login), Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(email.getText().toString())){
-            Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(password.getText().toString())){
-            Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
             return;
         }
         if(nameString.length() < 6){
-            Toast.makeText(getContext(), "Логин должет иметь более 5 символов", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_min_length), Toast.LENGTH_SHORT).show();
             return;
         }
         if(nameString.length() > 20){
-            Toast.makeText(getContext(), "Логин должет иметь не более 20 символов", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_max_length), Toast.LENGTH_SHORT).show();
             return;
         }
         if(!nameString.matches("^[a-zA-Z0-9_.-]*$")){
-            Toast.makeText(getContext(), "Логин должет иметь только латинские буквы, цифры, символы тире, подчеркивания и точки", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_contains_specific_characters), Toast.LENGTH_SHORT).show();
             return;
         }
         if(nameString.charAt(nameString.length()-1) == '.'){
-            Toast.makeText(getContext(), "Логин не может заканитваться точкой", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_does_not_end_with_a_dot), Toast.LENGTH_SHORT).show();
             return;
         }
         if (!Character.isLetter(nameString.charAt(0))){
-            Toast.makeText(getContext(), "Логин должен начинаться с буквы", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_starts_with_letter), Toast.LENGTH_SHORT).show();
             return;
         }
 
         ArrayList<User> users = ((MainMenuActivity)getActivity()).getUsers();
         for (User user : users){
             if(user.getName().equals(nameString)){
-                Toast.makeText(getContext(), "Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.user_with_name_exists), Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -125,7 +122,7 @@ public class SignUpFragment extends Fragment {
                             @Override
                             public void onSuccess(Void unused) {
                                 getActivity().getSharedPreferences("Records", getActivity().MODE_PRIVATE).edit().clear().commit();
-                                Toast.makeText(getContext(), "Пользователь добавлен!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), getString(R.string.user_is_added), Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getContext(), getActivity().getClass()));
                             }
                         });
@@ -133,12 +130,10 @@ public class SignUpFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     if (e instanceof FirebaseAuthInvalidCredentialsException){
-                        Toast.makeText(getContext(), "Email адрес имеет неправильный формат", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.invalid_email_or_password), Toast.LENGTH_SHORT).show();
                     }
                     else if (e instanceof FirebaseAuthUserCollisionException){
-                        Toast.makeText(getContext(), "Учетная запись с таким email уже сущесвует", Toast.LENGTH_SHORT).show();
-                    }else if(e instanceof FirebaseAuthWeakPasswordException){
-                        Toast.makeText(getContext(), "Пароль должет иметь более 5 символов", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.user_with_email_exists), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

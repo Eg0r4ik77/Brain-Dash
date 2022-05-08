@@ -34,8 +34,6 @@ public class LoginFragment extends Fragment {
     private EditText email;
     private EditText password;
 
-    private View view;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -70,10 +68,10 @@ public class LoginFragment extends Fragment {
     private void signIn() {
 
         if(TextUtils.isEmpty(email.getText().toString())){
-            Toast.makeText(getContext(), "Введите почту", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
             return;
         }else if(TextUtils.isEmpty(password.getText().toString())){
-            Toast.makeText(getContext(), "Введите пароль", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -81,16 +79,16 @@ public class LoginFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(getContext(), "Вход выполнен", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.login_completed), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getContext(), getActivity().getClass()));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         if(e instanceof FirebaseAuthInvalidUserException){
-                            Toast.makeText(getContext(), "Учетная запись с таким email не сущесвует ", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), getString(R.string.account_does_not_exist), Toast.LENGTH_SHORT).show();
                         }else if(e instanceof FirebaseAuthInvalidCredentialsException){
-                            Toast.makeText(getContext(), "Введен неправильный пароль", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), R.string.wrong_password, Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -42,11 +42,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             rank.setText(String.valueOf(users.indexOf(user)+1));
             userImage.setImageResource(R.drawable.ic_user);
             userName.setText(user.getName());
-            if(user.getName().equals("Вы")){
+            if(user.getName().equals("Вы") || user.getName().equals("You")){
                 view.setBackgroundColor(Color.GREEN);
             }
             points.setText(String.valueOf(user.getRating()));
         }
+
     }
 
     @NonNull

@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,13 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 public class AuthorizationFragment extends Fragment {
 
-    private final String[] names = {"Вход", "Регистрация"};
+    private String[] names;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        names = new String[]{getString(R.string.log_in), getString(R.string.sign_up)};
+    }
 
     @Nullable
     @Override

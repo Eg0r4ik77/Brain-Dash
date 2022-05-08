@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroidGame</string>
+    <string name="number_button_1">1</string>
+    <string name="number_button_2">2</string>
+    <string name="number_button_3">3</string>
+    <string name="number_button_4">4</string>
+    <string name="number_button_5">5</string>
+    <string name="number_button_6">6</string>
+    <string name="number_button_7">7</string>
+    <string name="number_button_8">8</string>
+    <string name="number_button_9">9</string>
+    <string name="number_button_0">0</string>
+    <string name="clean_button">C</string>
+    <string name="start_game">Начать игру!</string>
+    <string name="calculate_expression">Посчитай пример</string>
+    <string name="schulte_table">Таблица Шульте</string>
+    <string name="repeat_drawing">Повтори рисунок</string>
+    <string name="restart">попробовать снова</string>
+    <string name="to_menu">в меню</string>
+    <string name="back">НАЗАД</string>
+    <string name="game_score">Результат:\\u0020</string>
+    <string name="best_game_score">Лучший результат:\\u0020</string>
+    <string name="exit">Выход</string>
+    <string name="games">Игры</string>
+    <string name="exit_alert">Действительно хотите выйти из игры?</string>
+    <string name="leaderboard">Таблица лидеров</string>
+    <string name="update_password">Изменить пароль</string>
+    <string name="log_out">выйти из аккаунта</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="name">Имя</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="you">Вы</string>
+    <string name="authorization">Авторизация</string>
+    <string-array name="descriptions">
+        <item>Последовательно найдите все числа как можно большее количество раз за 60 секунд</item>
+        <item>Повторите как можно большее количество рисунков за 60 секунд</item>
+        <item>Решите как можно большее количество примеров за 60 секунд</item>
+    </string-array>
+    <string name="email">Электронная почта</string>
+    <string name="password">Пароль</string>
+    <string name="log_in">Войти</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="login">Логин</string>
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="enter_email">Введите почту</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="account_does_not_exist">Учетная запись с таким email не сущесвует</string>
+    <string name="wrong_password">Введен неправильный пароль</string>
+    <string name="login_completed">Вход выполнен</string>
+    <string name="enter_login">Введите логин</string>
+    <string name="login_min_length">Логин должет иметь более 5 символов</string>
+    <string name="login_max_length">Логин должет иметь не более 20 символов</string>
+    <string name="login_starts_with_letter">Логин должен начинаться с буквы</string>
+    <string name="login_does_not_end_with_a_dot">Логин не может заканчиваться точкой</string>
+    <string name="login_contains_specific_characters">Логин должет иметь только латинские буквы, цифры, символы тире, подчеркивания и точки</string>
+    <string name="user_with_name_exists">Пользователь с таким именем уже существует</string>
+    <string name="user_is_added">Пользователь добавлен!</string>
+    <string name="user_with_email_exists">Учетная запись с таким email уже сущесвует</string>
+    <string name="invalid_email_or_password">Email адрес или пароль введены неверно.Пароль должет иметь более 5 символов</string>
+    <string name="points">"Очки: "</string>
+    <string name="quiting_the_game">Выход из игры</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="Log_in_to_see_the_leaderboard">Авторизуйтесь для просмотра таблицы лидеров</string>
+    <string name="name_is_updated">Имя обновлено</string>
+    <string name="changes_saving">Сохранение изменений</string>
+    <string name="do_you_want_to_log_out">Действительно хотите выйти из аккаунта?</string>
+    <string name="logout">Выход из аккаунта</string>
+    <string name="account_deletion">Удаление аккаунта</string>
+    <string name="do_you_want_to_delete_account">Действительно хотите удалить аккаунт?</string>
+    <string name="account_is_deleted">Аккаунт удален</string>
+    <string name="email_is_incorrect">Почта введена неверно</string>
+    <string name="check_email">Проверьте почту для восстановления пароля</string>
+    <string name="try_again">Попробуйте еще раз. Что то пошло не так</string>
+</resources>

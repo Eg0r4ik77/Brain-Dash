@@ -23,13 +23,13 @@
             android:id="@+id/tabItem1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Вход" />
+            android:text="@string/log_in" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabItem2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Регистрация" />
+            android:text="@string/sign_up" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
@@ -47,7 +47,7 @@
         android:id="@+id/close_authorization_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Назад"
+        android:text="@string/back"
         android:backgroundTint="@color/purple_2"
         android:fontFamily="@font/button_font"
         android:textSize="20sp"

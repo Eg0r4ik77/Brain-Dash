@@ -8,6 +8,16 @@
     android:background="@drawable/gradient_background">
 
 
+    <Spinner
+        android:id="@+id/language_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#0000"
+        android:popupBackground="#0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/user_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/main_buttons_layout"
         android:layout_width="221dp"
@@ -31,7 +41,7 @@
             android:fontFamily="@font/button_font"
             android:textSize="20sp"
             app:cornerRadius="30dp"
-            android:text="@string/games_text"/>
+            android:text="@string/games"/>
 
         <com.google.android.material.button.MaterialButton
 
@@ -42,7 +52,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/purple_2"
             android:fontFamily="@font/button_font"
-            android:text="Таблица лидеров"
+            android:text="@string/leaderboard"
             android:textSize="20sp"
             android:visibility="visible"
             app:cornerRadius="30dp"
@@ -56,7 +66,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/purple_2"
             android:fontFamily="@font/button_font"
-            android:text="@string/exit_text"
+            android:text="@string/exit"
             android:textSize="20sp"
             app:cornerRadius="30dp" />
 
@@ -162,7 +172,7 @@
             android:gravity="center"
             android:padding="10sp"
 
-            android:text="Таблица лидеров"
+            android:text="@string/leaderboard"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

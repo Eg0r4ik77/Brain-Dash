@@ -26,8 +26,8 @@ public class GameOverFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        gameScoreText = getString(R.string.game_score_text);
-        bestGameScoreText = getString(R.string.best_game_score_text);
+        gameScoreText = getString(R.string.game_score);
+        bestGameScoreText = getString(R.string.best_game_score);
     }
 
     @SuppressLint("SetTextI18n")

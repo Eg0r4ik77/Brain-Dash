@@ -4,11 +4,9 @@ package com.sumsung.minigames.mainmenu.games;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -70,24 +65,24 @@ public class ProfileFragment extends Fragment {
         gameRecord2 = view.findViewById(R.id.game_record_2);
         gameRecord3 = view.findViewById(R.id.game_record_3);
 
-        gameRecord1.setText("Таблица Шульте: " + user.getRecord1());
-        gameRecord2.setText("Повтори рисунок: " + user.getRecord2());
-        gameRecord3.setText("Посчитай пример: " + user.getRecord3());
+        gameRecord1.setText(getString(R.string.schulte_table) +": " + user.getRecord1());
+        gameRecord2.setText(getString(R.string.repeat_drawing)+": " + user.getRecord2());
+        gameRecord3.setText(getString(R.string.calculate_expression)+": " + user.getRecord3());
 
         closeButton = view.findViewById(R.id.close_profile_button);
         closeButton.setOnClickListener(view1 -> {
             String newName = editName.getText().toString();
             if(!user.getName().equals((newName))){
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Сохранить изменения?").
-                        setPositiveButton("Да", (dialogInterface, i) -> {
+                builder.setMessage(getString(R.string.save_changes)+"?").
+                        setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
                             saveChanges();
-                        }).setNegativeButton("Нет", (dialogInterface, i) -> {
+                        }).setNegativeButton(getString(R.string.no), (dialogInterface, i) -> {
                             dialogInterface.cancel();
                             close();
                 });
                 AlertDialog dialog = builder.create();
-                dialog.setTitle("Сохранение изменений");
+                dialog.setTitle(getString(R.string.changes_saving));
                 dialog.show();
             }else{
                 close();
@@ -97,8 +92,8 @@ public class ProfileFragment extends Fragment {
         exitAccountButton = view.findViewById(R.id.exit_account_button);
         exitAccountButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("Действительно хотите выйти из аккаунта?").
-                    setPositiveButton("Да", (dialogInterface, i) -> {
+            builder.setMessage(getString(R.string.do_you_want_to_log_out)).
+                    setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
                         getActivity()
                                 .getSharedPreferences("Records", getActivity().MODE_PRIVATE)
                                 .edit()
@@ -106,11 +101,11 @@ public class ProfileFragment extends Fragment {
                                 .apply();
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(getContext(),getActivity().getClass()));
-                    }).setNegativeButton("Нет", (dialogInterface, i) -> {
+                    }).setNegativeButton(getString(R.string.no), (dialogInterface, i) -> {
                 dialogInterface.cancel();
             });
             AlertDialog dialog = builder.create();
-            dialog.setTitle("Выход из аккаунта");
+            dialog.setTitle(getString(R.string.logout));
             dialog.show();
         });
 
@@ -131,14 +126,14 @@ public class ProfileFragment extends Fragment {
         deleteAccountButton = view.findViewById(R.id.delete_account_button);
         deleteAccountButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("Действительно хотите удалить аккаунт?").
-                    setPositiveButton("Да", (dialogInterface, i) -> {
+            builder.setMessage(R.string.do_you_want_to_delete_account).
+                    setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
                         deleteAccount();
-                    }).setNegativeButton("Нет", (dialogInterface, i) -> {
+                    }).setNegativeButton(getString(R.string.no), (dialogInterface, i) -> {
                 dialogInterface.cancel();
             });
             AlertDialog dialog = builder.create();
-            dialog.setTitle("Удаление аккаунта");
+            dialog.setTitle(getString(R.string.account_deletion));
             dialog.show();
         });
 
@@ -154,7 +149,7 @@ public class ProfileFragment extends Fragment {
                 firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getContext(), "Аккаунт удален", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.account_is_deleted), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -166,35 +161,35 @@ public class ProfileFragment extends Fragment {
     private void saveChanges(){
         String newName = editName.getText().toString();
         if(newName.isEmpty()){
-            Toast.makeText(getContext(), "Введите имя", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.enter_login), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if(newName.length() < 6){
-            Toast.makeText(getContext(), "Логин должет иметь более 5 символов", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_min_length), Toast.LENGTH_SHORT).show();
             return;
         }
         if(newName.length() > 20){
-            Toast.makeText(getContext(), "Логин должет иметь не более 20 символов", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_max_length), Toast.LENGTH_SHORT).show();
             return;
         }
         if(!newName.matches("^[a-zA-Z0-9_.-]*$")){
-            Toast.makeText(getContext(), "Логин должет иметь только латинские буквы, цифры, символы тире, подчеркивания и точки", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_contains_specific_characters), Toast.LENGTH_SHORT).show();
             return;
         }
         if(newName.charAt(newName.length()-1) == '.'){
-            Toast.makeText(getContext(), "Логин не может заканитваться точкой", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_does_not_end_with_a_dot), Toast.LENGTH_SHORT).show();
             return;
         }
         if (!Character.isLetter(newName.charAt(0))){
-            Toast.makeText(getContext(), "Логин должен начинаться с буквы", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getString(R.string.login_starts_with_letter), Toast.LENGTH_SHORT).show();
             return;
         }
 
         ArrayList<User> users = ((MainMenuActivity)getActivity()).getUsers();
         for (User user : users){
             if(user.getName().equals(newName)){
-                Toast.makeText(getContext(), "Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.user_with_name_exists), Toast.LENGTH_SHORT).show();
                 return;
             }
         }
@@ -204,7 +199,7 @@ public class ProfileFragment extends Fragment {
 
         databaseReference.child(firebaseUser.getUid()).child("name").setValue(newName)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(getContext(), "Имя изменено", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.name_is_updated), Toast.LENGTH_SHORT).show();
                     close();
                 });
     }

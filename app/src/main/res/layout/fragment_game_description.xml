@@ -31,7 +31,7 @@
                 android:layout_marginTop="58dp"
                 android:backgroundTint="@color/purple_2"
                 android:fontFamily="@font/button_font"
-                android:text="@string/back_text"
+                android:text="@string/back"
                 android:textSize="20sp"
                 app:cornerRadius="30dp" />
 

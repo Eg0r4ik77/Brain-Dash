@@ -8,12 +8,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,9 +39,12 @@ import com.google.android.material.button.MaterialButton;
 import com.sumsung.minigames.mainmenu.games.ProfileFragment;
 import com.sumsung.minigames.models.User;
 
+import org.intellij.lang.annotations.Language;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -111,7 +123,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User currentUser = dataSnapshot.getValue(User.class);
                         if (currentUser.getName().equals(user.getName())) {
-                            currentUser.setName("Вы");
+                            currentUser.setName(getString(R.string.you));
                         }
                         users.add(currentUser);
                     }
@@ -138,6 +150,27 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
+
+        ArrayList<Drawable> languages = new ArrayList<>();
+        languages.add(getDrawable(R.drawable.ic_english));
+        languages.add(getDrawable(R.drawable.ic_russian));
+        LanguageAdapter languageAdapter = new LanguageAdapter(this, languages);;
+        Spinner languageSpinner = findViewById(R.id.language_spinner);
+        languageSpinner.setAdapter(languageAdapter);
+
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 1) setLocale("ru");
+                else setLocale("en");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                setLocale("en");
+            }
+        });
+
         toGameMenuButton.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction().
                     replace(R.id.games_content, new GamesMenuFragment())
@@ -146,7 +179,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         leaderboardButton.setOnClickListener(v -> {
             if(firebaseUser == null){
-                Toast.makeText(this, "Авторизуйтесь для просмотра таблицы лидеров", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.Log_in_to_see_the_leaderboard), Toast.LENGTH_SHORT).show();
             }else{
                 leaderboardLayout.setVisibility(View.VISIBLE);
             }
@@ -158,22 +191,27 @@ public class MainMenuActivity extends AppCompatActivity {
 
         exitButton.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.exit_alert_text).
-            setPositiveButton("Да", (dialogInterface, i) -> {
+            builder.setMessage(R.string.exit_alert).
+            setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
                 finishAffinity();
                 System.exit(0);
-            }).setNegativeButton("Нет", (dialogInterface, i) -> {
+            }).setNegativeButton(getString(R.string.no), (dialogInterface, i) -> {
                 dialogInterface.cancel();
             });
             AlertDialog dialog = builder.create();
-            dialog.setTitle("Выход из игры");
+            dialog.setTitle(getString(R.string.quiting_the_game));
             dialog.show();
         });
     }
 
     private void updateUi(){
+
+        exitButton.setText(getString(R.string.exit));
+        leaderboardButton.setText(getString(R.string.leaderboard));
+        toGameMenuButton.setText(getString(R.string.games));
+
         if(firebaseUser == null){
-            userButton.setText("Авторизация");
+            userButton.setText(R.string.authorization);
             userButton.setOnClickListener(view -> {
                getSupportFragmentManager()
                        .beginTransaction()
@@ -181,7 +219,7 @@ public class MainMenuActivity extends AppCompatActivity {
                        .commit();
            });
         }else{
-            userButton.setText(user.getName()+"\nRating: " + user.getRating());
+            userButton.setText(user.getName()+"\n"+getString(R.string.points) + user.getRating());
             userButton.setOnClickListener(view -> {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -196,5 +234,15 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public ArrayList<User> getUsers(){
         return users;
+    }
+
+    public void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+        updateUi();
     }
 }
