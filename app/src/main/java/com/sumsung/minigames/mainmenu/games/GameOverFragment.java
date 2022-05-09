@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -43,6 +45,12 @@ public class GameOverFragment extends Fragment {
 
         gameResultText.setText(gameScoreText +  getArguments().getInt("score") +
                 "\n" + bestGameScoreText + ((GameActivity)getActivity()).getBestScore());
+
+        Animation animationRight = AnimationUtils.loadAnimation(getContext(), R.anim.trans_right);
+        Animation animationLeft = AnimationUtils.loadAnimation(getContext(), R.anim.trans_left);
+        gameResultText.startAnimation(animationRight);
+        toMenuButton.startAnimation(animationLeft);
+        restartButton.startAnimation(animationRight);
 
         toMenuButton.setOnClickListener(v ->{
             ((GameActivity)getActivity()).playMenuButtonSound();

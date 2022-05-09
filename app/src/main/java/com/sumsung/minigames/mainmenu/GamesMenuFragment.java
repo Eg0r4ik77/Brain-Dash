@@ -35,6 +35,8 @@ public class GamesMenuFragment extends Fragment {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
+                    .setCustomAnimations(R.anim.alpha_anim, R.anim.fade)
+                    .addToBackStack(null)
                     .replace(R.id.games_content, fr)
                     .commit();
         });
@@ -48,7 +50,10 @@ public class GamesMenuFragment extends Fragment {
             fr.setArguments(bundle);
 
             getActivity()
-                    .getSupportFragmentManager().beginTransaction()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.alpha_anim, R.anim.fade)
+                    .addToBackStack(null)
                     .replace(R.id.games_content, fr)
                     .commit();
         });
@@ -62,7 +67,10 @@ public class GamesMenuFragment extends Fragment {
             fr.setArguments(bundle);
 
             getActivity()
-                    .getSupportFragmentManager().beginTransaction()
+                    .getSupportFragmentManager()
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.alpha_anim, R.anim.fade)
+                    .addToBackStack(null)
                     .replace(R.id.games_content, fr)
                     .commit();
         });

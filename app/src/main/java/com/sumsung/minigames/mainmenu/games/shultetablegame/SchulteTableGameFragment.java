@@ -2,6 +2,8 @@ package com.sumsung.minigames.mainmenu.games.shultetablegame;
 
 import android.annotation.SuppressLint;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -87,7 +89,7 @@ public class SchulteTableGameFragment extends Fragment {
                 button.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "button_font2.otf"));
                 button.setTextSize(20);
                 button.setTextColor(getResources().getColor(R.color.white));
-                button.setBackground(getResources().getDrawable(R.drawable.purple_button_rounded_corner));
+                button.setBackgroundResource(R.drawable.wrong_button_splash);
                 button.setText(String.valueOf(schulteTable.getTable()[i][j]));
 
                 android.widget.TableRow.LayoutParams p = new android.widget.TableRow.LayoutParams();
@@ -97,6 +99,14 @@ public class SchulteTableGameFragment extends Fragment {
 
 
                 button.setOnClickListener(v -> {
+                    Drawable current = button.getBackground();
+                    if(current instanceof AnimationDrawable){
+                        AnimationDrawable animationDrawable = (AnimationDrawable) current;
+                        animationDrawable.setEnterFadeDuration(1000);
+                        animationDrawable.setExitFadeDuration(1000);
+                        animationDrawable.start();
+                    }
+
                     ((GameActivity)getActivity()).playGameButtonSound();
                     applyChoice(button);
                 });

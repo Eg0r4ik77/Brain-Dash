@@ -228,6 +228,7 @@ public class ProfileFragment extends Fragment {
         getActivity().
                 getSupportFragmentManager()
                 .beginTransaction()
+                .setCustomAnimations(R.anim.trans_up, R.anim.trans_up)
                 .detach(this)
                 .commit();
     }

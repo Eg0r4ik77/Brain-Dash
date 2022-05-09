@@ -61,6 +61,7 @@ public class LoginFragment extends Fragment {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
+                    .addToBackStack(null)
                     .replace(R.id.games_content, new PasswordResetFragment())
                     .commit();
         });

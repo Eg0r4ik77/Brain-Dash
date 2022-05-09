@@ -17,6 +17,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -86,9 +88,6 @@ public class MainMenuActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
         soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
 
-        if(soundSharedPreferences.getInt("On", 1) == 1){
-            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_menu));
-        }
 
         leaderboardLayout = findViewById(R.id.leaderboard_layout);
         leaderboard = findViewById(R.id.leaderboard_view);
@@ -197,8 +196,10 @@ public class MainMenuActivity extends AppCompatActivity {
 
         toGameMenuButton.setOnClickListener(v -> {
             playMenuButtonSound();
-            getSupportFragmentManager().beginTransaction().
-                    replace(R.id.games_content, new GamesMenuFragment())
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(null)
+                    .replace(R.id.games_content, new GamesMenuFragment())
                     .commit();
         });
 
@@ -207,12 +208,16 @@ public class MainMenuActivity extends AppCompatActivity {
             if(firebaseUser == null){
                 Toast.makeText(this, getString(R.string.Log_in_to_see_the_leaderboard), Toast.LENGTH_SHORT).show();
             }else{
+                Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_increase_anim);
+                ((ConstraintLayout)findViewById(R.id.leaderboard_layout)).startAnimation(animation);
                 leaderboardLayout.setVisibility(View.VISIBLE);
             }
         });
 
         closeLeaderboardButton.setOnClickListener(v -> {
             menuButtonSound.start();
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_decrease_anim);
+            ((ConstraintLayout)findViewById(R.id.leaderboard_layout)).startAnimation(animation);
             leaderboardLayout.setVisibility(View.INVISIBLE);
         });
 
@@ -255,9 +260,10 @@ public class MainMenuActivity extends AppCompatActivity {
             userButton.setOnClickListener(view -> {
                 playMenuButtonSound();
                 getSupportFragmentManager()
-                       .beginTransaction()
-                       .replace(R.id.games_content, new AuthorizationFragment())
-                       .commit();
+                        .beginTransaction()
+                        .addToBackStack(null)
+                        .replace(R.id.games_content, new AuthorizationFragment())
+                        .commit();
            });
         }else{
             userButton.setText(user.getName()+"\n"+getString(R.string.points) + user.getRating());
@@ -265,6 +271,8 @@ public class MainMenuActivity extends AppCompatActivity {
                 playMenuButtonSound();
                 getSupportFragmentManager()
                         .beginTransaction()
+                        .setCustomAnimations(R.anim.trans_down, R.anim.trans_up)
+                        .addToBackStack(null)
                         .replace(R.id.games_content, new ProfileFragment())
                         .commit();
             });
@@ -288,9 +296,6 @@ public class MainMenuActivity extends AppCompatActivity {
         updateUi();
     }
 
-    @Override
-    public void onBackPressed() {}
-
     public void playMenuButtonSound(){
         if(soundSharedPreferences.getInt("On", 1) == 1){
             menuButtonSound.start();
@@ -302,6 +307,20 @@ public class MainMenuActivity extends AppCompatActivity {
             soundButton.setBackgroundResource(R.drawable.ic_sound_on);
         }else{
             soundButton.setBackgroundResource(R.drawable.ic_sound_off);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(this, MusicService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(soundSharedPreferences.getInt("On", 1) == 1){
+            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_menu));
         }
     }
 

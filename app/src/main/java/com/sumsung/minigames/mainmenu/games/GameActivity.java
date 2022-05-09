@@ -68,9 +68,6 @@ public class GameActivity extends AppCompatActivity {
 
         soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
 
-        if(soundSharedPreferences.getInt("On", 1) == 1){
-            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_game));
-        }
 
         gameOverSound = MediaPlayer.create(this, R.raw.sound_game_over);
         menuButtonSound = MediaPlayer.create(this, R.raw.sound_menu_button);
@@ -247,4 +244,21 @@ public class GameActivity extends AppCompatActivity {
         if(soundSharedPreferences.getInt("On", 1) == 0) return;
         menuButtonSound.start();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopService(new Intent(this, MusicService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(soundSharedPreferences.getInt("On", 1) == 1){
+            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_game));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {}
 }
