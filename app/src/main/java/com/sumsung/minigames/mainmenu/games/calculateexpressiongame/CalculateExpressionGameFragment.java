@@ -96,7 +96,6 @@ public class CalculateExpressionGameFragment extends Fragment {
     }
 
     private void resetSolution(){
-        ((GameActivity)getActivity()).playGameButtonSound();
         solutionText.setText(null);
         currentSolutionText = "";
     }

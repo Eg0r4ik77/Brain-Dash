@@ -54,6 +54,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_result_text" />
 
+        <TextView
+            android:id="@+id/new_best_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:text="@string/new_best_score"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:fontFamily="@font/button_font"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/game_result_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -23,6 +23,7 @@ public class GameOverFragment extends Fragment {
 
     private String gameScoreText;
     private String bestGameScoreText;
+    private String newBestScore;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -30,6 +31,7 @@ public class GameOverFragment extends Fragment {
 
         gameScoreText = getString(R.string.game_score);
         bestGameScoreText = getString(R.string.best_game_score);
+        newBestScore = getString(R.string.new_best_score);
     }
 
     @SuppressLint("SetTextI18n")
@@ -42,9 +44,15 @@ public class GameOverFragment extends Fragment {
         Button restartButton = view.findViewById(R.id.restart_button);
 
         TextView gameResultText = view.findViewById(R.id.game_result_text);
+        TextView newBestScore = view.findViewById(R.id.new_best_score);
 
-        gameResultText.setText(gameScoreText +  getArguments().getInt("score") +
-                "\n" + bestGameScoreText + ((GameActivity)getActivity()).getBestScore());
+        int score = getArguments().getInt("score");
+        int bestScore = ((GameActivity)getActivity()).getBestScore();
+
+        gameResultText.setText(gameScoreText + score +
+                "\n" + bestGameScoreText + bestScore);
+
+        newBestScore.setVisibility(score > bestScore ? View.VISIBLE : View.INVISIBLE);
 
         Animation animationRight = AnimationUtils.loadAnimation(getContext(), R.anim.trans_right);
         Animation animationLeft = AnimationUtils.loadAnimation(getContext(), R.anim.trans_left);

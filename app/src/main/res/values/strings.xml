@@ -69,6 +69,7 @@
     <string name="try_again">Try again. Something went wrong</string>
     <string name="do_you_want_to_update_password">Do you want to update password?</string>
     <string name="password_update">Password update</string>
+    <string name="new_best_score">New best score!</string>
     <string-array name="descriptions">
         <item>Find all the numbers in ascending order as many times as possible in 60 seconds</item>
         <item>Repeat as many drawings as possible in 60 seconds</item>
