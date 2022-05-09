@@ -8,19 +8,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,11 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.sumsung.minigames.R;
 import com.sumsung.minigames.authorization.AuthorizationFragment;
 import com.google.android.material.button.MaterialButton;
-import com.sumsung.minigames.mainmenu.games.ProfileFragment;
 import com.sumsung.minigames.models.User;
 
-import org.intellij.lang.annotations.Language;
-
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,6 +46,7 @@ import java.util.Locale;
 public class MainMenuActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
+    private SharedPreferences soundSharedPreferences;
     private DatabaseReference databaseReference;
 
     private FirebaseUser firebaseUser;
@@ -58,6 +56,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private Button leaderboardButton;
     private Button exitButton;
 
+    private ImageButton soundButton;
     private ImageButton closeLeaderboardButton;
 
     private MaterialButton userButton;
@@ -71,6 +70,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     private ArrayList<User> users;
 
+    private MediaPlayer menuButtonSound;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +79,16 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().hide();
 
+
+        menuButtonSound = MediaPlayer.create(this, R.raw.sound_menu_button);
+
         accountLoadingProgress = findViewById(R.id.account_loading_progress);
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
+        soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
+
+        if(soundSharedPreferences.getInt("On", 1) == 1){
+            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_menu));
+        }
 
         leaderboardLayout = findViewById(R.id.leaderboard_layout);
         leaderboard = findViewById(R.id.leaderboard_view);
@@ -94,6 +103,8 @@ public class MainMenuActivity extends AppCompatActivity {
         exitButton = findViewById(R.id.exit_button);
         userButton = findViewById(R.id.user_button);
         closeLeaderboardButton = findViewById(R.id.close_leaderboard_button);
+        soundButton = findViewById(R.id.sound_button);
+        updateSoundButtonImage();
 
         userButton.setVisibility(View.INVISIBLE);
 
@@ -185,12 +196,14 @@ public class MainMenuActivity extends AppCompatActivity {
                 .equals("ru") ? 1 : 0);
 
         toGameMenuButton.setOnClickListener(v -> {
+            playMenuButtonSound();
             getSupportFragmentManager().beginTransaction().
                     replace(R.id.games_content, new GamesMenuFragment())
                     .commit();
         });
 
         leaderboardButton.setOnClickListener(v -> {
+            playMenuButtonSound();
             if(firebaseUser == null){
                 Toast.makeText(this, getString(R.string.Log_in_to_see_the_leaderboard), Toast.LENGTH_SHORT).show();
             }else{
@@ -199,10 +212,12 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
         closeLeaderboardButton.setOnClickListener(v -> {
+            menuButtonSound.start();
             leaderboardLayout.setVisibility(View.INVISIBLE);
         });
 
         exitButton.setOnClickListener(v -> {
+            playMenuButtonSound();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.exit_alert).
             setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
@@ -215,10 +230,22 @@ public class MainMenuActivity extends AppCompatActivity {
             dialog.setTitle(getString(R.string.quiting_the_game));
             dialog.show();
         });
+
+        soundButton.setOnClickListener(view -> {
+            playMenuButtonSound();
+            if(soundSharedPreferences.getInt("On", 1) == 1){
+                soundSharedPreferences.edit().putInt("On", 0).apply();
+                stopService(new Intent(this, MusicService.class));
+            }else{
+                soundSharedPreferences.edit().putInt("On", 1).apply();
+                startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_menu));
+            }
+            updateSoundButtonImage();
+            Log.i("Sound",String.valueOf(getSharedPreferences("Sound", MODE_PRIVATE).getInt("On", 1)));
+        });
     }
 
     private void updateUi(){
-
         exitButton.setText(getString(R.string.exit));
         leaderboardButton.setText(getString(R.string.leaderboard));
         toGameMenuButton.setText(getString(R.string.games));
@@ -226,7 +253,8 @@ public class MainMenuActivity extends AppCompatActivity {
         if(firebaseUser == null){
             userButton.setText(R.string.authorization);
             userButton.setOnClickListener(view -> {
-               getSupportFragmentManager()
+                playMenuButtonSound();
+                getSupportFragmentManager()
                        .beginTransaction()
                        .replace(R.id.games_content, new AuthorizationFragment())
                        .commit();
@@ -234,6 +262,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }else{
             userButton.setText(user.getName()+"\n"+getString(R.string.points) + user.getRating());
             userButton.setOnClickListener(view -> {
+                playMenuButtonSound();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.games_content, new ProfileFragment())
@@ -258,4 +287,22 @@ public class MainMenuActivity extends AppCompatActivity {
         resources.updateConfiguration(config, resources.getDisplayMetrics());
         updateUi();
     }
+
+    @Override
+    public void onBackPressed() {}
+
+    public void playMenuButtonSound(){
+        if(soundSharedPreferences.getInt("On", 1) == 1){
+            menuButtonSound.start();
+        }
+    }
+
+    private void updateSoundButtonImage(){
+        if(soundSharedPreferences.getInt("On", 1) == 1){
+            soundButton.setBackgroundResource(R.drawable.ic_sound_on);
+        }else{
+            soundButton.setBackgroundResource(R.drawable.ic_sound_off);
+        }
+    }
+
 }

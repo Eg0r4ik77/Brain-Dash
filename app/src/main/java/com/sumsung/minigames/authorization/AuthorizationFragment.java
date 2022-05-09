@@ -16,6 +16,7 @@ import android.widget.Button;
 import com.sumsung.minigames.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.sumsung.minigames.mainmenu.MainMenuActivity;
 
 public class AuthorizationFragment extends Fragment {
 
@@ -44,6 +45,7 @@ public class AuthorizationFragment extends Fragment {
         }).attach();
 
         closeAuthorizationButton.setOnClickListener(view1 -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()

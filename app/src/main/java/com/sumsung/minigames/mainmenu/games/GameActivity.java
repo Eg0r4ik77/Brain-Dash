@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -24,12 +26,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sumsung.minigames.R;
 import com.sumsung.minigames.gamecontrollers.Timer;
+import com.sumsung.minigames.mainmenu.MusicService;
 import com.sumsung.minigames.mainmenu.games.calculateexpressiongame.CalculateExpressionGameFragment;
 import com.sumsung.minigames.mainmenu.games.repeatdrawinggame.RepeatDrawingGameFragment;
 import com.sumsung.minigames.mainmenu.games.shultetablegame.SchulteTableGameFragment;
 import com.sumsung.minigames.models.User;
 
 public class GameActivity extends AppCompatActivity {
+
+    private SharedPreferences soundSharedPreferences;
+
+    private MediaPlayer gameButtonSound;
+    private MediaPlayer gameOverSound;
+    private MediaPlayer menuButtonSound;
 
     private User user;
     private FirebaseUser firebaseUser;
@@ -57,6 +66,15 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         getSupportActionBar().hide();
 
+        soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
+
+        if(soundSharedPreferences.getInt("On", 1) == 1){
+            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_game));
+        }
+
+        gameOverSound = MediaPlayer.create(this, R.raw.sound_game_over);
+        menuButtonSound = MediaPlayer.create(this, R.raw.sound_menu_button);
+
         flashScreen = findViewById(R.id.flash_screen);
         flashScreen.setBackgroundResource(R.drawable.right_answer_anim);
 
@@ -75,6 +93,9 @@ public class GameActivity extends AppCompatActivity {
                new Handler().postDelayed((Runnable) () -> {
                    progressBar.setProgress(0);
                }, 1000);
+
+
+               playGameOverSound();
 
                 GameOverFragment fragment = new GameOverFragment();
                 Bundle bundle = new Bundle();
@@ -208,5 +229,22 @@ public class GameActivity extends AppCompatActivity {
                 return user.getRecord3();
             }
         }
+    }
+
+    public void playGameButtonSound(){
+        if(soundSharedPreferences.getInt("On", 1) == 0) return;
+        gameButtonSound = MediaPlayer.create(this, R.raw.sound_game_button);
+        gameButtonSound.setOnCompletionListener(mediaPlayer -> mediaPlayer.reset());
+        gameButtonSound.setVolume(0.2f, 0.2f);
+        gameButtonSound.start();
+    }
+    public void playGameOverSound(){
+        if(soundSharedPreferences.getInt("On", 1) == 0) return;
+        stopService(new Intent(this, MusicService.class));
+        gameOverSound.start();
+    }
+    public void playMenuButtonSound(){
+        if(soundSharedPreferences.getInt("On", 1) == 0) return;
+        menuButtonSound.start();
     }
 }

@@ -7,7 +7,7 @@
     android:background="@drawable/gradient_background"
     android:clickable="true"
     android:contentDescription="Profile"
-    tools:context=".mainmenu.games.ProfileFragment">
+    tools:context=".mainmenu.ProfileFragment">
 
 
     <com.google.android.material.button.MaterialButton

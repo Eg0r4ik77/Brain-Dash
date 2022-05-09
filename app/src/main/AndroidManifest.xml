@@ -8,12 +8,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidGame"
-        >
-        <activity
-            android:name="com.sumsung.minigames.mainmenu.games.GameActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
+        android:theme="@style/Theme.AndroidGame">
+        <service android:enabled="true" android:name=".mainmenu.MusicService" />
         <activity
             android:name="com.sumsung.minigames.mainmenu.MainMenuActivity"
             android:exported="true"
@@ -26,6 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.sumsung.minigames.mainmenu.games.GameActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

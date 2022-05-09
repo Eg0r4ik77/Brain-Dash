@@ -46,6 +46,7 @@ public class GameDescriptionFragment extends Fragment {
         descriptionText.setText(descriptions[this.getArguments().getInt("gameNumber")-1]);
 
         startButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             v.setClickable(false);
             timer = new Timer(4000, timerText) {
                 @Override
@@ -57,6 +58,7 @@ public class GameDescriptionFragment extends Fragment {
         });
 
         backButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             if(timer != null){
                 timer.pause();
             }

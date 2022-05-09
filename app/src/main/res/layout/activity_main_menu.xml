@@ -7,7 +7,6 @@
     tools:context="com.sumsung.minigames.mainmenu.MainMenuActivity"
     android:background="@drawable/gradient_background">
 
-
     <Spinner
         android:id="@+id/language_spinner"
         android:layout_width="wrap_content"
@@ -189,6 +188,18 @@
 
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/sound_button"
+        android:layout_width="55dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#0000"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/user_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/games_content"

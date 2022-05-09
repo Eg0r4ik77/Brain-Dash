@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.sumsung.minigames.R;
+import com.sumsung.minigames.mainmenu.MainMenuActivity;
 
 
 public class PasswordResetFragment extends Fragment {
@@ -34,6 +35,7 @@ public class PasswordResetFragment extends Fragment {
 
         Button resetPasswordButton = view.findViewById(R.id.reset_password_button);
         resetPasswordButton.setOnClickListener(view1 -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             String email = emailForPasswordReset.getText().toString();
             if(email.isEmpty()){
                 Toast.makeText(getContext(), getString(R.string.enter_email), Toast.LENGTH_SHORT).show();
@@ -63,6 +65,7 @@ public class PasswordResetFragment extends Fragment {
 
         Button cancelResetButton = view.findViewById(R.id.cancel_reset_button);
         cancelResetButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()

@@ -1,4 +1,4 @@
-package com.sumsung.minigames.mainmenu.games;
+package com.sumsung.minigames.mainmenu;
 
 
 import androidx.annotation.NonNull;
@@ -72,6 +72,7 @@ public class ProfileFragment extends Fragment {
 
         closeButton = view.findViewById(R.id.close_profile_button);
         closeButton.setOnClickListener(view1 -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             String newName = editName.getText().toString();
             if(!user.getName().equals((newName))){
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -92,6 +93,7 @@ public class ProfileFragment extends Fragment {
 
         exitAccountButton = view.findViewById(R.id.exit_account_button);
         exitAccountButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage(getString(R.string.do_you_want_to_log_out)).
                     setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
@@ -112,11 +114,13 @@ public class ProfileFragment extends Fragment {
 
         saveChangesButton = view.findViewById(R.id.save_changes_button);
         saveChangesButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             saveChanges();
         });
 
         editPasswordButton = view.findViewById(R.id.edit_password_button);
         editPasswordButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage(R.string.do_you_want_to_update_password).
                     setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
@@ -140,6 +144,7 @@ public class ProfileFragment extends Fragment {
 
         deleteAccountButton = view.findViewById(R.id.delete_account_button);
         deleteAccountButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage(R.string.do_you_want_to_delete_account).
                     setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {

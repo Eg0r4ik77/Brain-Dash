@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sumsung.minigames.R;
+import com.sumsung.minigames.mainmenu.MainMenuActivity;
 
 public class LoginFragment extends Fragment {
 
@@ -51,10 +52,12 @@ public class LoginFragment extends Fragment {
         toResetPasswordFragmentButton = view.findViewById(R.id.to_reset_password_fragment_button);
 
         signInButton.setOnClickListener(view1 -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             signIn();
         });
 
         toResetPasswordFragmentButton.setOnClickListener(view12 -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()

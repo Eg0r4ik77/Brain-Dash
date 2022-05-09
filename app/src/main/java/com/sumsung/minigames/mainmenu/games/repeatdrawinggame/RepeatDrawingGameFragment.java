@@ -110,6 +110,7 @@ public class RepeatDrawingGameFragment extends Fragment {
                 }
 
                 button.setOnClickListener(v -> {
+                    ((GameActivity)getActivity()).playGameButtonSound();
                     Drawable drawable = (Drawable)button.getBackground();
                     if(drawable.getConstantState().equals(getResources().getDrawable(R.drawable.white_button_rounded_corner).getConstantState())){
                         button.setBackground(getResources().getDrawable(R.drawable.green_button_rounded_corner));

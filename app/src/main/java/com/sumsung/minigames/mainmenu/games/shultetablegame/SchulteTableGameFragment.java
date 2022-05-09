@@ -97,6 +97,7 @@ public class SchulteTableGameFragment extends Fragment {
 
 
                 button.setOnClickListener(v -> {
+                    ((GameActivity)getActivity()).playGameButtonSound();
                     applyChoice(button);
                 });
 

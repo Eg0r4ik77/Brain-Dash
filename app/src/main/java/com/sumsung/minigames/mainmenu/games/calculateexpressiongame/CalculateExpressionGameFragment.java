@@ -60,6 +60,7 @@ public class CalculateExpressionGameFragment extends Fragment {
 
         for (Button button : number_buttons) {
             button.setOnClickListener(v -> {
+                ((GameActivity)getActivity()).playGameButtonSound();
                 currentSolutionText = currentSolutionText == null
                         ? button.getText().toString()
                         : currentSolutionText + button.getText().toString();
@@ -86,12 +87,16 @@ public class CalculateExpressionGameFragment extends Fragment {
         });
 
         Button cleanButton = view.findViewById(R.id.clean_button);
-        cleanButton.setOnClickListener(v -> resetSolution());
+        cleanButton.setOnClickListener(v -> {
+            ((GameActivity)getActivity()).playGameButtonSound();
+            resetSolution();
+        });
 
         return view;
     }
 
     private void resetSolution(){
+        ((GameActivity)getActivity()).playGameButtonSound();
         solutionText.setText(null);
         currentSolutionText = "";
     }

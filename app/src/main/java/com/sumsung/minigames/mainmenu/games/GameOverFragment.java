@@ -45,11 +45,13 @@ public class GameOverFragment extends Fragment {
                 "\n" + bestGameScoreText + ((GameActivity)getActivity()).getBestScore());
 
         toMenuButton.setOnClickListener(v ->{
+            ((GameActivity)getActivity()).playMenuButtonSound();
             startActivity(new Intent(getContext(), MainMenuActivity.class));
             getActivity().finish();
         });
 
         restartButton.setOnClickListener(v -> {
+            ((GameActivity)getActivity()).playMenuButtonSound();
             startActivity(new Intent(getContext(), getActivity().getClass())
                     .putExtra("gameNumber", getActivity().getIntent()
                             .getIntExtra("gameNumber", 1)));

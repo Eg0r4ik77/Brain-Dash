@@ -61,6 +61,7 @@ public class SignUpFragment extends Fragment {
         signUpButton = view.findViewById(R.id.sign_up_button);
 
         signUpButton.setOnClickListener(view1 -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             signUp();
         });
 

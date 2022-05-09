@@ -25,6 +25,7 @@ public class GamesMenuFragment extends Fragment {
         Button closeGamesMenuButton = view.findViewById(R.id.close_games_menu_button);
 
         schulteTableGameButton.setOnClickListener(v ->{
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
@@ -39,6 +40,7 @@ public class GamesMenuFragment extends Fragment {
         });
 
         repeatDrawingGameButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
@@ -52,6 +54,7 @@ public class GamesMenuFragment extends Fragment {
         });
 
         calculateExpressionGameButton.setOnClickListener(v -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
@@ -65,6 +68,7 @@ public class GamesMenuFragment extends Fragment {
         });
 
         closeGamesMenuButton.setOnClickListener(view1 -> {
+            ((MainMenuActivity)getActivity()).playMenuButtonSound();
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
