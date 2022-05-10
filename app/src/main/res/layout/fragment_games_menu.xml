@@ -80,6 +80,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/games" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/button_font"
+            android:padding="20dp"
+            android:text="@string/games_menu"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textAllCaps="true"
+            app:layout_constraintBottom_toTopOf="@+id/games"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.515" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

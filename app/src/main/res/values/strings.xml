@@ -52,7 +52,7 @@
     <string name="user_is_added">User is added!</string>
     <string name="user_with_email_exists">An account with this email already exists</string>
     <string name="invalid_email_or_password">Email address or password is not entered correctly.Password must be more than 5 characters long</string>
-    <string name="points">Points: </string>
+    <string name="points">"Points: "</string>
     <string name="quiting_the_game">Выход из игры</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -70,6 +70,10 @@
     <string name="do_you_want_to_update_password">Do you want to update password?</string>
     <string name="password_update">Password update</string>
     <string name="new_best_score">New best score!</string>
+    <string name="best_scores">Best scores</string>
+    <string name="reset_password">Reset your password</string>
+    <string name="send_password_reset_email">Send password reset email</string>
+    <string name="games_menu">Games menu</string>
     <string-array name="descriptions">
         <item>Find all the numbers in ascending order as many times as possible in 60 seconds</item>
         <item>Repeat as many drawings as possible in 60 seconds</item>

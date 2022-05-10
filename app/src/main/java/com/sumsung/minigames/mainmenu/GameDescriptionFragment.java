@@ -65,7 +65,7 @@ public class GameDescriptionFragment extends Fragment {
             getActivity()
                     .getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.games_content, new GamesMenuFragment())
+                    .detach(this)
                     .commit();
         });
 
@@ -81,6 +81,8 @@ public class GameDescriptionFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        timer.pause();
+        if(timer != null){
+            timer.pause();
+        }
     }
 }

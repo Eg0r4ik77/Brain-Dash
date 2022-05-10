@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     android:background="@drawable/gradient_background"
     tools:context=".authorization.AuthorizationFragment">
 
@@ -12,9 +13,9 @@
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:contentDescription="tab"
-        android:background="@color/black_overlay"
-
+        android:background="@color/purple_2"
         app:tabTextColor="@color/white"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
@@ -45,11 +46,12 @@
 
     <Button
         android:id="@+id/close_authorization_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
+        android:layout_width="107dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/purple_2"
         android:fontFamily="@font/button_font"
+        android:text="@string/back"
         android:textSize="20sp"
         app:cornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"

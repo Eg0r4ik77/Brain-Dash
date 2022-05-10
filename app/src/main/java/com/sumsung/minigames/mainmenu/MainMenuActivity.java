@@ -61,11 +61,13 @@ public class MainMenuActivity extends AppCompatActivity {
     private ImageButton soundButton;
     private ImageButton closeLeaderboardButton;
 
+    private TextView record1;
+    private TextView record2;
+    private TextView record3;
+
     private TextView leaderboardTextView;
 
     private MaterialButton userButton;
-
-    private ProgressBar accountLoadingProgress;
 
     private ConstraintLayout recordsLayout;
 
@@ -85,7 +87,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         menuButtonSound = MediaPlayer.create(this, R.raw.sound_menu_button);
 
-        accountLoadingProgress = findViewById(R.id.account_loading_progress);
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
         soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
 
@@ -93,9 +94,9 @@ public class MainMenuActivity extends AppCompatActivity {
         leaderboard = findViewById(R.id.leaderboard_view);
         recordsLayout = findViewById(R.id.records_layout);
 
-        TextView record1 = findViewById(R.id.record1_text);
-        TextView record2 = findViewById(R.id.record2_text);
-        TextView record3 = findViewById(R.id.record3_text);
+        record1 = findViewById(R.id.record1_text);
+        record2 = findViewById(R.id.record2_text);
+        record3 = findViewById(R.id.record3_text);
 
         leaderboardTextView = findViewById(R.id.leaderboard_textview);
 
@@ -122,13 +123,11 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
 
                     user = new User();
-                    record1.setText(String.valueOf(sharedPreferences.getInt("SchulteTableGameBestScore", 0)));
-                    record2.setText(String.valueOf(sharedPreferences.getInt("RepeatDrawingGameBestScore", 0)));
-                    record3.setText(String.valueOf(sharedPreferences.getInt("CalculateExpressionGameBestScore", 0)));
-                }
+                    recordsLayout.setVisibility(View.VISIBLE);
+                   }
                 else {
                     user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
-
+                    recordsLayout.setVisibility(View.INVISIBLE);
                     users = new ArrayList<>();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User currentUser = dataSnapshot.getValue(User.class);
@@ -151,7 +150,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     leaderboard.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                     leaderboard.setAdapter(new UserAdapter(users));
                 }
-                accountLoadingProgress.setVisibility(View.GONE);
                 userButton.setVisibility(View.VISIBLE);
                 updateUi();
             }
@@ -250,6 +248,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void updateUi(){
         exitButton.setText(getString(R.string.exit));
         leaderboardButton.setText(getString(R.string.leaderboard));
@@ -257,7 +256,11 @@ public class MainMenuActivity extends AppCompatActivity {
         leaderboardTextView.setText(getString(R.string.leaderboard));
 
         if(firebaseUser == null){
-            userButton.setText(getString(R.string.authorization)+ "\n0\n0\n0");
+            record1.setText(getString(R.string.schulte_table) +": "+String.valueOf(sharedPreferences.getInt("SchulteTableGameBestScore", 0)));
+            record2.setText(getString(R.string.repeat_drawing) +": "+String.valueOf(sharedPreferences.getInt("RepeatDrawingGameBestScore", 0)));
+            record3.setText(getString(R.string.calculate_expression) +": "+String.valueOf(sharedPreferences.getInt("CalculateExpressionGameBestScore", 0)));
+
+            userButton.setText(getString(R.string.authorization));
             userButton.setOnClickListener(view -> {
                 playMenuButtonSound();
                 getSupportFragmentManager()

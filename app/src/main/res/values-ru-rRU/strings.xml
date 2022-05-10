@@ -76,4 +76,8 @@
     <string name="do_you_want_to_update_password">Вы действительно хотите изменить пароль?</string>
     <string name="password_update">Изменение пароля</string>
     <string name="new_best_score">Новый рекорд!</string>
+    <string name="best_scores">Рекорды</string>
+    <string name="reset_password">Восстановите свой пароль</string>
+    <string name="send_password_reset_email">Отправить письмо для восстановления пароля</string>
+    <string name="games_menu">игры</string>
 </resources>
