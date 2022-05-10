@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidGame</string>
+    <string name="app_name">Brain Dash</string>
     <string name="number_button_1">1</string>
     <string name="number_button_2">2</string>
     <string name="number_button_3">3</string>
@@ -44,7 +44,7 @@
     <string name="login_completed">Login completed</string>
     <string name="enter_login">Enter login</string>
     <string name="login_min_length">Login must have more than 5 characters</string>
-    <string name="login_max_length">Login must have no more than 20 characters</string>
+    <string name="login_max_length">Login must have no more than 15 characters</string>
     <string name="login_starts_with_letter">The login must begin with the letter</string>
     <string name="login_does_not_end_with_a_dot">The login cannot end with a dot.</string>
     <string name="login_contains_specific_characters">Login should have only Latin letters, numbers, dashes, underscores and dots</string>

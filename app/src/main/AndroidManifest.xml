@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sumsung.minigames" >
+    package="com.sumsung.braindash" >
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher2"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_round2"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGame">
-        <service android:enabled="true" android:name=".mainmenu.MusicService" />
+        <service android:enabled="true" android:name="com.sumsung.braindash.mainmenu.MusicService" />
         <activity
-            android:name="com.sumsung.minigames.mainmenu.MainMenuActivity"
+            android:name="com.sumsung.braindash.mainmenu.MainMenuActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.sumsung.minigames.mainmenu.games.GameActivity"
+            android:name="com.sumsung.braindash.mainmenu.games.GameActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
     </application>

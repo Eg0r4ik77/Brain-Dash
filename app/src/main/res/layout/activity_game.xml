@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
-    tools:context=".mainmenu.games.GameActivity">
+    tools:context="com.sumsung.braindash.com.sumsung.braindash.mainmenu.games.GameActivity">
 
 
     <FrameLayout
@@ -67,8 +67,7 @@
         android:layout_width="410dp"
         android:layout_height="335dp"
         android:layout_marginTop="9dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/game_over_window"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

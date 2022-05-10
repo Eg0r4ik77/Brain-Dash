@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_background"
     android:theme="@style/ThemeOverlay.AndroidGame.FullscreenContainer"
-    tools:context=".mainmenu.GameDescriptionFragment">
+    tools:context="com.sumsung.braindash.com.sumsung.braindash.mainmenu.GameDescriptionFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
