@@ -1,5 +1,6 @@
 package com.sumsung.minigames.mainmenu;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.sumsung.minigames.R;
 import com.sumsung.minigames.models.User;
 
@@ -23,7 +25,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         this.users = users;
     }
 
-    class UserViewHolder extends RecyclerView.ViewHolder {
+     class UserViewHolder extends RecyclerView.ViewHolder {
         private View view;
         private final ImageView userImage;
         private final TextView rank;
@@ -48,6 +50,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             points.setText(String.valueOf(user.getRating()));
         }
 
+        public void updateName(){
+            for(User user : users){
+                if(user.getName().equals("Вы") || user.getName().equals("You")){
+                    user.setName(view.getContext().getString(R.string.you));
+                }
+            }
+        }
     }
 
     @NonNull
@@ -55,7 +64,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.leaderboard_item, parent, false);
-        return new UserViewHolder(view);
+        UserViewHolder userViewHolder = new UserViewHolder(view);
+        userViewHolder.updateName();
+        return userViewHolder;
     }
 
     @Override

@@ -104,6 +104,7 @@
         android:id="@+id/records_layout"
         android:layout_width="218dp"
         android:layout_height="146dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,6 +152,22 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="invisible">
 
+        <TextView
+            android:id="@+id/leaderboard_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/textview_rounded_corner"
+            android:fontFamily="@font/button_font"
+            android:gravity="center"
+            android:padding="10sp"
+            android:text="@string/leaderboard"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/leaderboard_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/close_leaderboard_button"
             android:layout_width="65dp"
@@ -161,21 +178,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_close" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/textview_rounded_corner"
-            android:fontFamily="@font/button_font"
-            android:gravity="center"
-            android:padding="10sp"
-
-            android:text="@string/leaderboard"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/leaderboard_view"
@@ -193,7 +195,6 @@
         android:id="@+id/sound_button"
         android:layout_width="55dp"
         android:layout_height="53dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="#0000"
         android:scaleType="centerCrop"

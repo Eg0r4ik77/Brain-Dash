@@ -19,8 +19,8 @@
     <string name="restart">попробовать снова</string>
     <string name="to_menu">в меню</string>
     <string name="back">НАЗАД</string>
-    <string name="game_score">Результат:\\u0020</string>
-    <string name="best_game_score">Лучший результат:\\u0020</string>
+    <string name="game_score">"Результат: "</string>
+    <string name="best_game_score">"Лучший результат: "</string>
     <string name="exit">Выход</string>
     <string name="games">Игры</string>
     <string name="exit_alert">Действительно хотите выйти из игры?</string>

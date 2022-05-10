@@ -78,4 +78,9 @@ public class GameDescriptionFragment extends Fragment {
         getActivity().finish();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.pause();
+    }
 }

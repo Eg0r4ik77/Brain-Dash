@@ -61,6 +61,8 @@ public class MainMenuActivity extends AppCompatActivity {
     private ImageButton soundButton;
     private ImageButton closeLeaderboardButton;
 
+    private TextView leaderboardTextView;
+
     private MaterialButton userButton;
 
     private ProgressBar accountLoadingProgress;
@@ -81,21 +83,21 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         getSupportActionBar().hide();
 
-
         menuButtonSound = MediaPlayer.create(this, R.raw.sound_menu_button);
 
         accountLoadingProgress = findViewById(R.id.account_loading_progress);
         sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
         soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
 
-
         leaderboardLayout = findViewById(R.id.leaderboard_layout);
         leaderboard = findViewById(R.id.leaderboard_view);
         recordsLayout = findViewById(R.id.records_layout);
 
-        TextView textView1 = findViewById(R.id.record1_text);
-        TextView textView2 = findViewById(R.id.record2_text);
-        TextView textView3 = findViewById(R.id.record3_text);
+        TextView record1 = findViewById(R.id.record1_text);
+        TextView record2 = findViewById(R.id.record2_text);
+        TextView record3 = findViewById(R.id.record3_text);
+
+        leaderboardTextView = findViewById(R.id.leaderboard_textview);
 
         toGameMenuButton = findViewById(R.id.to_game_menu_button);
         leaderboardButton = findViewById(R.id.leaderboard_button);
@@ -120,14 +122,12 @@ public class MainMenuActivity extends AppCompatActivity {
                     }
 
                     user = new User();
-                    recordsLayout.setVisibility(View.VISIBLE);
-                    textView1.setText(String.valueOf(sharedPreferences.getInt("SchulteTableGameBestScore", 0)));
-                    textView2.setText(String.valueOf(sharedPreferences.getInt("RepeatDrawingGameBestScore", 0)));
-                    textView3.setText(String.valueOf(sharedPreferences.getInt("CalculateExpressionGameBestScore", 0)));
+                    record1.setText(String.valueOf(sharedPreferences.getInt("SchulteTableGameBestScore", 0)));
+                    record2.setText(String.valueOf(sharedPreferences.getInt("RepeatDrawingGameBestScore", 0)));
+                    record3.setText(String.valueOf(sharedPreferences.getInt("CalculateExpressionGameBestScore", 0)));
                 }
                 else {
                     user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
-                    recordsLayout.setVisibility(View.INVISIBLE);
 
                     users = new ArrayList<>();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -184,8 +184,8 @@ public class MainMenuActivity extends AppCompatActivity {
                             .edit().putString("Language","en")
                             .apply();
                 }
+                leaderboard.setAdapter(new UserAdapter(users));
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
@@ -254,9 +254,10 @@ public class MainMenuActivity extends AppCompatActivity {
         exitButton.setText(getString(R.string.exit));
         leaderboardButton.setText(getString(R.string.leaderboard));
         toGameMenuButton.setText(getString(R.string.games));
+        leaderboardTextView.setText(getString(R.string.leaderboard));
 
         if(firebaseUser == null){
-            userButton.setText(R.string.authorization);
+            userButton.setText(getString(R.string.authorization)+ "\n0\n0\n0");
             userButton.setOnClickListener(view -> {
                 playMenuButtonSound();
                 getSupportFragmentManager()
@@ -266,6 +267,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         .commit();
            });
         }else{
+            sharedPreferences.edit().putBoolean("Authorized", true).apply();
             userButton.setText(user.getName()+"\n"+getString(R.string.points) + user.getRating());
             userButton.setOnClickListener(view -> {
                 playMenuButtonSound();
