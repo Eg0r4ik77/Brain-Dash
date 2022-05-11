@@ -15,7 +15,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,50 +32,49 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sumsung.braindash.Strings;
+import com.sumsung.braindash.adapters.LanguageAdapter;
+import com.sumsung.braindash.adapters.UserAdapter;
 import com.sumsung.braindash.authorization.AuthorizationFragment;
 import com.sumsung.braindash.models.User;
 import com.sumsung.braindash.R;
 import com.google.android.material.button.MaterialButton;
+import com.sumsung.braindash.services.MusicService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Locale;
 
 public class MainMenuActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences soundSharedPreferences;
-    private DatabaseReference databaseReference;
 
     private FirebaseUser firebaseUser;
     private User user;
+    private ArrayList<User> users;
 
     private Button toGameMenuButton;
     private Button leaderboardButton;
     private Button exitButton;
 
     private ImageButton soundButton;
-    private ImageButton closeLeaderboardButton;
 
     private TextView record1;
     private TextView record2;
     private TextView record3;
-
+    private TextView recordsLayoutLabel;
     private TextView leaderboardTextView;
 
     private MaterialButton userButton;
 
     private ConstraintLayout recordsLayout;
-
     private ConstraintLayout leaderboardLayout;
     private RecyclerView leaderboard;
 
-    private ArrayList<User> users;
-
     private MediaPlayer menuButtonSound;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +83,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
         menuButtonSound = MediaPlayer.create(this, R.raw.sound_menu_button);
 
-        sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
-        soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(Strings.RECORDS, MODE_PRIVATE);
+        soundSharedPreferences = getSharedPreferences(Strings.SOUND, MODE_PRIVATE);
 
         leaderboardLayout = findViewById(R.id.leaderboard_layout);
         leaderboard = findViewById(R.id.leaderboard_view);
@@ -95,6 +93,7 @@ public class MainMenuActivity extends AppCompatActivity {
         record1 = findViewById(R.id.record1_text);
         record2 = findViewById(R.id.record2_text);
         record3 = findViewById(R.id.record3_text);
+        recordsLayoutLabel = findViewById(R.id.records_layout_label);
 
         leaderboardTextView = findViewById(R.id.leaderboard_textview);
 
@@ -102,31 +101,25 @@ public class MainMenuActivity extends AppCompatActivity {
         leaderboardButton = findViewById(R.id.leaderboard_button);
         exitButton = findViewById(R.id.exit_button);
         userButton = findViewById(R.id.user_button);
-        closeLeaderboardButton = findViewById(R.id.close_leaderboard_button);
+        ImageButton closeLeaderboardButton = findViewById(R.id.close_leaderboard_button);
         soundButton = findViewById(R.id.sound_button);
         updateSoundButtonImage();
 
-        userButton.setVisibility(View.INVISIBLE);
 
-        databaseReference =  FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Strings.USERS);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                users = new ArrayList<>();
 
                 if(firebaseUser == null){
-                    users = new ArrayList<>();
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         users.add(dataSnapshot.getValue(User.class));
                     }
-
-                    user = new User();
-                    recordsLayout.setVisibility(View.VISIBLE);
-                   }
+                }
                 else {
                     user = snapshot.child(firebaseUser.getUid()).getValue(User.class);
-                    recordsLayout.setVisibility(View.INVISIBLE);
-                    users = new ArrayList<>();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User currentUser = dataSnapshot.getValue(User.class);
                         if (currentUser.getName().equals(user.getName())) {
@@ -135,15 +128,10 @@ public class MainMenuActivity extends AppCompatActivity {
                         users.add(currentUser);
                     }
 
-                    Collections.sort(users, (new Comparator<User>() {
-                        @Override
-                        public int compare(User user1, User user2) {
-                            int points1 = user1.getRating();
-                            int points2 = user2.getRating();
-                            if (points1 > points2) return -1;
-                            if (points1 == points2) return 0;
-                            return 1;
-                        }
+                    Collections.sort(users, ((user1, user2) -> {
+                        int points1 = user1.getRating();
+                        int points2 = user2.getRating();
+                        return Integer.compare(points2, points1);
                     }));
                     leaderboard.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                     leaderboard.setAdapter(new UserAdapter(users));
@@ -153,31 +141,29 @@ public class MainMenuActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
 
         ArrayList<Drawable> languages = new ArrayList<>();
         languages.add(getDrawable(R.drawable.ic_english));
         languages.add(getDrawable(R.drawable.ic_russian));
-        LanguageAdapter languageAdapter = new LanguageAdapter(this, languages);;
         Spinner languageSpinner = findViewById(R.id.language_spinner);
-        languageSpinner.setAdapter(languageAdapter);
+        languageSpinner.setAdapter(new LanguageAdapter(this, languages));
 
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
                 if(i == 1){
-                    setLocale("ru");
-                    getSharedPreferences("Languages", MODE_PRIVATE)
-                            .edit().putString("Language","ru")
+                    setLocale(Strings.RU);
+                    getSharedPreferences(Strings.LANGUAGES, MODE_PRIVATE)
+                            .edit().putString(Strings.LANGUAGE,Strings.RU)
                             .apply();
                 }
                 else{
-                    setLocale("en");
-                    getSharedPreferences("Languages", MODE_PRIVATE)
-                            .edit().putString("Language","en")
+                    setLocale(Strings.EN);
+                    getSharedPreferences(Strings.LANGUAGES, MODE_PRIVATE)
+                            .edit().putString(Strings.LANGUAGE,Strings.EN)
                             .apply();
                 }
                 leaderboard.setAdapter(new UserAdapter(users));
@@ -186,9 +172,9 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
-        languageSpinner.setSelection( getSharedPreferences("Languages", MODE_PRIVATE)
-                .getString("Language", "en")
-                .equals("ru") ? 1 : 0);
+        languageSpinner.setSelection( getSharedPreferences(Strings.LANGUAGES, MODE_PRIVATE)
+                .getString(Strings.LANGUAGE, Strings.EN)
+                .equals(Strings.RU) ? 1 : 0);
 
         toGameMenuButton.setOnClickListener(v -> {
             playMenuButtonSound();
@@ -205,15 +191,15 @@ public class MainMenuActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.Log_in_to_see_the_leaderboard), Toast.LENGTH_SHORT).show();
             }else{
                 Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_increase_anim);
-                ((ConstraintLayout)findViewById(R.id.leaderboard_layout)).startAnimation(animation);
+                findViewById(R.id.leaderboard_layout).startAnimation(animation);
                 leaderboardLayout.setVisibility(View.VISIBLE);
             }
         });
 
         closeLeaderboardButton.setOnClickListener(v -> {
-            menuButtonSound.start();
+            playMenuButtonSound();
             Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale_decrease_anim);
-            ((ConstraintLayout)findViewById(R.id.leaderboard_layout)).startAnimation(animation);
+            findViewById(R.id.leaderboard_layout).startAnimation(animation);
             leaderboardLayout.setVisibility(View.INVISIBLE);
         });
 
@@ -234,15 +220,14 @@ public class MainMenuActivity extends AppCompatActivity {
 
         soundButton.setOnClickListener(view -> {
             playMenuButtonSound();
-            if(soundSharedPreferences.getInt("On", 1) == 1){
-                soundSharedPreferences.edit().putInt("On", 0).apply();
+            if(isSoundOn()){
+                soundSharedPreferences.edit().putInt(Strings.ON, 0).apply();
                 stopService(new Intent(this, MusicService.class));
             }else{
-                soundSharedPreferences.edit().putInt("On", 1).apply();
-                startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_menu));
+                soundSharedPreferences.edit().putInt(Strings.ON, 1).apply();
+                startService(new Intent(this, MusicService.class).putExtra(Strings.MUSIC, R.raw.music_background_menu));
             }
             updateSoundButtonImage();
-            Log.i("Sound",String.valueOf(getSharedPreferences("Sound", MODE_PRIVATE).getInt("On", 1)));
         });
     }
 
@@ -252,13 +237,15 @@ public class MainMenuActivity extends AppCompatActivity {
         leaderboardButton.setText(getString(R.string.leaderboard));
         toGameMenuButton.setText(getString(R.string.games));
         leaderboardTextView.setText(getString(R.string.leaderboard));
+        recordsLayoutLabel.setText(getString(R.string.best_scores ));
+        recordsLayout.setVisibility(firebaseUser == null ? View.VISIBLE : View.INVISIBLE);
 
         if(firebaseUser == null){
-            record1.setText(getString(R.string.schulte_table) +": "+String.valueOf(sharedPreferences.getInt("SchulteTableGameBestScore", 0)));
-            record2.setText(getString(R.string.repeat_drawing) +": "+String.valueOf(sharedPreferences.getInt("RepeatDrawingGameBestScore", 0)));
-            record3.setText(getString(R.string.calculate_expression) +": "+String.valueOf(sharedPreferences.getInt("CalculateExpressionGameBestScore", 0)));
-
+            record1.setText(getString(R.string.schulte_table) +": "+ sharedPreferences.getInt(Strings.SCHULTE_TABLE_GAME_BEST_SCORE, 0));
+            record2.setText(getString(R.string.repeat_drawing) +": "+ sharedPreferences.getInt(Strings.REPEAT_DRAWING_GAME_BEST_SCORE, 0));
+            record3.setText(getString(R.string.calculate_expression) +": "+ sharedPreferences.getInt(Strings.CALCULATE_EXPRESSION_GAME_BEST_SCORE, 0));
             userButton.setText(getString(R.string.authorization));
+
             userButton.setOnClickListener(view -> {
                 playMenuButtonSound();
                 getSupportFragmentManager()
@@ -268,7 +255,7 @@ public class MainMenuActivity extends AppCompatActivity {
                         .commit();
            });
         }else{
-            sharedPreferences.edit().putBoolean("Authorized", true).apply();
+            sharedPreferences.edit().putBoolean(Strings.AUTHORIZED, true).apply();
             userButton.setText(user.getName()+"\n"+getString(R.string.points) + user.getRating());
             userButton.setOnClickListener(view -> {
                 playMenuButtonSound();
@@ -296,21 +283,18 @@ public class MainMenuActivity extends AppCompatActivity {
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+
         updateUi();
     }
 
     public void playMenuButtonSound(){
-        if(soundSharedPreferences.getInt("On", 1) == 1){
+        if(isSoundOn()){
             menuButtonSound.start();
         }
     }
 
     private void updateSoundButtonImage(){
-        if(soundSharedPreferences.getInt("On", 1) == 1){
-            soundButton.setBackgroundResource(R.drawable.ic_sound_on);
-        }else{
-            soundButton.setBackgroundResource(R.drawable.ic_sound_off);
-        }
+        soundButton.setBackgroundResource(isSoundOn() ? R.drawable.ic_sound_on : R.drawable.ic_sound_off);
     }
 
     @Override
@@ -322,9 +306,12 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(soundSharedPreferences.getInt("On", 1) == 1){
-            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_menu));
+        if(isSoundOn()){
+            startService(new Intent(this, MusicService.class).putExtra(Strings.MUSIC, R.raw.music_background_menu));
         }
     }
 
+    public boolean isSoundOn(){
+        return soundSharedPreferences.getInt(Strings.ON, 1) == 1;
+    }
 }

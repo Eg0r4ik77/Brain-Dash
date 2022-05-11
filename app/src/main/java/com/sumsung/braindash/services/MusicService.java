@@ -1,4 +1,4 @@
-package com.sumsung.braindash.mainmenu;
+package com.sumsung.braindash.services;
 
 
 import android.app.Service;
@@ -9,6 +9,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.sumsung.braindash.R;
+import com.sumsung.braindash.Strings;
 
 public class MusicService extends Service {
 
@@ -23,7 +24,7 @@ public class MusicService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        musicId = intent.getIntExtra("Music", R.raw.music_background_menu);
+        musicId = intent.getIntExtra(Strings.MUSIC, R.raw.music_background_menu);
         if(mediaPlayer != null) mediaPlayer.reset();
         mediaPlayer = MediaPlayer.create(this, musicId);
         mediaPlayer.setLooping(true);

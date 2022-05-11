@@ -24,11 +24,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sumsung.braindash.Strings;
 import com.sumsung.braindash.mainmenu.games.repeatdrawinggame.RepeatDrawingGameFragment;
 import com.sumsung.braindash.mainmenu.games.shultetablegame.SchulteTableGameFragment;
 import com.sumsung.braindash.R;
 import com.sumsung.braindash.gamecontrollers.Timer;
-import com.sumsung.braindash.mainmenu.MusicService;
+import com.sumsung.braindash.services.MusicService;
 import com.sumsung.braindash.mainmenu.games.calculateexpressiongame.CalculateExpressionGameFragment;
 import com.sumsung.braindash.models.User;
 
@@ -66,7 +67,7 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         getSupportActionBar().hide();
 
-        soundSharedPreferences = getSharedPreferences("Sound", MODE_PRIVATE);
+        soundSharedPreferences = getSharedPreferences(Strings.SOUND, MODE_PRIVATE);
 
 
         gameOverSound = MediaPlayer.create(this, R.raw.sound_game_over);
@@ -75,7 +76,7 @@ public class GameActivity extends AppCompatActivity {
         flashScreen = findViewById(R.id.flash_screen);
         flashScreen.setBackgroundResource(R.drawable.right_answer_anim);
 
-        databaseReference =  FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference =  FirebaseDatabase.getInstance().getReference(Strings.USERS);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         progressBar = findViewById(R.id.progress_bar);
@@ -96,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
 
                 GameOverFragment fragment = new GameOverFragment();
                 Bundle bundle = new Bundle();
-                bundle.putInt("score", score);
+                bundle.putInt(Strings.SCORE, score);
 
                 fragment.setArguments(bundle);
                 getSupportFragmentManager()
@@ -112,15 +113,12 @@ public class GameActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if(task.isSuccessful()) {
                         user = task.getResult().getValue(User.class);
-                    }else{
-                        Log.e("firebase", "Error getting data", task.getException());
                     }
                 }
             });
         }
 
-
-        startGame(getIntent().getIntExtra("gameNumber", 1));
+        startGame(getIntent().getIntExtra(Strings.GAME_NUMBER, 1));
     }
 
     @SuppressLint("SetTextI18n")
@@ -175,47 +173,47 @@ public class GameActivity extends AppCompatActivity {
 
     public void handleGameResult(){
         if(firebaseUser == null){
-            sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
+            sharedPreferences = getSharedPreferences(Strings.RECORDS, MODE_PRIVATE);
             editor = sharedPreferences.edit();
             if(fragment instanceof SchulteTableGameFragment){
-                editor.putInt("SchulteTableGameBestScore",
+                editor.putInt(Strings.SCHULTE_TABLE_GAME_BEST_SCORE,
                         Math.max(score,
-                                sharedPreferences.getInt("SchulteTableGameBestScore",0)));
+                                sharedPreferences.getInt(Strings.SCHULTE_TABLE_GAME_BEST_SCORE,0)));
             }else if(fragment instanceof RepeatDrawingGameFragment){
-                editor.putInt("RepeatDrawingGameBestScore",
+                editor.putInt(Strings.REPEAT_DRAWING_GAME_BEST_SCORE,
                         Math.max(score,
-                                sharedPreferences.getInt("RepeatDrawingGameBestScore",0)));
+                                sharedPreferences.getInt(Strings.REPEAT_DRAWING_GAME_BEST_SCORE,0)));
             }else{
-                editor.putInt("CalculateExpressionGameBestScore",
+                editor.putInt(Strings.CALCULATE_EXPRESSION_GAME_BEST_SCORE,
                         Math.max(score,
-                                sharedPreferences.getInt("CalculateExpressionGameBestScore",0)));
+                                sharedPreferences.getInt(Strings.CALCULATE_EXPRESSION_GAME_BEST_SCORE,0)));
             }
             editor.commit();
         }else{
             if(fragment instanceof SchulteTableGameFragment){
-                databaseReference.child(firebaseUser.getUid()).child("record1")
+                databaseReference.child(firebaseUser.getUid()).child(Strings.RECORD1)
                         .setValue(Math.max(score, user.getRecord1()));
             }else if(fragment instanceof RepeatDrawingGameFragment){
-                databaseReference.child(firebaseUser.getUid()).child("record2")
+                databaseReference.child(firebaseUser.getUid()).child(Strings.RECORD2)
                         .setValue(Math.max(score, user.getRecord2()));
             }else{
-                databaseReference.child(firebaseUser.getUid()).child("record3")
+                databaseReference.child(firebaseUser.getUid()).child(Strings.RECORD3)
                         .setValue(Math.max(score, user.getRecord3()));
             }
-            databaseReference.child(firebaseUser.getUid()).child("rating").setValue(score+user.getRating());
+            databaseReference.child(firebaseUser.getUid()).child(Strings.RATING).setValue(score+user.getRating());
         }
     }
 
 
     public int getBestScore(){
         if(firebaseUser == null){
-            sharedPreferences = getSharedPreferences("Records", MODE_PRIVATE);
+            sharedPreferences = getSharedPreferences(Strings.RECORDS, MODE_PRIVATE);
             if(fragment instanceof SchulteTableGameFragment){
-                return sharedPreferences.getInt("SchulteTableGameBestScore",0);
+                return sharedPreferences.getInt(Strings.SCHULTE_TABLE_GAME_BEST_SCORE,0);
             }else if(fragment instanceof RepeatDrawingGameFragment){
-                return sharedPreferences.getInt("RepeatDrawingGameBestScore",0);
+                return sharedPreferences.getInt(Strings.REPEAT_DRAWING_GAME_BEST_SCORE,0);
             }else{
-                return sharedPreferences.getInt("CalculateExpressionGameBestScore",0);
+                return sharedPreferences.getInt(Strings.CALCULATE_EXPRESSION_GAME_BEST_SCORE,0);
             }
         }else{
             if(fragment instanceof SchulteTableGameFragment){
@@ -229,19 +227,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void playGameButtonSound(){
-        if(soundSharedPreferences.getInt("On", 1) == 0) return;
+        if(soundSharedPreferences.getInt(Strings.ON, 1) == 0) return;
         gameButtonSound = MediaPlayer.create(this, R.raw.sound_game_button);
         gameButtonSound.setOnCompletionListener(mediaPlayer -> mediaPlayer.reset());
         gameButtonSound.setVolume(0.2f, 0.2f);
         gameButtonSound.start();
     }
     public void playGameOverSound(){
-        if(soundSharedPreferences.getInt("On", 1) == 0) return;
+        if(soundSharedPreferences.getInt(Strings.ON, 1) == 0) return;
         stopService(new Intent(this, MusicService.class));
         gameOverSound.start();
     }
     public void playMenuButtonSound(){
-        if(soundSharedPreferences.getInt("On", 1) == 0) return;
+        if(soundSharedPreferences.getInt(Strings.ON, 1) == 0) return;
         menuButtonSound.start();
     }
 
@@ -254,8 +252,8 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(soundSharedPreferences.getInt("On", 1) == 1){
-            startService(new Intent(this, MusicService.class).putExtra("Music", R.raw.music_background_game));
+        if(soundSharedPreferences.getInt(Strings.ON, 1) == 1){
+            startService(new Intent(this, MusicService.class).putExtra(Strings.MUSIC, R.raw.music_background_game));
         }
     }
 

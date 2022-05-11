@@ -82,13 +82,15 @@
         android:textAllCaps="false"
         android:textColor="#00838F"
         android:textSize="20sp"
+        android:visibility="invisible"
         app:cornerRadius="10sp"
         app:icon="@drawable/ic_user"
         app:iconSize="50sp"
         app:iconTintMode="multiply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/records_layout"

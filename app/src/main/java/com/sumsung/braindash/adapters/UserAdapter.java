@@ -1,4 +1,4 @@
-package com.sumsung.braindash.mainmenu;
+package com.sumsung.braindash.adapters;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sumsung.braindash.Strings;
 import com.sumsung.braindash.models.User;
 import com.sumsung.braindash.R;
 
@@ -42,7 +43,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             rank.setText(String.valueOf(users.indexOf(user)+1));
             userImage.setImageResource(R.drawable.ic_user);
             userName.setText(user.getName());
-            if(user.getName().equals("Вы") || user.getName().equals("You")){
+            if(user.getName().equals(Strings.YOU_RU) || user.getName().equals(Strings.YOU_EN)){
                 view.setBackgroundColor(Color.GREEN);
             }
             points.setText(String.valueOf(user.getRating()));
@@ -50,7 +51,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         public void updateName(){
             for(User user : users){
-                if(user.getName().equals("Вы") || user.getName().equals("You")){
+                if(user.getName().equals(Strings.YOU_RU) || user.getName().equals(Strings.YOU_EN)){
                     user.setName(view.getContext().getString(R.string.you));
                 }
             }

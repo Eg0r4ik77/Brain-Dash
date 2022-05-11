@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sumsung.braindash.R;
+import com.sumsung.braindash.Strings;
 
 public class GamesMenuFragment extends Fragment {
 
@@ -29,7 +30,7 @@ public class GamesMenuFragment extends Fragment {
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putInt("gameNumber", 1);
+            bundle.putInt(Strings.GAME_NUMBER, 1);
             fr.setArguments(bundle);
 
             getActivity()
@@ -46,7 +47,7 @@ public class GamesMenuFragment extends Fragment {
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putInt("gameNumber", 2);
+            bundle.putInt(Strings.GAME_NUMBER, 2);
             fr.setArguments(bundle);
 
             getActivity()
@@ -63,7 +64,7 @@ public class GamesMenuFragment extends Fragment {
             GameDescriptionFragment fr = new GameDescriptionFragment();
 
             Bundle bundle = new Bundle();
-            bundle.putInt("gameNumber", 3);
+            bundle.putInt(Strings.GAME_NUMBER, 3);
             fr.setArguments(bundle);
 
             getActivity()
@@ -79,9 +80,7 @@ public class GamesMenuFragment extends Fragment {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
             getActivity()
                     .getSupportFragmentManager()
-                    .beginTransaction()
-                    .detach(this)
-                    .commit();
+                    .popBackStack();
         });
        return view;
     }

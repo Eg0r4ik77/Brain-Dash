@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.sumsung.braindash.Strings;
 import com.sumsung.braindash.mainmenu.games.GameActivity;
 import com.sumsung.braindash.R;
 import com.sumsung.braindash.gamecontrollers.Timer;
@@ -43,7 +44,7 @@ public class GameDescriptionFragment extends Fragment {
         backButton = view.findViewById(R.id.back_button);
         startButton = view.findViewById(R.id.start_game_button);
 
-        descriptionText.setText(descriptions[this.getArguments().getInt("gameNumber")-1]);
+        descriptionText.setText(descriptions[this.getArguments().getInt(Strings.GAME_NUMBER)-1]);
 
         startButton.setOnClickListener(v -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
@@ -64,9 +65,7 @@ public class GameDescriptionFragment extends Fragment {
             }
             getActivity()
                     .getSupportFragmentManager()
-                    .beginTransaction()
-                    .detach(this)
-                    .commit();
+                    .popBackStack();
         });
 
         return view;
@@ -74,7 +73,7 @@ public class GameDescriptionFragment extends Fragment {
 
     public void startLevel(){
         startActivity(new Intent(getContext(), GameActivity.class)
-                .putExtra("gameNumber", this.getArguments().getInt("gameNumber")));
+                .putExtra(Strings.GAME_NUMBER, this.getArguments().getInt(Strings.GAME_NUMBER)));
         getActivity().finish();
     }
 

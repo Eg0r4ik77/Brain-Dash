@@ -49,9 +49,7 @@ public class AuthorizationFragment extends Fragment {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
             getActivity()
                     .getSupportFragmentManager()
-                    .beginTransaction()
-                    .detach(this)
-                    .commit();
+                    .popBackStack();
         });
 
         return view;

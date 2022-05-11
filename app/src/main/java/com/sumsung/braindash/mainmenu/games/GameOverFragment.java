@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.sumsung.braindash.R;
+import com.sumsung.braindash.Strings;
 import com.sumsung.braindash.mainmenu.MainMenuActivity;
 
 public class GameOverFragment extends Fragment {
@@ -46,7 +47,7 @@ public class GameOverFragment extends Fragment {
         TextView gameResultText = view.findViewById(R.id.game_result_text);
         TextView newBestScore = view.findViewById(R.id.new_best_score);
 
-        int score = getArguments().getInt("score");
+        int score = getArguments().getInt(Strings.SCORE);
         int bestScore = ((GameActivity)getActivity()).getBestScore();
 
         gameResultText.setText(gameScoreText + score +
@@ -69,8 +70,8 @@ public class GameOverFragment extends Fragment {
         restartButton.setOnClickListener(v -> {
             ((GameActivity)getActivity()).playMenuButtonSound();
             startActivity(new Intent(getContext(), getActivity().getClass())
-                    .putExtra("gameNumber", getActivity().getIntent()
-                            .getIntExtra("gameNumber", 1)));
+                    .putExtra(Strings.GAME_NUMBER, getActivity().getIntent()
+                            .getIntExtra(Strings.GAME_NUMBER, 1)));
         });
 
         return view;

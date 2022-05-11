@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sumsung.braindash.R;
+import com.sumsung.braindash.Strings;
 import com.sumsung.braindash.mainmenu.MainMenuActivity;
 import com.sumsung.braindash.models.User;
 
@@ -51,7 +52,7 @@ public class SignUpFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Users");
+        databaseReference = firebaseDatabase.getReference(Strings.USERS);
 
         name = view.findViewById(R.id.login_edit_text);
         email = view.findViewById(R.id.email_edit_text);
@@ -121,7 +122,7 @@ public class SignUpFragment extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                getActivity().getSharedPreferences("Records", getActivity().MODE_PRIVATE).edit().clear().commit();
+                                getActivity().getSharedPreferences(Strings.RECORDS, getActivity().MODE_PRIVATE).edit().clear().commit();
                                 Toast.makeText(getContext(), getString(R.string.user_is_added), Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(getContext(), getActivity().getClass()));
                             }

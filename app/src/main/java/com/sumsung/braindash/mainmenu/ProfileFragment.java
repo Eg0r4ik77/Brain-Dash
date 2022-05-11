@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sumsung.braindash.Strings;
 import com.sumsung.braindash.models.User;
 import com.sumsung.braindash.R;
 
@@ -47,6 +49,7 @@ public class ProfileFragment extends Fragment {
 
     private EditText editName;
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -96,13 +99,13 @@ public class ProfileFragment extends Fragment {
             builder.setMessage(getString(R.string.do_you_want_to_log_out)).
                     setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
                         getActivity()
-                                .getSharedPreferences("Records", Context.MODE_PRIVATE)
+                                .getSharedPreferences(Strings.RECORDS, Context.MODE_PRIVATE)
                                 .edit()
-                                .putBoolean("Authorized", false)
+                                .putBoolean(Strings.AUTHORIZED, false)
                                 .apply();
 
                         getActivity()
-                                .getSharedPreferences("Records", getActivity().MODE_PRIVATE)
+                                .getSharedPreferences(Strings.RECORDS, getActivity().MODE_PRIVATE)
                                 .edit()
                                 .clear()
                                 .apply();
@@ -166,16 +169,21 @@ public class ProfileFragment extends Fragment {
 
     private void deleteAccount(){
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid()).
-                removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getContext(), getString(R.string.account_is_deleted), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if(task.isSuccessful()){
+                    FirebaseDatabase.getInstance().getReference(Strings.USERS).child(firebaseUser.getUid()).
+                            removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(getContext(), getString(R.string.account_is_deleted), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
             }
         });
         FirebaseAuth.getInstance().signOut();
@@ -218,10 +226,10 @@ public class ProfileFragment extends Fragment {
             }
         }
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Strings.USERS);
         FirebaseUser firebaseUser =  FirebaseAuth.getInstance().getCurrentUser();
 
-        databaseReference.child(firebaseUser.getUid()).child("name").setValue(newName)
+        databaseReference.child(firebaseUser.getUid()).child(Strings.NAME).setValue(newName)
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(getContext(), getString(R.string.name_is_updated), Toast.LENGTH_SHORT).show();
                     close();
@@ -231,10 +239,7 @@ public class ProfileFragment extends Fragment {
     private void close(){
         getActivity().
                 getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.anim.trans_up, R.anim.trans_up)
-                .detach(this)
-                .commit();
+                .popBackStack();
     }
 
 }

@@ -1,4 +1,4 @@
-package com.sumsung.braindash.mainmenu;
+package com.sumsung.braindash.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round2"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidGame">
-        <service android:enabled="true" android:name="com.sumsung.braindash.mainmenu.MusicService" />
+        <service android:enabled="true" android:name="com.sumsung.braindash.services.MusicService" />
         <activity
             android:name="com.sumsung.braindash.mainmenu.MainMenuActivity"
             android:exported="true"
