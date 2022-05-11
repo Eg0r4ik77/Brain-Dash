@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -32,33 +34,28 @@ import java.util.ArrayList;
 public class SignUpFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-
-    private Button signUpButton;
 
     private EditText name;
     private EditText email;
     private EditText password;
-
-    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(Strings.USERS);
 
         name = view.findViewById(R.id.login_edit_text);
         email = view.findViewById(R.id.email_edit_text);
         password = view.findViewById(R.id.password_edit_text);
 
-        signUpButton = view.findViewById(R.id.sign_up_button);
+        Button signUpButton = view.findViewById(R.id.sign_up_button);
 
         signUpButton.setOnClickListener(view1 -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
@@ -84,33 +81,8 @@ public class SignUpFragment extends Fragment {
             Toast.makeText(getContext(), getString(R.string.enter_password), Toast.LENGTH_SHORT).show();
             return;
         }
-        if(nameString.length() < 6){
-            Toast.makeText(getContext(), getString(R.string.login_min_length), Toast.LENGTH_SHORT).show();
+        if(!isValidLogin(getContext(), nameString)){
             return;
-        }
-        if(nameString.length() > 15){
-            Toast.makeText(getContext(), getString(R.string.login_max_length), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(!nameString.matches("^[a-zA-Z0-9_.-]*$")){
-            Toast.makeText(getContext(), getString(R.string.login_contains_specific_characters), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(nameString.charAt(nameString.length()-1) == '.'){
-            Toast.makeText(getContext(), getString(R.string.login_does_not_end_with_a_dot), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!Character.isLetter(nameString.charAt(0))){
-            Toast.makeText(getContext(), getString(R.string.login_starts_with_letter), Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        ArrayList<User> users = ((MainMenuActivity)getActivity()).getUsers();
-        for (User user : users){
-            if(user.getName().equals(nameString)){
-                Toast.makeText(getContext(), getString(R.string.user_with_name_exists), Toast.LENGTH_SHORT).show();
-                return;
-            }
         }
 
             firebaseAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
@@ -138,5 +110,37 @@ public class SignUpFragment extends Fragment {
                     }
                 }
             });
+    }
+
+    public static boolean isValidLogin(Context context, String newName){
+        if(newName.length() < 6){
+            Toast.makeText(context, context.getString(R.string.login_min_length), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(newName.length() > 15){
+            Toast.makeText(context, context.getString(R.string.login_max_length), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(!newName.matches("^[a-zA-Z0-9_.-]*$")){
+            Toast.makeText(context, context.getString(R.string.login_contains_specific_characters), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(newName.charAt(newName.length()-1) == '.'){
+            Toast.makeText(context, context.getString(R.string.login_does_not_end_with_a_dot), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!Character.isLetter(newName.charAt(0))){
+            Toast.makeText(context, context.getString(R.string.login_starts_with_letter), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        ArrayList<User> users = ((MainMenuActivity)context).getUsers();
+        for (User user : users){
+            if(user.getName().equals(newName)){
+                Toast.makeText(context, context.getString(R.string.user_with_name_exists), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
+        return true;
     }
 }

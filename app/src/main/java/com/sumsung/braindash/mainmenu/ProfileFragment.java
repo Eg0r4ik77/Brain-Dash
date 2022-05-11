@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sumsung.braindash.Strings;
+import com.sumsung.braindash.authorization.SignUpFragment;
 import com.sumsung.braindash.models.User;
 import com.sumsung.braindash.R;
 
@@ -36,16 +37,6 @@ public class ProfileFragment extends Fragment {
 
     private User user;
     private  FirebaseUser firebaseUser;
-
-    private ImageButton closeButton;
-    private Button exitAccountButton;
-    private Button saveChangesButton;
-    private Button editPasswordButton;
-    private Button deleteAccountButton;
-
-    private TextView gameRecord1;
-    private TextView gameRecord2;
-    private TextView gameRecord3;
 
     private EditText editName;
 
@@ -63,15 +54,15 @@ public class ProfileFragment extends Fragment {
         editName = view.findViewById(R.id.edit_name);
         editName.setText(user.getName());
 
-        gameRecord1 = view.findViewById(R.id.game_record_1);
-        gameRecord2 = view.findViewById(R.id.game_record_2);
-        gameRecord3 = view.findViewById(R.id.game_record_3);
+        TextView gameRecord1 = view.findViewById(R.id.game_record_1);
+        TextView gameRecord2 = view.findViewById(R.id.game_record_2);
+        TextView gameRecord3 = view.findViewById(R.id.game_record_3);
 
         gameRecord1.setText(getString(R.string.schulte_table) +": " + user.getRecord1());
         gameRecord2.setText(getString(R.string.repeat_drawing)+": " + user.getRecord2());
         gameRecord3.setText(getString(R.string.calculate_expression)+": " + user.getRecord3());
 
-        closeButton = view.findViewById(R.id.close_profile_button);
+        ImageButton closeButton = view.findViewById(R.id.close_profile_button);
         closeButton.setOnClickListener(view1 -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
             String newName = editName.getText().toString();
@@ -92,7 +83,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        exitAccountButton = view.findViewById(R.id.exit_account_button);
+        Button exitAccountButton = view.findViewById(R.id.exit_account_button);
         exitAccountButton.setOnClickListener(v -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -119,13 +110,13 @@ public class ProfileFragment extends Fragment {
             dialog.show();
         });
 
-        saveChangesButton = view.findViewById(R.id.save_changes_button);
+        Button saveChangesButton = view.findViewById(R.id.save_changes_button);
         saveChangesButton.setOnClickListener(v -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
             saveChanges();
         });
 
-        editPasswordButton = view.findViewById(R.id.edit_password_button);
+        Button editPasswordButton = view.findViewById(R.id.edit_password_button);
         editPasswordButton.setOnClickListener(v -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -149,7 +140,7 @@ public class ProfileFragment extends Fragment {
             dialog.show();
         });
 
-        deleteAccountButton = view.findViewById(R.id.delete_account_button);
+        Button deleteAccountButton = view.findViewById(R.id.delete_account_button);
         deleteAccountButton.setOnClickListener(v -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -197,33 +188,8 @@ public class ProfileFragment extends Fragment {
             return;
         }
 
-        if(newName.length() < 6){
-            Toast.makeText(getContext(), getString(R.string.login_min_length), Toast.LENGTH_SHORT).show();
+        if(!SignUpFragment.isValidLogin(getContext(), newName)){
             return;
-        }
-        if(newName.length() > 15){
-            Toast.makeText(getContext(), getString(R.string.login_max_length), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(!newName.matches("^[a-zA-Z0-9_.-]*$")){
-            Toast.makeText(getContext(), getString(R.string.login_contains_specific_characters), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if(newName.charAt(newName.length()-1) == '.'){
-            Toast.makeText(getContext(), getString(R.string.login_does_not_end_with_a_dot), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!Character.isLetter(newName.charAt(0))){
-            Toast.makeText(getContext(), getString(R.string.login_starts_with_letter), Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        ArrayList<User> users = ((MainMenuActivity)getActivity()).getUsers();
-        for (User user : users){
-            if(user.getName().equals(newName)){
-                Toast.makeText(getContext(), getString(R.string.user_with_name_exists), Toast.LENGTH_SHORT).show();
-                return;
-            }
         }
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(Strings.USERS);
@@ -241,5 +207,4 @@ public class ProfileFragment extends Fragment {
                 getSupportFragmentManager()
                 .popBackStack();
     }
-
 }

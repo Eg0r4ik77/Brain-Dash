@@ -16,6 +16,7 @@ import android.widget.Button;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.sumsung.braindash.R;
+import com.sumsung.braindash.adapters.AuthorizationAdapter;
 import com.sumsung.braindash.mainmenu.MainMenuActivity;
 
 

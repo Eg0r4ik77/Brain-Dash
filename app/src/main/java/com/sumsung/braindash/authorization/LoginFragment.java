@@ -28,10 +28,6 @@ import com.sumsung.braindash.mainmenu.MainMenuActivity;
 public class LoginFragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseDatabase firebaseDatabase;
-
-    private Button signInButton;
-    private Button toResetPasswordFragmentButton;
 
     private EditText email;
     private EditText password;
@@ -44,13 +40,13 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
         email = view.findViewById(R.id.email_field);
         password = view.findViewById(R.id.password_field);
 
-        signInButton = view.findViewById(R.id.sing_in_button);
-        toResetPasswordFragmentButton = view.findViewById(R.id.to_reset_password_fragment_button);
+        Button signInButton = view.findViewById(R.id.sing_in_button);
+        Button toResetPasswordFragmentButton = view.findViewById(R.id.to_reset_password_fragment_button);
 
         signInButton.setOnClickListener(view1 -> {
             ((MainMenuActivity)getActivity()).playMenuButtonSound();

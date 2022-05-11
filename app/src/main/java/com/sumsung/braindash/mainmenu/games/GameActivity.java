@@ -37,7 +37,6 @@ public class GameActivity extends AppCompatActivity {
 
     private SharedPreferences soundSharedPreferences;
 
-    private MediaPlayer gameButtonSound;
     private MediaPlayer gameOverSound;
     private MediaPlayer menuButtonSound;
 
@@ -46,7 +45,6 @@ public class GameActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
 
     private TextView scoreText;
     private TextView timerText;
@@ -69,7 +67,6 @@ public class GameActivity extends AppCompatActivity {
 
         soundSharedPreferences = getSharedPreferences(Strings.SOUND, MODE_PRIVATE);
 
-
         gameOverSound = MediaPlayer.create(this, R.raw.sound_game_over);
         menuButtonSound = MediaPlayer.create(this, R.raw.sound_menu_button);
 
@@ -87,13 +84,12 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void finish() {
                 handleGameResult();
-               progressBar.setProgress(100);
-               new Handler().postDelayed((Runnable) () -> {
+                progressBar.setProgress(100);
+                new Handler().postDelayed((Runnable) () -> {
                    progressBar.setProgress(0);
-               }, 1000);
+                   }, 1000);
 
-
-               playGameOverSound();
+                playGameOverSound();
 
                 GameOverFragment fragment = new GameOverFragment();
                 Bundle bundle = new Bundle();
@@ -174,7 +170,7 @@ public class GameActivity extends AppCompatActivity {
     public void handleGameResult(){
         if(firebaseUser == null){
             sharedPreferences = getSharedPreferences(Strings.RECORDS, MODE_PRIVATE);
-            editor = sharedPreferences.edit();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             if(fragment instanceof SchulteTableGameFragment){
                 editor.putInt(Strings.SCHULTE_TABLE_GAME_BEST_SCORE,
                         Math.max(score,
@@ -228,7 +224,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void playGameButtonSound(){
         if(soundSharedPreferences.getInt(Strings.ON, 1) == 0) return;
-        gameButtonSound = MediaPlayer.create(this, R.raw.sound_game_button);
+        MediaPlayer gameButtonSound = MediaPlayer.create(this, R.raw.sound_game_button);
         gameButtonSound.setOnCompletionListener(mediaPlayer -> mediaPlayer.reset());
         gameButtonSound.setVolume(0.2f, 0.2f);
         gameButtonSound.start();
