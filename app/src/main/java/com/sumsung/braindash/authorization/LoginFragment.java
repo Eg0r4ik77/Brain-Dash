@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.sumsung.braindash.R;
+import com.sumsung.braindash.Strings;
 import com.sumsung.braindash.mainmenu.MainMenuActivity;
 
 public class LoginFragment extends Fragment {
@@ -81,6 +82,11 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(getContext(), getString(R.string.login_completed), Toast.LENGTH_SHORT).show();
+                        getActivity()
+                                .getSharedPreferences(Strings.RECORDS, getActivity().MODE_PRIVATE)
+                                .edit()
+                                .putBoolean(Strings.AUTHORIZED, true)
+                                .apply();
                         startActivity(new Intent(getContext(), getActivity().getClass()));
                     }
                 }).addOnFailureListener(new OnFailureListener() {

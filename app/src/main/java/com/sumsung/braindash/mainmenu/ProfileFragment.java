@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,8 @@ public class ProfileFragment extends Fragment {
     private User user;
     private  FirebaseUser firebaseUser;
 
+    SharedPreferences sharedPreferences;
+
     private EditText editName;
 
     @SuppressLint("SetTextI18n")
@@ -50,6 +53,8 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         user = ((MainMenuActivity)getActivity()).getUser();
+
+        sharedPreferences = getContext().getSharedPreferences(Strings.RECORDS, getContext().MODE_PRIVATE);
 
         editName = view.findViewById(R.id.edit_name);
         editName.setText(user.getName());
@@ -95,8 +100,7 @@ public class ProfileFragment extends Fragment {
                                 .putBoolean(Strings.AUTHORIZED, false)
                                 .apply();
 
-                        getActivity()
-                                .getSharedPreferences(Strings.RECORDS, getActivity().MODE_PRIVATE)
+                       sharedPreferences
                                 .edit()
                                 .clear()
                                 .apply();
@@ -146,6 +150,10 @@ public class ProfileFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setMessage(R.string.do_you_want_to_delete_account).
                     setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+                        sharedPreferences
+                                .edit()
+                                .clear()
+                                .apply();
                         deleteAccount();
                     }).setNegativeButton(getString(R.string.no), (dialogInterface, i) -> {
                 dialogInterface.cancel();

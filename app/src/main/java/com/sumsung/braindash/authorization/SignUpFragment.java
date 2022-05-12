@@ -96,6 +96,11 @@ public class SignUpFragment extends Fragment {
                             public void onSuccess(Void unused) {
                                 getActivity().getSharedPreferences(Strings.RECORDS, getActivity().MODE_PRIVATE).edit().clear().commit();
                                 Toast.makeText(getContext(), getString(R.string.user_is_added), Toast.LENGTH_SHORT).show();
+                                getActivity()
+                                        .getSharedPreferences(Strings.RECORDS, getActivity().MODE_PRIVATE)
+                                        .edit()
+                                        .putBoolean(Strings.AUTHORIZED, true)
+                                        .apply();
                                 startActivity(new Intent(getContext(), getActivity().getClass()));
                             }
                         });

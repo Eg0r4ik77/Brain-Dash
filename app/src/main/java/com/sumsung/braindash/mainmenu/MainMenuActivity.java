@@ -238,7 +238,9 @@ public class MainMenuActivity extends AppCompatActivity {
         toGameMenuButton.setText(getString(R.string.games));
         leaderboardTextView.setText(getString(R.string.leaderboard));
         recordsLayoutLabel.setText(getString(R.string.best_scores ));
-        recordsLayout.setVisibility(firebaseUser == null ? View.VISIBLE : View.INVISIBLE);
+        //recordsLayout.setVisibility(firebaseUser == null ? View.VISIBLE : View.INVISIBLE);
+        recordsLayout.setVisibility(sharedPreferences.getBoolean(Strings.AUTHORIZED, false) ? View.INVISIBLE : View.VISIBLE);
+
 
         if(firebaseUser == null){
             record1.setText(getString(R.string.schulte_table) +": "+ sharedPreferences.getInt(Strings.SCHULTE_TABLE_GAME_BEST_SCORE, 0));
