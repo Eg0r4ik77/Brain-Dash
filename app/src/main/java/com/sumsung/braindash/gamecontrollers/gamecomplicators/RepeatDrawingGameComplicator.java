@@ -13,11 +13,14 @@ public class RepeatDrawingGameComplicator extends GameComplicator{
     @Override
     public void complicateGame() {
         incrementGameDifficulty();
-        if(getGameDifficulty() > drawing.getDrawingTilesCount()){
-            drawing.setDrawingTilesCount(getGameDifficulty());
-            if(drawing.getDrawingTilesCount() >= drawing.getSize()* drawing.getSize()){
-                drawing.setSize(drawing.getSize()+1);
-            }
+        drawing.setDrawingTilesCount((int)(Math.random()*(drawing.getSize()*drawing.getSize()-2)+2));
+        switch (getGameDifficulty()){
+            case 5:
+                drawing.setSize(3);
+                break;
+            case 13:
+                drawing.setSize(4);
+                break;
         }
     }
 }

@@ -6,10 +6,6 @@ public class Drawing {
     public int drawingTilesCount  = 2;
     private boolean[][] drawingFlags;
 
-    public int getDrawingTilesCount() {
-        return drawingTilesCount;
-    }
-
     public void setDrawingTilesCount(int drawingTilesCount) {
         this.drawingTilesCount = drawingTilesCount;
     }
